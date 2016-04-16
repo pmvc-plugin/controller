@@ -30,7 +30,7 @@ l(__DIR__.'/src/MappingBuilder.php');
 l(__DIR__.'/src/Request.php');
 l(__DIR__.'/src/RouterInterface.php');
 setAppFolder(__DIR__.'/../../../pmvc-app');
-${_INIT_CONFIG}[_CLASS] = __NAMESPACE__.'\controller';
+${_INIT_CONFIG}[_CLASS] = __NAMESPACE__.'\Controller';
 
 /**
  * PMVC Action.
@@ -44,7 +44,7 @@ ${_INIT_CONFIG}[_CLASS] = __NAMESPACE__.'\controller';
  *
  * @link https://packagist.org/packages/pmvc/pmvc
  */
-class controller extends \PMVC\PlugIn
+class Controller extends \PMVC\PlugIn
 {
     /**
      * Mapping.
@@ -76,13 +76,9 @@ class controller extends \PMVC\PlugIn
      *
      * @return void
      */
-    public function setOption($k, $v = null)
+    public function offsetSet($k, $v = null)
     {
-        $this->store($k, $v);
-        if (isContain($k, _PLUGIN)) {
-            initPlugIn(getOption(_PLUGIN));
-            $this->store(_PLUGIN, null);
-        }
+        $this->silent($k, $v);
         callPlugin(
             'dispatcher',
             'set',
@@ -94,14 +90,26 @@ class controller extends \PMVC\PlugIn
     }
 
     /**
-     * Store Option (Will not trigger Event).
+     * Get Option.
+     *
+     * @param mixed $k key
+     *
+     * @return mixed
+     */
+    public function &offsetGet($k)
+    {
+        return option('get', $k);
+    }
+
+    /**
+     * Slient for store option (Will not trigger Event).
      *
      * @param mixed $k key
      * @param mixed $v value
      *
      * @return void
      */
-    public function store($k, $v = null)
+    public function silent($k, $v = null)
     {
         option('set', $k, $v);
     }
@@ -138,7 +146,7 @@ class controller extends \PMVC\PlugIn
             $alias
         );
         if (!$path) {
-            $app = getOption(_DEFAULT_APP);
+            $app = $this[_DEFAULT_APP];
             $path = $this->_getAppFile(
                 $parents,
                 $app,
@@ -160,10 +168,7 @@ class controller extends \PMVC\PlugIn
             );
         } else {
             $parent = realpath(dirname(dirname($path)));
-            $this->setOption(
-                _RUN_PARENT,
-                $parent
-            );
+            $this[_RUN_PARENT] = $parent;
             $this->setApp($app);
             $appPlugin = plug(
                 _RUN_APP,
@@ -276,7 +281,7 @@ class controller extends \PMVC\PlugIn
     {
         $actionMapping = $this->_processMapping($index);
         $actionForm = $this->_processForm($actionMapping);
-        $this->setOption(_RUN_FORM, $actionForm);
+        $this[_RUN_FORM] = $actionForm;
         //validate the form if necesarry
         if ($actionMapping->validate) {
             $errorForward = $this->_processValidate($actionForm);
@@ -328,7 +333,7 @@ class controller extends \PMVC\PlugIn
     private function _processForm($actionMapping)
     {
         if (empty($actionMapping->form)) {
-            $actionForm = getOption(_RUN_FORM);
+            $actionForm = $this[_RUN_FORM];
             if (!empty($actionForm)) {
                 return $actionForm;
             }
@@ -354,7 +359,7 @@ class controller extends \PMVC\PlugIn
     private function _initActionFormValue($actionForm, $actionMapping)
     {
         $scope = &$actionMapping->scope;
-        $this->setOption(_SCOPE, $actionMapping);
+        $this[_SCOPE] = $actionMapping;
         if (!is_array($scope)) {
             $scope = $this->_request->keySet();
         }
@@ -475,7 +480,7 @@ class controller extends \PMVC\PlugIn
      */
     public function getErrorForward()
     {
-        $AllErrors = getOption(ERRORS);
+        $AllErrors = $this[ERRORS];
         if (empty($AllErrors[USER_LAST_ERROR])) {
             return false;
         }
@@ -527,7 +532,7 @@ class controller extends \PMVC\PlugIn
      */
     public function getApp()
     {
-        return option('get', _RUN_APP);
+        return $this[_RUN_APP];
     }
 
     /**
@@ -539,17 +544,7 @@ class controller extends \PMVC\PlugIn
      */
     public function setApp($app)
     {
-        return $this->setOption(_RUN_APP, $app);
-    }
-
-    /**
-     * Get App Parent.
-     *
-     * @return string
-     */
-    public function getAppParent()
-    {
-        return option('get', _RUN_PARENT);
+        return $this[_RUN_APP] = $app;
     }
 
     /**
@@ -571,6 +566,16 @@ class controller extends \PMVC\PlugIn
      */
     public function setAppAction($action)
     {
-        return $this->setOption(_RUN_ACTION, $action);
+        return $this[_RUN_ACTION] = $action;
+    }
+
+    /**
+     * Get App Parent.
+     *
+     * @return string
+     */
+    public function getAppParent()
+    {
+        return $this[_RUN_PARENT];
     }
 }

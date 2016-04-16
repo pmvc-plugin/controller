@@ -23,7 +23,7 @@ class DefaultFormTest extends PHPUnit_Framework_TestCase
             _DEFAULT_FORM => 'FakeDefaultForm',
         ];
         $mvc = \PMVC\plug('controller');
-        $mvc->setOption($option);
+        \PMVC\set($mvc, $option);
         $result = $mvc->process($b);
         $this->assertEquals($test_str, $result[0]);
         $this->assertEquals('aaa', \PMVC\getOption('fakeDefaultForm'));

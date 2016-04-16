@@ -50,7 +50,7 @@ class ActionControllerTest extends PHPUnit_Framework_TestCase
             _RUN_ACTION => 'index',
         ];
         $mvc = \PMVC\plug('controller');
-        $mvc->setOption($options);
+        \PMVC\set($mvc, $options);
         $view = \PMVC\plug(
             'view', [
             _CLASS => '\PMVC\FakeView',

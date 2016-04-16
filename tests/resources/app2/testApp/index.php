@@ -10,6 +10,6 @@ class FakeAction extends \PMVC\Action
 {
     public function init()
     {
-        \PMVC\plug('controller')->store('test', 'app2');
+        \PMVC\option('set', 'test', 'app2');
     }
 }

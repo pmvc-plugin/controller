@@ -20,7 +20,7 @@ class ActionControllerPlugAppTest extends PHPUnit_Framework_TestCase
             $this->resources.'app2',
         ];
         $mvc = plug('controller');
-        $mvc->store(_RUN_APP, 'testApp');
+        $mvc->setApp('testApp');
         $mvc->plugApp($folders);
         $store = folders(_RUN_APP);
         $expected = array_reverse($folders);
@@ -37,7 +37,7 @@ class ActionControllerPlugAppTest extends PHPUnit_Framework_TestCase
             $this->resources.'app2',
         ];
         $mvc = plug('controller');
-        $mvc->store(_RUN_APP, 'testApp');
+        $mvc->setApp('testApp');
         $result = $mvc->plugApp($folders);
         $this->assertTrue($result);
         $this->assertEquals(
