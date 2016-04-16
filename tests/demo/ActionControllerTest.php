@@ -11,7 +11,7 @@ class ActionControllerTest extends PHPUnit_Framework_TestCase
             _CLASS => 'FakeClass',
             ]
         );
-        $mvc = $this->getMock('\PMVC\ActionController', ['execute'], [[]]);
+        $mvc = $this->getMock('\PMVC\controller', ['execute'], [[]]);
         $mvc->expects($this->exactly(2))
             ->method('execute')
             ->will(

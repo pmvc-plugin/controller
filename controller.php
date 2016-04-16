@@ -30,7 +30,7 @@ l(__DIR__.'/src/MappingBuilder.php');
 l(__DIR__.'/src/Request.php');
 l(__DIR__.'/src/RouterInterface.php');
 setAppFolder(__DIR__.'/../../../pmvc-app');
-${_INIT_CONFIG}[_CLASS] = __NAMESPACE__.'\ActionController';
+${_INIT_CONFIG}[_CLASS] = __NAMESPACE__.'\controller';
 
 /**
  * PMVC Action.
@@ -44,7 +44,7 @@ ${_INIT_CONFIG}[_CLASS] = __NAMESPACE__.'\ActionController';
  *
  * @link https://packagist.org/packages/pmvc/pmvc
  */
-class ActionController extends \PMVC\PlugIn
+class controller extends \PMVC\PlugIn
 {
     /**
      * Mapping.

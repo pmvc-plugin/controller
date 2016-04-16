@@ -21,7 +21,7 @@
  */
 
 /**
- * MVC
+ * MVC.
  */
 define('_FORM', '_form_'); //action
 define('_VALIDATE', '_validate_'); //action
