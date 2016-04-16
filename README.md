@@ -5,8 +5,9 @@
 [![License](https://poser.pugx.org/pmvc-plugin/controller/license)](https://packagist.org/packages/pmvc-plugin/controller)
 [![Total Downloads](https://poser.pugx.org/pmvc-plugin/controller/downloads)](https://packagist.org/packages/pmvc-plugin/controller) 
 
-controller
+PMVC Controller
 ===============
+https://github.com/pmvc/pmvc
 
 ## Install with Composer
 ### 1. Download composer
