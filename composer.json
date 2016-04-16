@@ -1,0 +1,21 @@
+{
+    "name": "pmvc-plugin/controller",
+    "description": "PMVC Controller",
+    "type": "library",
+    "homepage": "https://github.com/pmvc/pmvc",
+    "keywords": ["controller", "pmvc", "plug-in"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Hill",
+            "email": "hill@kimo.com"
+        }
+    ],
+    "require": {
+        "pmvc/pmvc": "*"
+    },
+    "require-dev": {
+        "squizlabs/php_codesniffer" : "@stable"
+    },
+    "minimum-stability": "dev"
+}
