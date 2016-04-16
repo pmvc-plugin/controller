@@ -30,7 +30,7 @@ l(__DIR__.'/src/MappingBuilder.php');
 l(__DIR__.'/src/Request.php');
 l(__DIR__.'/src/RouterInterface.php');
 setAppFolder(__DIR__.'/../../../pmvc-app');
-${_INIT_CONFIG}[_CLASS] = __NAMESPACE__.'\Controller';
+${_INIT_CONFIG}[_CLASS] = __NAMESPACE__.'\controller';
 
 /**
  * PMVC Action.
@@ -44,7 +44,7 @@ ${_INIT_CONFIG}[_CLASS] = __NAMESPACE__.'\Controller';
  *
  * @link https://packagist.org/packages/pmvc/pmvc
  */
-class Controller extends \PMVC\PlugIn
+class controller extends \PMVC\PlugIn
 {
     /**
      * Mapping.
@@ -133,7 +133,7 @@ class Controller extends \PMVC\PlugIn
             ]
         );
         if (empty($parent)) {
-            $parent = $this->getAppParent();
+            $parent = $this[_RUN_PARENT];
         }
         $folders = \PMVC\addAppFolder($parent, $appAlias);
         $alias = $folders['alias'];
@@ -567,15 +567,5 @@ class Controller extends \PMVC\PlugIn
     public function setAppAction($action)
     {
         return $this[_RUN_ACTION] = $action;
-    }
-
-    /**
-     * Get App Parent.
-     *
-     * @return string
-     */
-    public function getAppParent()
-    {
-        return $this[_RUN_PARENT];
     }
 }
