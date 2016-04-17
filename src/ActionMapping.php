@@ -64,21 +64,21 @@ class ActionMapping extends HashMap
     public $scope;
 
     /**
-     * This action mapping name.
+     * ActionMappings.
      *
-     * @var string
+     * @var ActionMappings
      */
-    public $name;
+    private $_mappings;
 
     /**
      * ActionMapping.
      *
-     * @param array  $mapping mapping
-     * @param string $name    name
+     * @param array  $mapping  mapping
+     * @param string $mappings name
      */
-    public function __construct(&$mapping, $name)
+    public function __construct(&$mapping, $mappings)
     {
-        $this->name = $name;
+        $this->_mappings = $mappings;
         if (isset($mapping[_FUNCTION])) {
             $this->func = $mapping[_FUNCTION];
         }
@@ -104,7 +104,7 @@ class ActionMapping extends HashMap
      */
     public function offsetExists($name)
     {
-        return getC()->getMapping()->forwardExists($name);
+        return $this->_mappings->forwardExists($name);
     }
 
     /**
@@ -116,6 +116,6 @@ class ActionMapping extends HashMap
      */
     public function offsetGet($name)
     {
-        return getC()->getMapping()->findForward($name);
+        return $this->_mappings->findForward($name);
     }
 }

@@ -28,9 +28,9 @@ namespace PMVC;
 function transparent($name, $app = null)
 {
     if (is_null($app)) {
-        $app = getC()->getApp();
+        $app = plug('controller')->getApp();
     }
-    $folder = getC()->getAppParent();
+    $folder = plug('controller')->getAppParent();
     if (!$folder) {
         return $name;
     }

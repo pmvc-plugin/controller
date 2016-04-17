@@ -101,7 +101,7 @@ class ActionMappings
     public function findMapping($name)
     {
         $mapping = &$this->_mappings->{ACTION_MAPPINGS}[$name];
-        $mappingObj = new ActionMapping($mapping, $name);
+        $mappingObj = new ActionMapping($mapping, $this);
 
         return $mappingObj;
     }
