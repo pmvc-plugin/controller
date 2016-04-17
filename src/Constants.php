@@ -41,13 +41,8 @@ define('_HEADER', '_header_');
 define('_ROUTER', '_router_');
 define('_VIEW_ENGINE', '_view_engine_');
 define('_TEMPLATE_DIR', '_template_dir_');
-// Error
-define('_ERROR_REPORTING', '_error_reporting_');
-define('_ERROR_ENABLE_LOG', '_error_enable_log_');
 
-/*
- * Run
- */
+/* Run */
 define('_DEFAULT_APP', '_default_app_');
 define('_DEFAULT_FORM', '_default_form_');
 define('_RUN_APP', '_run_app_');
