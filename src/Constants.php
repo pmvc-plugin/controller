@@ -37,9 +37,8 @@ define('_INIT_BUILDER', '_init_builder_');
 define('_ACTION', '_action_');
 define('_HEADER', '_header_');
 
-/* options constant(s) */
+/* Options constant(s) */
 define('_ROUTER', '_router_');
-define('_VIEW_ENGINE', '_view_engine_');
 define('_TEMPLATE_DIR', '_template_dir_');
 
 /* Run */

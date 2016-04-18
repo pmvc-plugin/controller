@@ -29,7 +29,7 @@ l(__DIR__.'/src/ActionMappings.php');
 l(__DIR__.'/src/MappingBuilder.php');
 l(__DIR__.'/src/Request.php');
 l(__DIR__.'/src/RouterInterface.php');
-setAppFolder(__DIR__.'/../../../pmvc-app');
+setAppFolder(__DIR__.'/../../pmvc-app');
 ${_INIT_CONFIG}[_CLASS] = __NAMESPACE__.'\controller';
 
 /**
