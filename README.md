@@ -7,7 +7,9 @@
 
 PMVC Controller
 ===============
-https://github.com/pmvc/pmvc
+   * A simple MVC for unidirectional dataflow architecture.
+   * <img src="https://raw.githubusercontent.com/pmvc/pmvc.github.io/master/flow5.png">
+   * More information https://github.com/pmvc/pmvc
 
 ## Install with Composer
 ### 1. Download composer
