@@ -102,7 +102,7 @@ class controller extends \PMVC\PlugIn
     }
 
     /**
-     * Slient for store option (Will not trigger Event).
+     * Silent store (Will not trigger Event).
      *
      * @param mixed $k key
      * @param mixed $v value
