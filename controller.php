@@ -279,6 +279,12 @@ class controller extends \PMVC\PlugIn
      */
     public function execute($index)
     {
+        if (!$this->_mappings->mappingExists($index)) {
+            return !trigger_error(
+                'No mappings found for index: '.$index,
+                E_USER_WARNING
+            );
+        }
         $actionMapping = $this->_processMapping($index);
         $actionForm = $this->_processForm($actionMapping);
         $this[_RUN_FORM] = $actionForm;
@@ -307,20 +313,7 @@ class controller extends \PMVC\PlugIn
      */
     private function _processMapping($index)
     {
-        $m = $this->_mappings;
-        if (!$m->mappingExists($index)) {
-            if ($this->_mappings->mappingExists('index')) {
-                $index = 'index';
-            }
-        }
-        if (!$m->mappingExists($index)) {
-            return !trigger_error(
-                'No mappings found for index: '.$index,
-                E_USER_WARNING
-            );
-        }
-
-        return $m->findMapping($index);
+        return $this->_mappings->findMapping($index);
     }
 
     /**
@@ -554,7 +547,12 @@ class controller extends \PMVC\PlugIn
      */
     public function getAppAction()
     {
-        return option('get', _RUN_ACTION, '');
+        $action = option('get', _RUN_ACTION);
+        if (!$this->_mappings->mappingExists($action)) {
+            $action = 'index';
+        }
+
+        return $action;
     }
 
     /**
