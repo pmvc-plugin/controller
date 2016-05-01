@@ -51,7 +51,7 @@ function transparent($name, $app = null)
  *
  * @return mixed
  */
-function setAppFolder($folders, $alias = [])
+function setAppFolders($folders, $alias = [])
 {
     return folders(_RUN_APP, $folders, $alias, true);
 }
@@ -64,7 +64,7 @@ function setAppFolder($folders, $alias = [])
  *
  * @return mixed
  */
-function addAppFolder($folders, $alias = [])
+function addAppFolders($folders, $alias = [])
 {
     return folders(_RUN_APP, $folders, $alias);
 }

@@ -29,7 +29,7 @@ l(__DIR__.'/src/ActionMappings.php');
 l(__DIR__.'/src/MappingBuilder.php');
 l(__DIR__.'/src/Request.php');
 l(__DIR__.'/src/RouterInterface.php');
-setAppFolder(__DIR__.'/../../pmvc-app');
+setAppFolders([__DIR__.'/../../pmvc-app']);
 ${_INIT_CONFIG}[_CLASS] = __NAMESPACE__.'\controller';
 
 /**
@@ -117,13 +117,13 @@ class controller extends \PMVC\PlugIn
     /**
      * Plug App.
      *
-     * @param array  $parent    defaultAppFolder
+     * @param array  $folders   defaultAppFolder
      * @param array  $appAlias  appAlias
      * @param string $indexFile index.php
      *
      * @return mixed
      */
-    public function plugApp($parent = [], $appAlias = [], $indexFile = 'index')
+    public function plugApp($folders = [], $appAlias = [], $indexFile = 'index')
     {
         callPlugin(
             'dispatcher',
@@ -132,10 +132,10 @@ class controller extends \PMVC\PlugIn
                 Event\MAP_REQUEST, true,
             ]
         );
-        if (empty($parent)) {
-            $parent = $this[_RUN_PARENT];
+        if (empty($folders)) {
+            $folders = [$this[_RUN_PARENT]];
         }
-        $folders = \PMVC\addAppFolder($parent, $appAlias);
+        $folders = \PMVC\addAppFolders($folders, $appAlias);
         $alias = $folders['alias'];
         $parents = $folders['folders'];
         $app = $this->getApp();
@@ -176,7 +176,7 @@ class controller extends \PMVC\PlugIn
                     _PLUGIN_FILE => $path,
                 ]
             );
-            addPlugInFolder($parent.'/'.$app.'/plugins');
+            addPlugInFolders([$parent.'/'.$app.'/plugins']);
             $builder = $appPlugin[_INIT_BUILDER];
             if (empty($builder)) {
                 return !trigger_error('No builder found', E_USER_WARNING);

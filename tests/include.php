@@ -4,6 +4,6 @@ namespace PMVC;
 
 include __DIR__.'/../vendor/autoload.php';
 \PMVC\Load::plug();
-\PMVC\addPlugInFolder('../');
+\PMVC\addPlugInFolders([__DIR__.'/../../']);
 \PMVC\plug('controller');
 l(__DIR__.'/resources/FakeView.php');
