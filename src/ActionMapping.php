@@ -74,13 +74,16 @@ class ActionMapping extends HashMap
      * ActionMapping.
      *
      * @param array  $mapping  mapping
-     * @param string $mappings name
+     * @param string $mappings mappings
+     * @param string $name     name
      */
-    public function __construct(&$mapping, $mappings)
+    public function __construct(&$mapping, $mappings, $name)
     {
         $this->_mappings = $mappings;
         if (isset($mapping[_FUNCTION])) {
             $this->func = $mapping[_FUNCTION];
+        } elseif (exists(_RUN_APP, 'plugin')) {
+            $this->func = [plug(_RUN_APP), $name];
         }
         if (isset($mapping[_FORM])) {
             $this->form = $mapping[_FORM];

@@ -78,7 +78,7 @@ class MappingBuilder
      *
      * @return bool
      */
-    public function addAction($psId, $settings)
+    public function addAction($psId, $settings = null)
     {
         if (is_callable($settings)) {
             $settings = [
