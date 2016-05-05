@@ -53,6 +53,13 @@ class ActionForward extends HashMap
     private $_header = [];
 
     /**
+     * View.
+     *
+     * @var object
+     */
+    private $_view;
+
+    /**
      * Lazyoutput action.
      *
      * @var string
@@ -121,6 +128,9 @@ class ActionForward extends HashMap
     {
         if (is_null($type)) {
             $type = 'redirect';
+        }
+        if ('view' === $type) {
+            $this->_view = plug('view');
         }
         $this->_type = $type;
     }
@@ -197,7 +207,11 @@ class ActionForward extends HashMap
      */
     public function set($k, $v = null)
     {
-        return set($this, $k, $v);
+        if ($this->_view) {
+            return $this->_view->set($k, $v);
+        } else {
+            return set($this, $k, $v);
+        }
     }
 
     /**
@@ -210,7 +224,11 @@ class ActionForward extends HashMap
      */
     public function get($k = null, $default = null)
     {
-        return get($this, $k, $default);
+        if ($this->_view) {
+            return $this->_view->set($k, $default);
+        } else {
+            return get($this, $k, $default);
+        }
     }
 
     /**
@@ -245,8 +263,7 @@ class ActionForward extends HashMap
                 Event\B4_PROCESS_VIEW, true,
             ]
         );
-
-        $view = plug('view');
+        $view = $this->_view;
         $view['forward'] = $this;
         $view->setThemeFolder(
             getOption(_TEMPLATE_DIR)
@@ -256,7 +273,6 @@ class ActionForward extends HashMap
             $this->setHeader($view['headers']);
         }
         $this->_processHeader();
-        $view->set(get($this));
 
         return $view->process();
     }
