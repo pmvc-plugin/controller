@@ -82,7 +82,7 @@ class ActionMappings
     public function addByKey($mappings, $key)
     {
         if (!empty($mappings->{$key})) {
-            $this->_mappings->{$key} = arrayMerge(
+            $this->_mappings->{$key} = array_replace(
                 $this->_mappings->{$key},
                 $mappings->{$key}
             );
