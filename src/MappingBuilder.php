@@ -85,6 +85,12 @@ class MappingBuilder
                 _FUNCTION => $settings,
             ];
         }
+        if (!isset($settings[_FUNCTION])) {
+            $settings[_FUNCTION] = [
+                plug(_RUN_APP),
+                $psId
+            ];
+        }
         $settings = new HashMap(
             mergeDefault(
                 $this->getActionDefault(), $settings
