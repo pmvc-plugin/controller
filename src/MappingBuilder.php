@@ -88,11 +88,11 @@ class MappingBuilder
         if (!isset($settings[_FUNCTION])) {
             $settings[_FUNCTION] = [
                 plug(_RUN_APP),
-                $psId
+                $psId,
             ];
         }
         $settings = new HashMap(
-            mergeDefault(
+            array_replace(
                 $this->getActionDefault(), $settings
             )
         );
@@ -129,7 +129,7 @@ class MappingBuilder
      */
     public function addForward($psId, $settings)
     {
-        $settings = mergeDefault(
+        $settings = array_replace(
             $this->getForwardDefault(), $settings
         );
         $this->_aaMap[ACTION_FORWARDS][$psId] = $settings;
