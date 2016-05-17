@@ -48,9 +48,8 @@ class ActionControllerPlugAppTest extends PHPUnit_Framework_TestCase
 
     public function testGetAppsParent()
     {
-
         $folders = [
-            $this->resources.'apps1'
+            $this->resources.'apps1',
         ];
         $mvc = plug('controller');
         $mvc->setApp('testApp');

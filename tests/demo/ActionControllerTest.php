@@ -9,7 +9,7 @@ class ActionControllerTest extends PHPUnit_Framework_TestCase
         $b->addAction(
             'index', [
              'FakeClass',
-             'index'
+             'index',
             ]
         );
         $mvc = $this->getMock('\PMVC\controller', ['execute'], [[]]);
@@ -33,7 +33,7 @@ class ActionControllerTest extends PHPUnit_Framework_TestCase
             'index',
             [
                 _FUNCTION => ['FakeClass', 'index'],
-                _FORM  => 'FakeFailForm',
+                _FORM     => 'FakeFailForm',
             ]
         );
         $b->addForward(

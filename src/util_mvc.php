@@ -41,10 +41,13 @@ function transparent($name, $app = null)
 
 /**
  * Get site folder.
+ *
+ * @return string
  */
 function getAppsParent()
 {
     $folder = realpath(lastSlash(plug('controller')[_RUN_APPS]).'../').'/';
+
     return $folder;
 }
 
