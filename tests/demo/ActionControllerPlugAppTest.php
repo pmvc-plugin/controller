@@ -48,12 +48,24 @@ class ActionControllerPlugAppTest extends PHPUnit_Framework_TestCase
 
     public function testGetAppsParent()
     {
-        $folders = [
-            $this->resources.'apps1',
-        ];
         $mvc = plug('controller');
         $mvc->setApp('testApp');
-        $result = $mvc->plugApp($folders);
+        $mvc->plugApp([$this->resources.'apps1']);
         $this->assertEquals(realpath($this->resources).'/', \PMVC\getAppsParent());
+    }
+
+    public function testTransparent()
+    {
+        $mvc = plug('controller');
+        $mvc->setApp('testApp');
+        $mvc->plugApp([$this->resources.'apps1']);
+        $this->assertEquals(
+            realpath($this->resources).'/'.'FakeView.php',
+            \PMVC\transparent('FakeView.php')
+        );
+        $this->assertEquals(
+            realpath($this->resources).'/'.'apps1/testApp/index.php',
+            \PMVC\transparent('index.php')
+        );
     }
 }

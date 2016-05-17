@@ -525,7 +525,7 @@ class controller extends \PMVC\PlugIn
      */
     public function getApp()
     {
-        return $this[_RUN_APP];
+        return $this[_RUN_APP] ?: $this[_DEFAULT_APP];
     }
 
     /**
@@ -547,7 +547,7 @@ class controller extends \PMVC\PlugIn
      */
     public function getAppAction()
     {
-        $action = option('get', _RUN_ACTION);
+        $action = $this[_RUN_ACTION];
         if (!$this->_mappings->mappingExists($action)) {
             $action = 'index';
         }

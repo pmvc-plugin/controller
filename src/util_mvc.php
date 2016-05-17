@@ -27,15 +27,19 @@ namespace PMVC;
  */
 function transparent($name, $app = null)
 {
+    $c = plug('controller');
     if (is_null($app)) {
-        $app = plug('controller')->getApp().'/';
+        $app = $c->getApp();
+    }
+    if (!is_null($app)) {
+        $app = basename($c[_RUN_APPS]).'/'.$app.'/';
     }
     $folder = getAppsParent();
-    $appFile = realpath($folder.$app.$name);
-    if ($appFile) {
+    $appFile = $folder.$app.$name;
+    if (realpath($appFile)) {
         return $appFile;
     } else {
-        return realpath($name);
+        return realpath($folder.$name);
     }
 }
 
