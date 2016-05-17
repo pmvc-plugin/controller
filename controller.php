@@ -133,7 +133,7 @@ class controller extends \PMVC\PlugIn
             ]
         );
         if (empty($folders)) {
-            $folders = [$this[_RUN_PARENT]];
+            $folders = [$this[_RUN_APPS]];
         }
         $folders = \PMVC\addAppFolders($folders, $appAlias);
         $alias = $folders['alias'];
@@ -168,7 +168,7 @@ class controller extends \PMVC\PlugIn
             );
         } else {
             $parent = realpath(dirname(dirname($path)));
-            $this[_RUN_PARENT] = $parent;
+            $this[_RUN_APPS] = $parent;
             $this->setApp($app);
             $appPlugin = plug(
                 _RUN_APP,

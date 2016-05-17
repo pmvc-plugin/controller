@@ -31,3 +31,7 @@ PMVC Controller
 #### 2.2 Or use composer command-line
    * php composer.phar require pmvc-plugin/controller
 
+## Explain App Folder
+--- Site Folder (_RUN_APPS Parent, \PMVC\getAppsParent())
+------ Apps Folder (_RUN_APPS)
+--------- App Folder (_RUN_APP)

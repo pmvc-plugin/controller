@@ -45,6 +45,6 @@ define('_TEMPLATE_DIR', '_template_dir_');
 define('_DEFAULT_APP', '_default_app_');
 define('_DEFAULT_FORM', '_default_form_');
 define('_RUN_APP', '_run_app_');
+define('_RUN_APPS', '_run_apps_');
 define('_RUN_ACTION', '_run_action_');
 define('_RUN_FORM', '_run_form_');
-define('_RUN_PARENT', '_run_parent_');

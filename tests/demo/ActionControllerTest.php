@@ -8,7 +8,8 @@ class ActionControllerTest extends PHPUnit_Framework_TestCase
         $b = new PMVC\MappingBuilder();
         $b->addAction(
             'index', [
-            _CLASS => 'FakeClass',
+             'FakeClass',
+             'index'
             ]
         );
         $mvc = $this->getMock('\PMVC\controller', ['execute'], [[]]);
@@ -31,7 +32,7 @@ class ActionControllerTest extends PHPUnit_Framework_TestCase
         $b->addAction(
             'index',
             [
-                _CLASS => 'FakeClass',
+                _FUNCTION => ['FakeClass', 'index'],
                 _FORM  => 'FakeFailForm',
             ]
         );

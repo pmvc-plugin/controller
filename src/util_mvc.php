@@ -28,19 +28,24 @@ namespace PMVC;
 function transparent($name, $app = null)
 {
     if (is_null($app)) {
-        $app = plug('controller')->getApp();
+        $app = plug('controller')->getApp().'/';
     }
-    $folder = plug('controller')->getAppParent();
-    if (!$folder) {
-        return $name;
-    }
-    $appFile = lastSlash($folder).$app.'/'.$name;
-    $appFile = realpath($appFile);
+    $folder = getAppsParent();
+    $appFile = realpath($folder.$app.$name);
     if ($appFile) {
         return $appFile;
     } else {
-        return $name;
+        return realpath($name);
     }
+}
+
+/**
+ * Get site folder.
+ */
+function getAppsParent()
+{
+    $folder = realpath(lastSlash(plug('controller')[_RUN_APPS]).'../').'/';
+    return $folder;
 }
 
 /**

@@ -16,8 +16,8 @@ class ActionControllerPlugAppTest extends PHPUnit_Framework_TestCase
     public function testStore()
     {
         $folders = [
-            $this->resources.'app1',
-            $this->resources.'app2',
+            $this->resources.'apps1',
+            $this->resources.'apps2',
         ];
         $mvc = plug('controller');
         $mvc->setApp('testApp');
@@ -33,8 +33,8 @@ class ActionControllerPlugAppTest extends PHPUnit_Framework_TestCase
     public function testPlugApp()
     {
         $folders = [
-            $this->resources.'app1',
-            $this->resources.'app2',
+            $this->resources.'apps1',
+            $this->resources.'apps2',
         ];
         $mvc = plug('controller');
         $mvc->setApp('testApp');
@@ -44,5 +44,17 @@ class ActionControllerPlugAppTest extends PHPUnit_Framework_TestCase
             'app2',
             getOption('test')
         );
+    }
+
+    public function testGetAppsParent()
+    {
+
+        $folders = [
+            $this->resources.'apps1'
+        ];
+        $mvc = plug('controller');
+        $mvc->setApp('testApp');
+        $result = $mvc->plugApp($folders);
+        $this->assertEquals(realpath($this->resources).'/', \PMVC\getAppsParent());
     }
 }
