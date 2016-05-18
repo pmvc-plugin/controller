@@ -123,8 +123,11 @@ class controller extends \PMVC\PlugIn
      *
      * @return mixed
      */
-    public function plugApp($folders = [], $appAlias = [], $indexFile = 'index')
+    public function plugApp(array $folders = [], array $appAlias = [], $indexFile = 'index')
     {
+        if (exists(_RUN_APP, 'plugin')) {
+            return !trigger_error('APP was pluged.', E_USER_WARNING);
+        }
         callPlugin(
             'dispatcher',
             'notify',
