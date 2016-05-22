@@ -85,11 +85,17 @@ class MappingBuilder
                 _FUNCTION => $settings,
             ];
         }
-        if (!isset($settings[_FUNCTION])) {
+        if (!isset($settings[_FUNCTION]) && exists(_RUN_APP, 'plugin')) {
             $settings[_FUNCTION] = [
                 plug(_RUN_APP),
                 $psId,
             ];
+        }
+        if (!isset($settings[_FUNCTION])) {
+            return !trigger_error(
+                'Not seeting _FUNCTION. '.
+                print_r(func_get_args(), true)
+            );
         }
         $settings = new HashMap(
             array_replace(
