@@ -152,7 +152,7 @@ class MappingBuilder
     {
         return [
             _PATH   => '_DEFAULT_',
-            _TYPE   => 'redirect',
+            _TYPE   => null,
             _HEADER => null,
             _ACTION => null,
         ];

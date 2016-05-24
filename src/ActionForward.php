@@ -126,9 +126,6 @@ class ActionForward extends HashMap
      */
     private function _setType($type = null)
     {
-        if (is_null($type)) {
-            $type = 'redirect';
-        }
         if ('view' === $type) {
             $this->_view = plug('view');
         }
