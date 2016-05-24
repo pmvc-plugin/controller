@@ -428,14 +428,7 @@ class controller extends \PMVC\PlugIn
      */
     public function processForward($actionForward)
     {
-        callPlugin(
-            'dispatcher',
-            'notify',
-            [
-                Event\B4_PROCESS_FORWARD,
-                true,
-            ]
-        );
+        $this[_FORWARD] = $actionForward;
         if (callPlugin('dispatcher', 'stop')) {
             unset($actionForward->action);
 
