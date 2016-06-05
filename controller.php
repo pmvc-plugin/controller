@@ -159,7 +159,7 @@ class controller extends \PMVC\PlugIn
         }
         if (!$path) {
             return !trigger_error(
-                'No App found for '.var_export(
+                'No App found for '.print_r(
                     [
                     'Parent' => $parents,
                     'App'    => [$this->getApp(), $app],
