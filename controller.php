@@ -406,11 +406,15 @@ class controller extends \PMVC\PlugIn
         );
         $func = $actionMapping->func;
         if (!is_callable($func)) {
-            return !trigger_error(
-                'parse action error, function not exists. '.
-                print_r($func, true),
-                E_USER_WARNING
-            );
+            if (exists(_RUN_APP, 'plugin')) {
+                $func = [plug(_RUN_APP), $func];
+            } else {
+                return !trigger_error(
+                    'parse action error, function not exists. '.
+                    print_r($func, true),
+                    E_USER_WARNING
+                );
+            }
         }
 
         return call_user_func_array(

@@ -78,23 +78,15 @@ class MappingBuilder
      *
      * @return bool
      */
-    public function addAction($psId, $settings = null)
+    public function addAction($psId, $settings = [])
     {
         if (is_callable($settings)) {
             $settings = [
                 _FUNCTION => $settings,
             ];
-        }
-        if (!isset($settings[_FUNCTION]) && exists(_RUN_APP, 'plugin')) {
-            $settings[_FUNCTION] = [
-                plug(_RUN_APP),
-                $psId,
-            ];
-        }
-        if (!isset($settings[_FUNCTION])) {
+        } elseif (!is_array($settings)) {
             return !trigger_error(
-                'Not seeting _FUNCTION. '.
-                print_r(func_get_args(), true)
+                'Set Action::function failed. ['.$settings.']'
             );
         }
         $settings = new HashMap(

@@ -80,7 +80,11 @@ class ActionMapping extends HashMap
     public function __construct(&$mapping, $mappings, $name)
     {
         $this->_mappings = $mappings;
-        $this->func = $mapping[_FUNCTION];
+        if (isset($mapping[_FUNCTION])) {
+            $this->func = $mapping[_FUNCTION];
+        } else {
+            $this->func = $name;
+        }
         if (isset($mapping[_FORM])) {
             $this->form = $mapping[_FORM];
         } else {
