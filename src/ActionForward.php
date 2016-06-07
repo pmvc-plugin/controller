@@ -265,7 +265,10 @@ class ActionForward extends HashMap
         $view->setThemeFolder(
             getOption(_TEMPLATE_DIR)
         );
-        $view->setThemePath($this->getPath());
+        $path = $this->getPath();
+        if ($path) {
+            $view->setThemePath($path);
+        }
         if (isset($view['headers'])) {
             $this->setHeader($view['headers']);
         }

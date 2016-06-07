@@ -143,7 +143,7 @@ class MappingBuilder
     public function getForwardDefault()
     {
         return [
-            _PATH   => '_DEFAULT_',
+            _PATH   => null,
             _TYPE   => null,
             _HEADER => null,
             _ACTION => null,
