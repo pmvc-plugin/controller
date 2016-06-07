@@ -60,11 +60,11 @@ class ActionControllerTest extends PHPUnit_Framework_TestCase
         $error = $mvc->process($b);
         $this->assertEquals(
             $options[\PMVC\ERRORS][\PMVC\USER_ERRORS],
-            $error[0]->v['errors']
+            $error[0]['v']['errors']
         );
         $this->assertEquals(
             $options[\PMVC\ERRORS][\PMVC\USER_LAST_ERROR],
-            $error[0]->v['lastError']
+            $error[0]['v']['lastError']
         );
     }
 }

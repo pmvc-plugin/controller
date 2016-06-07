@@ -21,6 +21,7 @@ class FakeView extends PlugIn
 
     public function process()
     {
-        return $this;
+        $this['v'] = $this->v;
+        return $this['this'];
     }
 }
