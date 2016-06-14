@@ -112,8 +112,8 @@ class MappingBuilder
         return [
             _FUNCTION => null,
             _FORM     => null,
-            _VALIDATE => true,
             _SCOPE    => 'request',
+            _VALIDATE => true,
         ];
     }
 
@@ -143,10 +143,10 @@ class MappingBuilder
     public function getForwardDefault()
     {
         return [
+            _ACTION => null,
+            _HEADER => null,
             _PATH   => null,
             _TYPE   => null,
-            _HEADER => null,
-            _ACTION => null,
         ];
     }
 }

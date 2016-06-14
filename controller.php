@@ -18,8 +18,6 @@
 namespace PMVC;
 
 l(__DIR__.'/src/Constants.php');
-l(__DIR__.'/src/namespace.constants.php');
-l(__DIR__.'/src/namespace.events.php');
 l(__DIR__.'/src/util_mvc.php');
 l(__DIR__.'/src/Action.php');
 l(__DIR__.'/src/ActionForm.php');

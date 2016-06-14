@@ -23,28 +23,47 @@
 /**
  * MVC.
  */
-define('_FORM', '_form_'); //action
-define('_VALIDATE', '_validate_'); //action
-define('_SCOPE', '_scope_'); //action
-define('_TYPE', '_type_');
-define('_FORWARD', '_forward_');
-define('_PATH', '_path_');
-define('_FUNCTION', '_function_');
-define('_OPTION', '_option_');
-define('_INIT_BUILDER', '_init_builder_');
+namespace {
+    define('_FORWARD', '_forward_');
+    define('_INIT_BUILDER', '_init_builder_');
 
-/* mapping-forward */
-define('_ACTION', '_action_');
-define('_HEADER', '_header_');
+    /* Action */
+    define('_FUNCTION', '_function_');
+    define('_FORM', '_form_');
+    define('_SCOPE', '_scope_');
+    define('_VALIDATE', '_validate_');
 
-/* Options constant(s) */
-define('_ROUTER', '_router_');
-define('_TEMPLATE_DIR', '_template_dir_');
+    /* Forward */
+    define('_ACTION', '_action_');
+    define('_HEADER', '_header_');
+    define('_PATH', '_path_');
+    define('_TYPE', '_type_');
 
-/* Run */
-define('_DEFAULT_APP', '_default_app_');
-define('_DEFAULT_FORM', '_default_form_');
-define('_RUN_APP', '_run_app_');
-define('_RUN_APPS', '_run_apps_');
-define('_RUN_ACTION', '_run_action_');
-define('_RUN_FORM', '_run_form_');
+    /* Options */
+    define('_ROUTER', '_router_');
+    define('_TEMPLATE_DIR', '_template_dir_');
+    define('_DEFAULT_APP', '_default_app_');
+    define('_DEFAULT_FORM', '_default_form_');
+
+    /* Run */
+    define('_RUN_APP', '_run_app_');
+    define('_RUN_APPS', '_run_apps_');
+    define('_RUN_ACTION', '_run_action_');
+    define('_RUN_FORM', '_run_form_');
+}
+
+namespace PMVC {
+    const ACTION_FORMS = '__action_forms__';
+    const ACTION_MAPPINGS = '__action_mappings__';
+    const ACTION_FORWARDS = '__action_forwards__';
+}
+
+namespace PMVC\Event {
+    const MAP_REQUEST = 'MapRequest';
+    const B4_PROCESS_ACTION = 'B4ProcessAction';
+    const B4_PROCESS_ERROR = 'B4ProcessError';
+    const B4_PROCESS_MAPPING = 'B4ProcessMapping';
+    const B4_PROCESS_VIEW = 'B4ProcessView';
+    const FINISH = 'Finish';
+    const SET_CONFIG = 'SetConfig';
+}
