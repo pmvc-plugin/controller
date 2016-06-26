@@ -116,6 +116,14 @@ class ActionMappings
     public function findForm($name)
     {
         $form = &$this->_mappings->{ACTION_FORMS}[$name];
+
+        if (exists(_RUN_APP, 'plugin')) {
+            $func = plug(_RUN_APP)->isCallable($name);
+            if ($func) {
+                $form[_CLASS] = $func;
+            }
+        }
+
         if (is_callable($form[_CLASS])) {
             $actionForm = call_user_func($form[_CLASS]);
         } else {
