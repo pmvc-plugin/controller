@@ -56,6 +56,12 @@ class controller extends \PMVC\PlugIn
      * @var HttpRequestServlet
      */
     private $_request;
+    /**
+     * Is finish. 
+     *
+     * @var bool 
+     */
+    private $_isFinish=false;
 
     /**
      * ActionController construct with the options.
@@ -271,6 +277,11 @@ class controller extends \PMVC\PlugIn
         return $results;
     }
 
+    public function __destruct()
+    {
+        $this->_finish();
+    }
+
     /**
      * Execute mapping.
      *
@@ -450,6 +461,9 @@ class controller extends \PMVC\PlugIn
      */
     private function _finish()
     {
+        if ($this->_isFinish) {
+            return null;
+        }
         callPlugin(
             'dispatcher',
             'notify',
@@ -462,6 +476,7 @@ class controller extends \PMVC\PlugIn
         if ($errorForward) {
             $this->processForward($errorForward);
         }
+        $this->_isFinish = true;
     }
 
     /**
