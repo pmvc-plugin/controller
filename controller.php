@@ -57,11 +57,11 @@ class controller extends \PMVC\PlugIn
      */
     private $_request;
     /**
-     * Is finish. 
+     * Is finish.
      *
-     * @var bool 
+     * @var bool
      */
-    private $_isFinish=false;
+    private $_isFinish = false;
 
     /**
      * ActionController construct with the options.
@@ -462,7 +462,7 @@ class controller extends \PMVC\PlugIn
     private function _finish()
     {
         if ($this->_isFinish) {
-            return null;
+            return;
         }
         callPlugin(
             'dispatcher',
