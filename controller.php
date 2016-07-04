@@ -190,7 +190,7 @@ class controller extends \PMVC\PlugIn
             } else {
                 unset($appPlugin[_INIT_BUILDER]);
 
-                return $this->addMapping($builder());
+                return $this->addMapping($builder);
             }
         }
     }
@@ -260,7 +260,7 @@ class controller extends \PMVC\PlugIn
             ]
         );
         if (!is_null($builder)) {
-            $this->addMapping($builder());
+            $this->addMapping($builder);
         }
         $forward = (object) [
             'action' => $this->getAppAction(),

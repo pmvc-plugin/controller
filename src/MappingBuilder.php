@@ -29,27 +29,20 @@ namespace PMVC;
  *
  * @link https://packagist.org/packages/pmvc/pmvc
  */
-class MappingBuilder
+class MappingBuilder extends HashMap
 {
     /**
-     * Action Mapping.
+     * Get Initial State.
      *
-     * @var array
+     * @return array
      */
-    private $_aaMap = [
-        ACTION_FORMS    => [],
-        ACTION_MAPPINGS => [],
-        ACTION_FORWARDS => [],
-    ];
-
-    /**
-     * Get mappings.
-     *
-     * @return ActionMappings
-     */
-    public function __invoke()
+    protected function getInitialState()
     {
-        return (object) $this->_aaMap;
+        return [
+            ACTION_FORMS    => [],
+            ACTION_MAPPINGS => [],
+            ACTION_FORWARDS => [],
+        ];
     }
 
     /**
@@ -62,11 +55,11 @@ class MappingBuilder
      */
     public function addForm($psFormId, $settings = [])
     {
-        if (!isset($this->_aaMap[ACTION_FORMS][$psFormId])) {
+        if (!isset($this[ACTION_FORMS][$psFormId])) {
             if (!isset($settings[_CLASS])) {
                 $settings[_CLASS] = $psFormId;
             }
-            $this->_aaMap[ACTION_FORMS][$psFormId] = $settings;
+            $this[ACTION_FORMS][$psFormId] = $settings;
         }
     }
 
@@ -97,7 +90,7 @@ class MappingBuilder
         if (!is_null($settings[_FORM])) {
             $this->addForm($settings[_FORM]);
         }
-        $this->_aaMap[ACTION_MAPPINGS][$psId] = $settings;
+        $this[ACTION_MAPPINGS][$psId] = $settings;
 
         return $settings;
     }
@@ -130,7 +123,7 @@ class MappingBuilder
         $settings = array_replace(
             $this->getForwardDefault(), $settings
         );
-        $this->_aaMap[ACTION_FORWARDS][$psId] = $settings;
+        $this[ACTION_FORWARDS][$psId] = $settings;
 
         return true;
     }
