@@ -47,7 +47,7 @@ class ActionMappings
      */
     public function set($mappings)
     {
-        $this->_mappings = (object)get($mappings);
+        $this->_mappings = (object) get($mappings);
 
         return !empty($this->_mappings);
     }
@@ -64,7 +64,7 @@ class ActionMappings
         if (empty($this->_mappings)) {
             return $this->set($mappings);
         }
-        $mappings = (object)get($mappings);
+        $mappings = (object) get($mappings);
         $this->addByKey($mappings, ACTION_MAPPINGS);
         $this->addByKey($mappings, ACTION_FORMS);
         $this->addByKey($mappings, ACTION_FORWARDS);
