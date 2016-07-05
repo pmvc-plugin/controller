@@ -185,13 +185,9 @@ class controller extends \PMVC\PlugIn
             );
             addPlugInFolders([$parent.'/'.$app.'/plugins']);
             $builder = $appPlugin[_INIT_BUILDER];
-            if (empty($builder)) {
-                return !trigger_error('No builder found', E_USER_WARNING);
-            } else {
-                unset($appPlugin[_INIT_BUILDER]);
+            unset($appPlugin[_INIT_BUILDER]);
 
-                return $this->addMapping($builder);
-            }
+            return $this->addMapping($builder);
         }
     }
 
