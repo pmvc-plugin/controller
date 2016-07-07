@@ -235,13 +235,13 @@ class ActionForward extends HashMap
      */
     private function _processHeader()
     {
-        $headers = $this->getHeader();
+        $headers = &$this->getHeader();
 
         return callPlugin(
             getOption(_ROUTER),
             'processHeader',
             [
-                $this->getHeader(),
+                $headers,
             ]
         );
     }
@@ -261,7 +261,6 @@ class ActionForward extends HashMap
             ]
         );
         $view = $this->_view;
-        $view['forward'] = $this;
         $view->setThemeFolder(
             getOption(_TEMPLATE_DIR)
         );

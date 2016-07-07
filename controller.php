@@ -56,12 +56,6 @@ class controller extends \PMVC\PlugIn
      * @var HttpRequestServlet
      */
     private $_request;
-    /**
-     * Is finish.
-     *
-     * @var bool
-     */
-    private $_isFinish = false;
 
     /**
      * ActionController construct with the options.
@@ -82,12 +76,12 @@ class controller extends \PMVC\PlugIn
      */
     public function offsetSet($k, $v = null)
     {
-        $this->silent($k, $v);
+        option('set', $k, $v);
         callPlugin(
             'dispatcher',
             'set',
             [
-                'setOption',
+                Event\SET_CONFIG,
                 $k,
             ]
         );
@@ -103,19 +97,6 @@ class controller extends \PMVC\PlugIn
     public function &offsetGet($k)
     {
         return option('get', $k);
-    }
-
-    /**
-     * Silent store (Will not trigger Event).
-     *
-     * @param mixed $k key
-     * @param mixed $v value
-     *
-     * @return void
-     */
-    public function silent($k, $v = null)
-    {
-        option('set', $k, $v);
     }
 
     /**
@@ -457,9 +438,16 @@ class controller extends \PMVC\PlugIn
      */
     private function _finish()
     {
-        if ($this->_isFinish) {
+        if ($this[Event\FINISH]) {
             return;
         }
+        /*Only parse user error, not contain system and app errors*/
+        $errorForward = $this->getErrorForward();
+        if ($errorForward) {
+            $this->processForward($errorForward);
+        }
+        /*Need located after processForward to avoid json view trigger twice*/
+        option('set', Event\FINISH, true);
         callPlugin(
             'dispatcher',
             'notify',
@@ -468,11 +456,6 @@ class controller extends \PMVC\PlugIn
                 true,
             ]
         );
-        $errorForward = $this->getErrorForward();
-        if ($errorForward) {
-            $this->processForward($errorForward);
-        }
-        $this->_isFinish = true;
     }
 
     /**
