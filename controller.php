@@ -418,17 +418,17 @@ class controller extends \PMVC\PlugIn
      */
     public function processForward($actionForward)
     {
+        if (!is_callable([$actionForward, 'go'])) {
+            return $actionForward;
+        }
         $this[_FORWARD] = $actionForward;
         if (callPlugin('dispatcher', 'stop')) {
             unset($actionForward->action);
 
             return;
         }
-        if (is_callable([$actionForward, 'go'])) {
-            return $actionForward->go();
-        } else {
-            return $actionForward;
-        }
+
+        return $actionForward->go();
     }
 
     /**
