@@ -447,7 +447,6 @@ class controller extends \PMVC\PlugIn
             $this->processForward($errorForward);
         }
         /*Need located after processForward to avoid json view trigger twice*/
-        option('set', Event\FINISH, true);
         callPlugin(
             'dispatcher',
             'notify',
@@ -456,6 +455,7 @@ class controller extends \PMVC\PlugIn
                 true,
             ]
         );
+        option('set', Event\FINISH, true);
     }
 
     /**
