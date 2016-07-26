@@ -143,17 +143,16 @@ class controller extends \PMVC\PlugIn
             );
         }
         if (!$path) {
-            return !trigger_error(
-                'No App found for '.print_r(
-                    [
-                    'Parent' => $parents,
-                    'App'    => [$this->getApp(), $app],
-                    'Index'  => $indexFile,
-                    'Alias'  => $alias,
-                    ],
-                    true
-                ), E_USER_WARNING
-            );
+            return !trigger_error( print_r(
+            [
+                'Error'  => 'No app found, Please check following debug message.',
+                'Parent' => $parents,
+                'App'    => [$this->getApp(), $app],
+                'Index'  => $indexFile,
+                'Alias'  => $alias,
+            ],
+            true
+            ), E_USER_WARNING);
         } else {
             $parent = realpath(dirname(dirname($path)));
             $this[_RUN_APPS] = $parent;
