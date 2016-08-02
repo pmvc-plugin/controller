@@ -44,7 +44,7 @@ ${_INIT_CONFIG}[_CLASS] = __NAMESPACE__.'\Controller';
  *
  * @link https://packagist.org/packages/pmvc/pmvc
  */
-class Controller extends \PMVC\PlugIn
+class controller extends \PMVC\PlugIn
 {
     /**
      * Mapping.
@@ -159,7 +159,7 @@ class Controller extends \PMVC\PlugIn
                 $app,
                 $indexFile,
                 $alias
-            ); 
+            );
             if (!$path) {
                 throw new DomainException('Not set default app correct.');
             }
