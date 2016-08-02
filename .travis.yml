@@ -12,4 +12,4 @@ before_script:
  
 script:
   - phpunit
-  - vendor/bin/phpcs src/ 
+  - vendor/bin/phpcs src/ ./controller.php

@@ -60,12 +60,34 @@ class ActionControllerPlugAppTest extends PHPUnit_Framework_TestCase
         $mvc->setApp('testApp');
         $mvc->plugApp([$this->resources.'apps1']);
         $this->assertEquals(
-            realpath($this->resources).'/'.'FakeView.php',
+            realpath($this->resources).'/FakeView.php',
             \PMVC\transparent('FakeView.php')
         );
         $this->assertEquals(
-            realpath($this->resources).'/'.'apps1/testApp/index.php',
+            realpath($this->resources).'/apps1/testApp/index.php',
             \PMVC\transparent('index.php')
         );
+    }
+
+    /**
+     * @expectedException PHPUnit_Framework_Error
+     */
+    public function testSetAppFail()
+    {
+        $mvc = plug('controller');
+        $mvc->setApp('xxx');
+        $mvc->plugApp();
+    }
+
+    /**
+     * @expectedException DomainException 
+     */
+    public function testSetDefaultAppFail()
+    {
+        $mvc = plug('controller');
+           
+        $mvc->setApp('xxx');
+        $mvc[_DEFAULT_APP] = '';
+        @$mvc->plugApp();
     }
 }

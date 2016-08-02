@@ -17,6 +17,8 @@
  */
 namespace PMVC;
 
+use DomainException;
+
 l(__DIR__.'/src/Constants.php');
 l(__DIR__.'/src/util_mvc.php');
 l(__DIR__.'/src/Action.php');
@@ -28,7 +30,7 @@ l(__DIR__.'/src/MappingBuilder.php');
 l(__DIR__.'/src/Request.php');
 l(__DIR__.'/src/RouterInterface.php');
 setAppFolders([__DIR__.'/../../pmvc-app']);
-${_INIT_CONFIG}[_CLASS] = __NAMESPACE__.'\controller';
+${_INIT_CONFIG}[_CLASS] = __NAMESPACE__.'\Controller';
 
 /**
  * PMVC Action.
@@ -42,7 +44,7 @@ ${_INIT_CONFIG}[_CLASS] = __NAMESPACE__.'\controller';
  *
  * @link https://packagist.org/packages/pmvc/pmvc
  */
-class controller extends \PMVC\PlugIn
+class Controller extends \PMVC\PlugIn
 {
     /**
      * Mapping.
@@ -108,8 +110,11 @@ class controller extends \PMVC\PlugIn
      *
      * @return mixed
      */
-    public function plugApp(array $folders = [], array $appAlias = [], $indexFile = 'index')
-    {
+    public function plugApp(
+        array $folders = [],
+        array $appAlias = [],
+        $indexFile = 'index'
+    ) {
         if (exists(_RUN_APP, 'plugin')) {
             return !trigger_error('APP was pluged.', E_USER_WARNING);
         }
@@ -134,41 +139,45 @@ class controller extends \PMVC\PlugIn
             $alias
         );
         if (!$path) {
+            http_response_code(404);
+            trigger_error(
+                print_r(
+                    [
+                     'Error'  => 'No app found, '.
+                                 'Please check following debug message.',
+                     'Parent' => $parents,
+                     'App'    => $app,
+                     'Index'  => $indexFile,
+                     'Alias'  => $alias ?: '',
+                     ],
+                    true
+                ), E_USER_WARNING
+            );
             $app = $this[_DEFAULT_APP];
             $path = $this->_getAppFile(
                 $parents,
                 $app,
                 $indexFile,
                 $alias
-            );
-        }
-        if (!$path) {
-            return !trigger_error( print_r(
-            [
-                'Error'  => 'No app found, Please check following debug message.',
-                'Parent' => $parents,
-                'App'    => [$this->getApp(), $app],
-                'Index'  => $indexFile,
-                'Alias'  => $alias,
-            ],
-            true
-            ), E_USER_WARNING);
-        } else {
-            $parent = realpath(dirname(dirname($path)));
-            $this[_RUN_APPS] = $parent;
+            ); 
+            if (!$path) {
+                throw new DomainException('Not set default app correct.');
+            }
             $this->setApp($app);
-            $appPlugin = plug(
-                _RUN_APP,
-                [
-                    _PLUGIN_FILE => $path,
-                ]
-            );
-            addPlugInFolders([$parent.'/'.$app.'/plugins']);
-            $builder = $appPlugin[_INIT_BUILDER];
-            unset($appPlugin[_INIT_BUILDER]);
-
-            return $this->addMapping($builder);
         }
+        $parent = realpath(dirname(dirname($path)));
+        $this[_RUN_APPS] = $parent;
+        $appPlugin = plug(
+            _RUN_APP,
+            [
+                _PLUGIN_FILE => $path,
+            ]
+        );
+        addPlugInFolders([$parent.'/'.$app.'/plugins']);
+        $builder = $appPlugin[_INIT_BUILDER];
+        unset($appPlugin[_INIT_BUILDER]);
+
+        return $this->addMapping($builder);
     }
 
     /**
@@ -253,6 +262,11 @@ class controller extends \PMVC\PlugIn
         return $results;
     }
 
+    /**
+     * Destruct.
+     *
+     * @return void
+     */
     public function __destruct()
     {
         $this->_finish();
