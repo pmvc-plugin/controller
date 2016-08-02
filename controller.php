@@ -30,7 +30,7 @@ l(__DIR__.'/src/MappingBuilder.php');
 l(__DIR__.'/src/Request.php');
 l(__DIR__.'/src/RouterInterface.php');
 setAppFolders([__DIR__.'/../../pmvc-app']);
-${_INIT_CONFIG}[_CLASS] = __NAMESPACE__.'\Controller';
+${_INIT_CONFIG}[_CLASS] = __NAMESPACE__.'\controller';
 
 /**
  * PMVC Action.
@@ -44,7 +44,9 @@ ${_INIT_CONFIG}[_CLASS] = __NAMESPACE__.'\Controller';
  *
  * @link https://packagist.org/packages/pmvc/pmvc
  */
-class Controller extends \PMVC\PlugIn
+// @codingStandardsIgnoreStart
+class controller extends \PMVC\PlugIn
+// @codingStandardsIgnoreEnd
 {
     /**
      * Mapping.
@@ -159,7 +161,7 @@ class Controller extends \PMVC\PlugIn
                 $app,
                 $indexFile,
                 $alias
-            ); 
+            );
             if (!$path) {
                 throw new DomainException('Not set default app correct.');
             }

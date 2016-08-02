@@ -80,12 +80,12 @@ class ActionControllerPlugAppTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException DomainException 
+     * @expectedException DomainException
      */
     public function testSetDefaultAppFail()
     {
         $mvc = plug('controller');
-           
+
         $mvc->setApp('xxx');
         $mvc[_DEFAULT_APP] = '';
         @$mvc->plugApp();
