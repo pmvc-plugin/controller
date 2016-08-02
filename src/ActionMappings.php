@@ -45,9 +45,9 @@ class ActionMappings
      *
      * @return bool
      */
-    public function set($mappings)
+    public function set(MappingBuilder $mappings)
     {
-        $this->_mappings = (object) get($mappings);
+        $this->_mappings = $mappings;
 
         return !empty($this->_mappings);
     }
@@ -59,12 +59,11 @@ class ActionMappings
      *
      * @return void
      */
-    public function add($mappings)
+    public function add(MappingBuilder $mappings)
     {
         if (empty($this->_mappings)) {
             return $this->set($mappings);
         }
-        $mappings = (object) get($mappings);
         $this->addByKey($mappings, ACTION_MAPPINGS);
         $this->addByKey($mappings, ACTION_FORMS);
         $this->addByKey($mappings, ACTION_FORWARDS);
@@ -80,16 +79,14 @@ class ActionMappings
      *
      * @return array keys
      */
-    public function addByKey($mappings, $key)
+    public function addByKey(MappingBuilder $mappings, $key)
     {
-        if (!empty($mappings->{$key})) {
-            $this->_mappings->{$key} = array_replace(
-                $this->_mappings->{$key},
-                $mappings->{$key}
-            );
-        }
+        $this->_mappings[$key] = array_replace(
+            $this->_mappings[$key],
+            $mappings[$key]
+        );
 
-        return $this->_mappings->{$key};
+        return $this->_mappings[$key];
     }
 
     /**
@@ -101,7 +98,7 @@ class ActionMappings
      */
     public function findMapping($name)
     {
-        $mapping = &$this->_mappings->{ACTION_MAPPINGS}[$name];
+        $mapping = value($this->_mappings, [ACTION_MAPPINGS, $name]);
         $mappingObj = new ActionMapping($mapping, $this, $name);
 
         return $mappingObj;
@@ -116,9 +113,9 @@ class ActionMappings
      */
     public function findForm($name)
     {
-        $form = &$this->_mappings->{ACTION_FORMS}[$name];
+        $form = value($this->_mappings, [ACTION_FORMS, $name]);
 
-        if (exists(_RUN_APP, 'plugin')) {
+        if (!$form && exists(_RUN_APP, 'plugin')) {
             $func = plug(_RUN_APP)->isCallable($name);
             if ($func) {
                 $form[_CLASS] = $func;
@@ -149,7 +146,7 @@ class ActionMappings
      */
     public function findForward($name)
     {
-        $forward = get($this->_mappings->{ACTION_FORWARDS}, $name);
+        $forward = value($this->_mappings, [ACTION_FORWARDS, $name]);
         if ($forward) {
             return new ActionForward($forward);
         } else {
@@ -169,7 +166,7 @@ class ActionMappings
      */
     public function forwardExists($name)
     {
-        return isset($this->_mappings->{ACTION_FORWARDS}[$name]);
+        return isset($this->_mappings[ACTION_FORWARDS][$name]);
     }
 
     /**
@@ -181,6 +178,6 @@ class ActionMappings
      */
     public function mappingExists($name)
     {
-        return isset($this->_mappings->{ACTION_MAPPINGS}[$name]);
+        return isset($this->_mappings[ACTION_MAPPINGS][$name]);
     }
 }

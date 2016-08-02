@@ -179,7 +179,11 @@ class controller extends \PMVC\PlugIn
         $builder = $appPlugin[_INIT_BUILDER];
         unset($appPlugin[_INIT_BUILDER]);
 
-        return $this->addMapping($builder);
+        if ($builder) {
+            return $this->addMapping($builder);
+        } else {
+            return true;
+        }
     }
 
     /**
@@ -203,25 +207,13 @@ class controller extends \PMVC\PlugIn
     }
 
     /**
-     * Reset mapping.
-     *
-     * @param mixed $mappings mappings
-     *
-     * @return bool
-     */
-    public function setMapping($mappings)
-    {
-        return $this->_mappings->set($mappings);
-    }
-
-    /**
      * Add mapping.
      *
      * @param mixed $mappings mappings
      *
      * @return bool
      */
-    public function addMapping($mappings)
+    public function addMapping(MappingBuilder $mappings)
     {
         return $this->_mappings->add($mappings);
     }
