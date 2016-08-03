@@ -115,8 +115,11 @@ class ActionMappings
     {
         $form = value($this->_mappings, [ACTION_FORMS, $name]);
 
-        if (!$form && exists(_RUN_APP, 'plugin')) {
-            $func = plug(_RUN_APP)->isCallable($name);
+        if (!class_exists($form[_CLASS])
+            && !is_callable($form[_CLASS])
+            && exists(_RUN_APP, 'plugin')
+        ) {
+            $func = plug(_RUN_APP)->isCallable($form[_CLASS]);
             if ($func) {
                 $form[_CLASS] = $func;
             }
