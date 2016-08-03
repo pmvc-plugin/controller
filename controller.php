@@ -176,11 +176,13 @@ class controller extends \PMVC\PlugIn
             ]
         );
         addPlugInFolders([$parent.'/'.$app.'/plugins']);
-        $builder = $appPlugin[_INIT_BUILDER];
-        unset($appPlugin[_INIT_BUILDER]);
+        if (isset($appPlugin[_INIT_BUILDER])) {
+            $isBuild = $this->addMapping(
+                $appPlugin[_INIT_BUILDER]
+            );
+            unset($appPlugin[_INIT_BUILDER]);
 
-        if ($builder) {
-            return $this->addMapping($builder);
+            return $isBuild;
         } else {
             return true;
         }
