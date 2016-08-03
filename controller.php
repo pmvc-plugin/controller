@@ -141,7 +141,6 @@ class controller extends \PMVC\PlugIn
             $alias
         );
         if (!$path) {
-            http_response_code(404);
             trigger_error(
                 print_r(
                     [
@@ -155,6 +154,7 @@ class controller extends \PMVC\PlugIn
                     true
                 ), E_USER_WARNING
             );
+            http_response_code(404);
             $app = $this[_DEFAULT_APP];
             $path = $this->_getAppFile(
                 $parents,
