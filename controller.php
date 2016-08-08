@@ -399,6 +399,22 @@ class controller extends \PMVC\PlugIn
                 true,
             ]
         );
+
+        return call_user_func_array(
+            $this->getActionCall($actionMapping),
+            [$actionMapping, $actionForm]
+        );
+    }
+
+    /**
+     * Get action call.
+     *
+     * @param ActionMapping $actionMapping actionMapping
+     *
+     * @return callback
+     */
+    public function getActionCall(ActionMapping $actionMapping)
+    {
         $func = $actionMapping->func;
         if (!is_callable($func)) {
             if (exists(_RUN_APP, 'plugin')) {
@@ -412,10 +428,7 @@ class controller extends \PMVC\PlugIn
             }
         }
 
-        return call_user_func_array(
-            $func,
-            [$actionMapping, $actionForm]
-        );
+        return $func;
     }
 
     /**

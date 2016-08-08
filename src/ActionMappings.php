@@ -64,9 +64,9 @@ class ActionMappings
         if (empty($this->_mappings)) {
             return $this->set($mappings);
         }
-        $this->addByKey($mappings, ACTION_MAPPINGS);
-        $this->addByKey($mappings, ACTION_FORMS);
-        $this->addByKey($mappings, ACTION_FORWARDS);
+        $this->addByKey(ACTION_MAPPINGS, $mappings);
+        $this->addByKey(ACTION_FORMS, $mappings);
+        $this->addByKey(ACTION_FORWARDS, $mappings);
 
         return !empty($this->_mappings);
     }
@@ -74,17 +74,19 @@ class ActionMappings
     /**
      * Add mappings by key.
      *
-     * @param array  $mappings mappings
      * @param string $key      key
+     * @param array  $mappings mappings
      *
      * @return array keys
      */
-    public function addByKey(MappingBuilder $mappings, $key)
+    public function addByKey($key, MappingBuilder $mappings = null)
     {
-        $this->_mappings[$key] = array_replace(
-            $this->_mappings[$key],
-            $mappings[$key]
-        );
+        if (!is_null($mappings)) {
+            $this->_mappings[$key] = array_replace(
+                $this->_mappings[$key],
+                $mappings[$key]
+            );
+        }
 
         return $this->_mappings[$key];
     }
