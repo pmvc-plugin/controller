@@ -11,11 +11,6 @@ class FakeView extends PlugIn
         set($this->v, $k, $v);
     }
 
-    public function append($k, $v = null)
-    {
-        set($this->v, $k, $v);
-    }
-
     public function setThemeFolder($v)
     {
     }
