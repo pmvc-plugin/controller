@@ -73,9 +73,10 @@ class ActionForward extends HashMap
      */
     public function __construct($forward)
     {
+        parent::__construct();
         $this->setPath($forward[_PATH]);
-        $this->_setType($forward[_TYPE]);
         $this->setHeader($forward[_HEADER]);
+        $this->_setType($forward[_TYPE]);
         $this->action = $forward[_ACTION];
     }
 
