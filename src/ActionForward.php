@@ -196,6 +196,22 @@ class ActionForward extends HashMap
     }
 
     /**
+     * Append.
+     *
+     * @param array $arr merge array
+     *
+     * @return array
+     */
+    public function append(array $arr)
+    {
+        if ($this->_view) {
+            return $this->_view->appendView($arr);
+        } else {
+            return parent::append($arr);
+        }
+    }
+
+    /**
      * Set ActionFored key and value.
      *
      * @param string $k key
