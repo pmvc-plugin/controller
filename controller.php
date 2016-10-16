@@ -279,7 +279,7 @@ class controller extends \PMVC\PlugIn
     {
         if (!$this->_mappings->mappingExists($index)) {
             return !trigger_error(
-                'No mappings found for index: '.$index,
+                'No mappings found for action: ['.$index.']',
                 E_USER_WARNING
             );
         }
