@@ -45,8 +45,7 @@ ${_INIT_CONFIG}[_CLASS] = __NAMESPACE__.'\controller';
  * @link https://packagist.org/packages/pmvc/pmvc
  */
 // @codingStandardsIgnoreStart
-class controller extends \PMVC\PlugIn
-// @codingStandardsIgnoreEnd
+class controller extends \PMVC\PlugIn // @codingStandardsIgnoreEnd
 {
     /**
      * Mapping.
