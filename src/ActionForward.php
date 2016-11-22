@@ -317,8 +317,7 @@ class ActionForward extends HashMap
         case 'action':
         default:
             if (exists(_RUN_APP, 'plugin')) {
-                $run = plug(_RUN_APP);
-                \PMVC\set($run, get($this));
+                plug(_RUN_APP)->append(get($this));
             }
 
             return $this;
