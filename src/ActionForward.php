@@ -239,7 +239,7 @@ class ActionForward extends HashMap
     public function get($k = null, $default = null)
     {
         if ($this->_view) {
-            return $this->_view->set($k, $default);
+            return $this->_view->get($k, $default);
         } else {
             return get($this, $k, $default);
         }
