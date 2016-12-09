@@ -16,6 +16,14 @@ class FakeView extends PlugIn
         return get($this->v, $k, $default);
     }
 
+    public function appendView(array $arr)
+    {
+        $this->v = array_merge_recursive(
+            $this->v,
+            $arr
+        );
+    }
+
     public function setThemeFolder($v)
     {
     }
