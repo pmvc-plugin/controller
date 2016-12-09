@@ -23,6 +23,7 @@
 /**
  * MVC.
  */
+
 namespace {
     define('_FORWARD', '_forward_');
     define('_INIT_BUILDER', '_init_builder_');
