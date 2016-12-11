@@ -46,7 +46,7 @@ ${_INIT_CONFIG}[_CLASS] = __NAMESPACE__.'\controller';
  * @link https://packagist.org/packages/pmvc/pmvc
  */
 // @codingStandardsIgnoreStart
-class controller extends \PMVC\PlugIn // @codingStandardsIgnoreEnd
+class controller extends PlugIn // @codingStandardsIgnoreEnd
 {
     /**
      * Mapping.
@@ -130,7 +130,7 @@ class controller extends \PMVC\PlugIn // @codingStandardsIgnoreEnd
         if (empty($folders)) {
             $folders = [$this[_RUN_APPS]];
         }
-        $folders = \PMVC\addAppFolders($folders, $appAlias);
+        $folders = addAppFolders($folders, $appAlias);
         $alias = $folders['alias'];
         $parents = $folders['folders'];
         $app = $this->getApp();
@@ -154,7 +154,7 @@ class controller extends \PMVC\PlugIn // @codingStandardsIgnoreEnd
                     true
                 ), E_USER_WARNING
             );
-            http_response_code(404);
+            option('set', 'httpResponseCode', 404);
             $app = $this[_DEFAULT_APP];
             $path = $this->_getAppFile(
                 $parents,
@@ -186,38 +186,6 @@ class controller extends \PMVC\PlugIn // @codingStandardsIgnoreEnd
         } else {
             return true;
         }
-    }
-
-    /**
-     * Plug App.
-     *
-     * @param string $parents   Multiple app folder
-     * @param array  $app       app name
-     * @param string $indexFile index.php
-     * @param string $alias     alias
-     *
-     * @return mixed
-     */
-    private function _getAppFile($parents, $app, $indexFile, $alias)
-    {
-        if (!empty($alias[$app])) {
-            $app = $alias[$app];
-        }
-        $file = $app.'/'.$indexFile.'.php';
-
-        return find($file, $parents);
-    }
-
-    /**
-     * Add mapping.
-     *
-     * @param mixed $mappings mappings
-     *
-     * @return bool
-     */
-    public function addMapping(MappingBuilder $mappings)
-    {
-        return $this->_mappings->add($mappings);
     }
 
     /**
@@ -256,16 +224,6 @@ class controller extends \PMVC\PlugIn // @codingStandardsIgnoreEnd
         $this->_finish();
 
         return $results;
-    }
-
-    /**
-     * Destruct.
-     *
-     * @return void
-     */
-    public function __destruct()
-    {
-        $this->_finish();
     }
 
     /**
@@ -401,34 +359,9 @@ class controller extends \PMVC\PlugIn // @codingStandardsIgnoreEnd
         );
 
         return call_user_func_array(
-            $this->getActionCall($actionMapping),
+            $this->_getActionFunc($actionMapping),
             [$actionMapping, $actionForm]
         );
-    }
-
-    /**
-     * Get action call.
-     *
-     * @param ActionMapping $actionMapping actionMapping
-     *
-     * @return callback
-     */
-    public function getActionCall(ActionMapping $actionMapping)
-    {
-        $func = $actionMapping->func;
-        if (!is_callable($func)) {
-            if (exists(_RUN_APP, 'plugin')) {
-                $func = [plug(_RUN_APP), $func];
-            } else {
-                return !trigger_error(
-                    'parse action error, function not exists. '.
-                    print_r($func, true),
-                    E_USER_WARNING
-                );
-            }
-        }
-
-        return $func;
     }
 
     /**
@@ -478,6 +411,63 @@ class controller extends \PMVC\PlugIn // @codingStandardsIgnoreEnd
             ]
         );
         option('set', Event\FINISH, true);
+    }
+
+    /**
+     * Plug App.
+     *
+     * @param string $parents   Multiple app folder
+     * @param array  $app       app name
+     * @param string $indexFile index.php
+     * @param string $alias     alias
+     *
+     * @return mixed
+     */
+    private function _getAppFile($parents, $app, $indexFile, $alias)
+    {
+        if (!empty($alias[$app])) {
+            $app = $alias[$app];
+        }
+        $file = $app.'/'.$indexFile.'.php';
+
+        return find($file, $parents);
+    }
+
+    /**
+     * Add mapping.
+     *
+     * @param mixed $mappings mappings
+     *
+     * @return bool
+     */
+    public function addMapping(MappingBuilder $mappings)
+    {
+        return $this->_mappings->add($mappings);
+    }
+
+    /**
+     * Get action call.
+     *
+     * @param ActionMapping $actionMapping actionMapping
+     *
+     * @return callback
+     */
+    private function _getActionFunc(ActionMapping $actionMapping)
+    {
+        $func = $actionMapping->func;
+        if (!is_callable($func)) {
+            if (exists(_RUN_APP, 'plugin')) {
+                $func = [plug(_RUN_APP), $func];
+            } else {
+                return !trigger_error(
+                    'parse action error, function not exists. '.
+                    print_r($func, true),
+                    E_USER_WARNING
+                );
+            }
+        }
+
+        return $func;
     }
 
     /**
@@ -579,5 +569,15 @@ class controller extends \PMVC\PlugIn // @codingStandardsIgnoreEnd
     public function setAppAction($action)
     {
         return $this[_RUN_ACTION] = $action;
+    }
+
+    /**
+     * Destruct.
+     *
+     * @return void
+     */
+    public function __destruct()
+    {
+        $this->_finish();
     }
 }

@@ -23,7 +23,9 @@ class ActionControllerPlugAppTest extends PHPUnit_Framework_TestCase
         $mvc->setApp('testApp');
         $mvc->plugApp($folders);
         $store = folders(_RUN_APP);
-        $expected = array_reverse($folders);
+        $expected = array_reverse(array_map(function ($d) {
+            return realpath($d);
+        }, $folders));
         $this->assertEquals(
             $expected,
             $store['folders']
