@@ -11,6 +11,16 @@ PMVC Controller
    * <img src="https://raw.githubusercontent.com/pmvc/pmvc.github.io/master/flow5.png">
    * More information https://github.com/pmvc/pmvc
 
+## Explain flow
+controller -> plugapp -> process -> execute -> _processMapping -> _processForm -> _processValidate -> _processAction -> processForward -> _finish
+
+## Explain App Folder
+```
+- Site Folder (_RUN_APPS Parent, \PMVC\getAppsParent())
+-- Apps Folder (_RUN_APPS)
+--- App Folder (_RUN_APP)
+```
+
 ## Install with Composer
 ### 1. Download composer
    * mkdir test_folder
@@ -31,9 +41,3 @@ PMVC Controller
 #### 2.2 Or use composer command-line
    * php composer.phar require pmvc-plugin/controller
 
-## Explain App Folder
-```
-- Site Folder (_RUN_APPS Parent, \PMVC\getAppsParent())
--- Apps Folder (_RUN_APPS)
---- App Folder (_RUN_APP)
-```
