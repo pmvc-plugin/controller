@@ -141,6 +141,7 @@ class controller extends PlugIn // @codingStandardsIgnoreEnd
             $alias
         );
         if (!$path) {
+            option('set', 'httpResponseCode', 404);
             trigger_error(
                 print_r(
                     [
@@ -154,7 +155,6 @@ class controller extends PlugIn // @codingStandardsIgnoreEnd
                     true
                 ), E_USER_WARNING
             );
-            option('set', 'httpResponseCode', 404);
             $app = $this[_DEFAULT_APP];
             $path = $this->_getAppFile(
                 $parents,
