@@ -18,7 +18,9 @@ class ControllerTest extends PHPUnit_Framework_TestCase
              'index',
             ]
         );
-        $mvc = $this->getMock('\PMVC\controller', ['execute'], [[]]);
+        $mvc = $this->getMockBuilder('\PMVC\controller')
+            ->setMethods(['execute'])
+            ->getMock();
         $mvc->expects($this->exactly(2))
             ->method('execute')
             ->will(
@@ -103,11 +105,9 @@ class ControllerTest extends PHPUnit_Framework_TestCase
                 _TYPE => 'view',
             ]
         );
-        $jsonView = $this->getMock(
-            'FakeJsonView',
-            ['onFinish'],
-            [[]]
-        );
+        $jsonView = $this->getMockBuilder('FakeJsonView')
+            ->setMethods(['onFinish'])
+            ->getMock();
         $jsonView->expects($this->once())
             ->method('onFinish');
         \PMVC\replug('view', $jsonView);
