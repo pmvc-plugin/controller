@@ -189,6 +189,26 @@ class controller extends PlugIn // @codingStandardsIgnoreEnd
     }
 
     /**
+     * Plug App.
+     *
+     * @param string $parents   Multiple app folder
+     * @param array  $app       app name
+     * @param string $indexFile index.php
+     * @param string $alias     alias
+     *
+     * @return mixed
+     */
+    private function _getAppFile($parents, $app, $indexFile, $alias)
+    {
+        if (!empty($alias[$app])) {
+            $app = $alias[$app];
+        }
+        $file = $app.'/'.$indexFile.'.php';
+
+        return find($file, $parents);
+    }
+
+    /**
      * Process the request.
      *
      * @param MappingBuilder $builder Get mappings
@@ -365,25 +385,28 @@ class controller extends PlugIn // @codingStandardsIgnoreEnd
     }
 
     /**
-     * ActionForward.
+     * Get action call.
      *
-     * @param ActionForward $actionForward actionForward
+     * @param ActionMapping $actionMapping actionMapping
      *
-     * @return mixed
+     * @return callback
      */
-    public function processForward($actionForward)
+    private function _getActionFunc(ActionMapping $actionMapping)
     {
-        if (!is_callable([$actionForward, 'go'])) {
-            return $actionForward;
+        $func = $actionMapping->func;
+        if (!is_callable($func)) {
+            if (exists(_RUN_APP, 'plugin')) {
+                $func = [plug(_RUN_APP), $func];
+            } else {
+                return !trigger_error(
+                    'parse action error, function not exists. '.
+                    print_r($func, true),
+                    E_USER_WARNING
+                );
+            }
         }
-        $this[_FORWARD] = $actionForward;
-        if (callPlugin('dispatcher', 'stop')) {
-            unset($actionForward->action);
 
-            return;
-        }
-
-        return $actionForward->go();
+        return $func;
     }
 
     /**
@@ -416,23 +439,25 @@ class controller extends PlugIn // @codingStandardsIgnoreEnd
     }
 
     /**
-     * Plug App.
+     * ActionForward.
      *
-     * @param string $parents   Multiple app folder
-     * @param array  $app       app name
-     * @param string $indexFile index.php
-     * @param string $alias     alias
+     * @param ActionForward $actionForward actionForward
      *
      * @return mixed
      */
-    private function _getAppFile($parents, $app, $indexFile, $alias)
+    public function processForward($actionForward)
     {
-        if (!empty($alias[$app])) {
-            $app = $alias[$app];
+        if (!is_callable([$actionForward, 'go'])) {
+            return $actionForward;
         }
-        $file = $app.'/'.$indexFile.'.php';
+        $this[_FORWARD] = $actionForward;
+        if (callPlugin('dispatcher', 'stop')) {
+            unset($actionForward->action);
 
-        return find($file, $parents);
+            return;
+        }
+
+        return $actionForward->go();
     }
 
     /**
@@ -445,31 +470,6 @@ class controller extends PlugIn // @codingStandardsIgnoreEnd
     public function addMapping(MappingBuilder $mappings)
     {
         return $this->_mappings->add($mappings);
-    }
-
-    /**
-     * Get action call.
-     *
-     * @param ActionMapping $actionMapping actionMapping
-     *
-     * @return callback
-     */
-    private function _getActionFunc(ActionMapping $actionMapping)
-    {
-        $func = $actionMapping->func;
-        if (!is_callable($func)) {
-            if (exists(_RUN_APP, 'plugin')) {
-                $func = [plug(_RUN_APP), $func];
-            } else {
-                return !trigger_error(
-                    'parse action error, function not exists. '.
-                    print_r($func, true),
-                    E_USER_WARNING
-                );
-            }
-        }
-
-        return $func;
     }
 
     /**
