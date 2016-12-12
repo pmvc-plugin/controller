@@ -6,7 +6,7 @@ class ControllerTest extends PHPUnit_Framework_TestCase
 {
     public function setup()
     {
-        \PMVC\option('set',Event\FINISH, false);
+        \PMVC\option('set', Event\FINISH, false);
     }
 
     public function testProcess()
@@ -114,17 +114,16 @@ class ControllerTest extends PHPUnit_Framework_TestCase
         \PMVC\plug(
             'another', [
                 _CLASS => 'anotherPlugin',
-                'view' => $jsonView
+                'view' => $jsonView,
             ]
         );
         $mvc = \PMVC\plug('controller');
-        $mvc[\PMVC\ERRORS] = [ 
+        $mvc[\PMVC\ERRORS] = [
             \PMVC\USER_ERRORS     => 'erros',
             \PMVC\USER_LAST_ERROR => 'last',
         ];
         $result = $mvc->process($b);
     }
-
 }
 
 class FakeClass extends PMVC\Action
@@ -152,7 +151,7 @@ class anotherPlugin extends \PMVC\PlugIn
         $this['view']->process();
     }
 
-    function init()
+    public function init()
     {
         \PMVC\plug('dispatcher')
             ->attachAfter($this, Event\FINISH);
@@ -161,7 +160,6 @@ class anotherPlugin extends \PMVC\PlugIn
 
 class FakeJsonView extends \PMVC\FakeView
 {
-
     public function onFinish()
     {
     }
@@ -172,7 +170,7 @@ class FakeJsonView extends \PMVC\FakeView
             // run directly if miss event
             return $this->onFinish();
         } else {
-            // only run by finish event 
+            // only run by finish event
             \PMVC\plug('dispatcher')
                 ->attachAfter($this, Event\FINISH);
         }
