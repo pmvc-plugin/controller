@@ -401,7 +401,7 @@ class controller extends PlugIn // @codingStandardsIgnoreEnd
         if ($errorForward) {
             $this->processForward($errorForward);
         }
-        /*Need located after processForward to avoid json view trigger twice*/
+        /* <!-- Need located after processForward to avoid json view trigger twice*/
         callPlugin(
             'dispatcher',
             'notify',
@@ -410,7 +410,8 @@ class controller extends PlugIn // @codingStandardsIgnoreEnd
                 true,
             ]
         );
-        option('set', Event\FINISH, true);
+        option('set', Event\FINISH, true); // need located after callPlugin to avoid unexpedted trigger.
+        /* --> */
     }
 
     /**
