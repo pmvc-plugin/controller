@@ -410,7 +410,8 @@ class controller extends PlugIn // @codingStandardsIgnoreEnd
                 true,
             ]
         );
-        option('set', Event\FINISH, true); // need located after callPlugin to avoid unexpedted trigger.
+        // Need located after callPlugin to avoid unexpedted trigger.
+        option('set', Event\FINISH, true);
         /* --> */
     }
 
