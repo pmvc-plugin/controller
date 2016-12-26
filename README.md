@@ -16,7 +16,7 @@ controller -> plugapp -> process -> execute -> _processMapping -> _processForm -
 
 ## Explain App Folder
 ```
-- Site Folder (_RUN_APPS Parent, \PMVC\getAppsParent())
+- Site Folder (_RUN_APPS's parent folder, \PMVC\getAppsParent())
 -- Apps Folder (_RUN_APPS)
 --- App Folder (_RUN_APP)
 ```
