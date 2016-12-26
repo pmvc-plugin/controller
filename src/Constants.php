@@ -58,13 +58,3 @@ namespace PMVC {
     const ACTION_MAPPINGS = '__action_mappings__';
     const ACTION_FORWARDS = '__action_forwards__';
 }
-
-namespace PMVC\Event {
-    const MAP_REQUEST = 'MapRequest';
-    const B4_PROCESS_ACTION = 'B4ProcessAction';
-    const B4_PROCESS_ERROR = 'B4ProcessError';
-    const B4_PROCESS_MAPPING = 'B4ProcessMapping';
-    const B4_PROCESS_VIEW = 'B4ProcessView';
-    const FINISH = 'Finish';
-    const SET_CONFIG = 'SetConfig';
-}
