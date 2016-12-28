@@ -303,13 +303,21 @@ class controller extends PlugIn // @codingStandardsIgnoreEnd
     {
         if (empty($actionMapping->form)) {
             $actionForm = $this[_RUN_FORM];
-            if (!empty($actionForm)) {
-                return $actionForm;
+            if (empty($actionForm)) {
+                $defaultForm = getOption(
+                    _DEFAULT_FORM,
+                    __NAMESPACE__.'\ActionForm'
+                );
+                $actionForm = new $defaultForm();
+            }
+        } else {
+            $actionForm = $this->_mappings->findForm(
+                $actionMapping->form
+            );
+            if (empty($actionForm)) {
+                throw new DomainException('ActionForm: ['.$actionMapping->form.'] not exists.');
             }
         }
-        $actionForm = $this->_mappings->findForm(
-            $actionMapping->form
-        );
 
         //add request parameters
         $this->_initActionFormValue($actionForm, $actionMapping);

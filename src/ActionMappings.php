@@ -130,14 +130,10 @@ class ActionMappings
 
         if (is_callable($form[_CLASS])) {
             $actionForm = call_user_func($form[_CLASS]);
-        } else {
-            if (!class_exists($form[_CLASS])) {
-                $form[_CLASS] = getOption(
-                    _DEFAULT_FORM,
-                    __NAMESPACE__.'\ActionForm'
-                );
-            }
+        } elseif (class_exists($form[_CLASS])) {
             $actionForm = new $form[_CLASS]();
+        } else {
+            $actionForm = false;
         }
 
         return $actionForm;
