@@ -315,7 +315,11 @@ class controller extends PlugIn // @codingStandardsIgnoreEnd
                 $actionMapping->form
             );
             if (empty($actionForm)) {
-                throw new DomainException('ActionForm: ['.$actionMapping->form.'] not exists.');
+                throw new DomainException(
+                    'ActionForm: ['.
+                    $actionMapping->form.
+                    '] not exists.'
+                );
             }
         }
 
