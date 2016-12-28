@@ -5,10 +5,10 @@ class DefaultFormTest extends PHPUnit_Framework_TestCase
     public function setup()
     {
         \PMVC\unplug('controller');
-        \PMVC\option('set',[
-            _RUN_FORM=>null,
-            _DEFAULT_FORM=> null, 
-            'fakeDefaultForm'=>null
+        \PMVC\option('set', [
+            _RUN_FORM        => null,
+            _DEFAULT_FORM    => null,
+            'fakeDefaultForm'=> null,
         ]);
     }
 
@@ -20,7 +20,7 @@ class DefaultFormTest extends PHPUnit_Framework_TestCase
             'index', [
                 _FUNCTION => function () use ($test_str) {
                     return $test_str;
-                }
+                },
             ]
         );
         $option = [
@@ -41,10 +41,10 @@ class DefaultFormTest extends PHPUnit_Framework_TestCase
         $b = new PMVC\MappingBuilder();
         $b->addAction(
             'index', [
-                _FUNCTION => function ()  {
+                _FUNCTION => function () {
                     return '';
                 },
-                _FORM => 'xxx'
+                _FORM => 'xxx',
             ]
         );
         $mvc = \PMVC\plug('controller');
@@ -56,7 +56,7 @@ class DefaultFormTest extends PHPUnit_Framework_TestCase
         $b = new PMVC\MappingBuilder();
         $b->addAction(
             'index', [
-                _FUNCTION => function ()  {
+                _FUNCTION => function () {
                     return '';
                 },
             ]
