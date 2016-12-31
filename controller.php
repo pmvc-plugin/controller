@@ -217,10 +217,6 @@ class controller extends PlugIn // @codingStandardsIgnoreEnd
      */
     public function process(MappingBuilder $builder = null)
     {
-        if (callPlugin('dispatcher', 'stop')) {
-            // Stop for authentication plugin verify failed
-            return;
-        }
         callPlugin(
             'dispatcher',
             'notify',
@@ -228,6 +224,10 @@ class controller extends PlugIn // @codingStandardsIgnoreEnd
                 Event\MAP_REQUEST, true,
             ]
         );
+        if (callPlugin('dispatcher', 'stop')) {
+            // Stop for authentication plugin verify failed
+            return;
+        }
         if (!is_null($builder)) {
             $this->addMapping($builder);
         }
