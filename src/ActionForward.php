@@ -206,9 +206,9 @@ class ActionForward extends HashMap
     public function append(array $arr)
     {
         if ($this->_view) {
-            return $this->_view->appendView($arr);
+            return $this->_view->append($arr);
         } else {
-            return parent::append($arr);
+            return $this[[]] = $arr;
         }
     }
 
@@ -318,7 +318,7 @@ class ActionForward extends HashMap
         case 'action':
         default:
             if (exists(_RUN_APP, 'plugin')) {
-                plug(_RUN_APP)->append(get($this));
+                plug(_RUN_APP)[[]] = get($this);
             }
 
             return $this;
