@@ -129,6 +129,17 @@ class ActionForward extends HashMap
     private function _setType($type = null)
     {
         if ('view' === $type) {
+            $c = \PMVC\plug('controller');
+            $appViewEngine = \PMVC\value(
+                $c['view'],
+                [
+                    'engine',
+                    $c->getApp(),
+                ]
+            );
+            if ($appViewEngine) {
+                $c[_VIEW_ENGINE] = $appViewEngine;
+            }
             $this->_view = plug('view');
         }
         $this->_type = $type;
@@ -278,9 +289,18 @@ class ActionForward extends HashMap
                 Event\B4_PROCESS_VIEW, true,
             ]
         );
+        $c = \PMVC\plug('controller');
+        $appTemplateDir = \PMVC\value(
+            $c['template'],
+            [
+                'dir',
+                $c->getApp(),
+            ],
+            $c[_TEMPLATE_DIR]
+        );
         $view = $this->_view;
         $view->setThemeFolder(
-            getOption(_TEMPLATE_DIR)
+            $appTemplateDir
         );
         $path = $this->getPath();
         if ($path) {
