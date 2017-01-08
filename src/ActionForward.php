@@ -310,6 +310,7 @@ class ActionForward extends HashMap
             $this->setHeader($view['headers']);
         }
         $this->_processHeader();
+        flush();
 
         return $view->process();
     }
