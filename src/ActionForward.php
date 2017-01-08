@@ -308,6 +308,7 @@ class ActionForward extends HashMap
         }
         if (isset($view['headers'])) {
             $this->setHeader($view['headers']);
+            unset($view['headers']);
         }
         $this->_processHeader();
         flush();
