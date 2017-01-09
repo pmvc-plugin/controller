@@ -282,6 +282,13 @@ class ActionForward extends HashMap
      */
     private function _processView()
     {
+        $view = $this->_view;
+        if (isset($view['headers'])) {
+            $this->setHeader($view['headers']);
+            unset($view['headers']);
+        }
+        $this->_processHeader();
+        flush();
         callPlugin(
             'dispatcher',
             'notify',
@@ -298,7 +305,6 @@ class ActionForward extends HashMap
             ],
             $c[_TEMPLATE_DIR]
         );
-        $view = $this->_view;
         $view->setThemeFolder(
             $appTemplateDir
         );
@@ -306,12 +312,6 @@ class ActionForward extends HashMap
         if ($path) {
             $view->setThemePath($path);
         }
-        if (isset($view['headers'])) {
-            $this->setHeader($view['headers']);
-            unset($view['headers']);
-        }
-        $this->_processHeader();
-        flush();
 
         return $view->process();
     }
