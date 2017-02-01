@@ -141,6 +141,13 @@ class ActionForward extends HashMap
                 $c[_VIEW_ENGINE] = $appViewEngine;
             }
             $this->_view = plug('view');
+            if (exists(_RUN_APP, 'plugin')) {
+                $run = plug(_RUN_APP);
+                $keepForward = $run[_FORWARD];
+                if (!is_null($keepForward) && count($keepForward)) {
+                    $this->_view->append(get($keepForward));
+                }
+            }
         }
         $this->_type = $type;
     }
@@ -340,7 +347,13 @@ class ActionForward extends HashMap
         case 'action':
         default:
             if (exists(_RUN_APP, 'plugin')) {
-                plug(_RUN_APP)[[]] = get($this);
+                $run = plug(_RUN_APP);
+                $keepForward = $run[_FORWARD];
+                if (is_null($keepForward)) {
+                    $keepForward = new HashMap();
+                    $run[_FORWARD] = $keepForward;
+                }
+                $keepForward[[]] = get($this);
             }
 
             return $this;

@@ -8,6 +8,7 @@ class ActionForwardTest extends PHPUnit_Framework_TestCase
 {
     public function setup()
     {
+        \PMVC\unplug(_RUN_APP);
         \PMVC\unplug('view');
         \PMVC\plug(
             'view', [
@@ -52,7 +53,7 @@ class ActionForwardTest extends PHPUnit_Framework_TestCase
         $forward->go();
         $this->assertEquals(
             $expected,
-            $run[$utKey]
+            $run[_FORWARD][$utKey]
         );
     }
 
