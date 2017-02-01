@@ -148,6 +148,12 @@ class ActionMappings
      */
     public function findForward($name)
     {
+        if (empty($name)) {
+            return !trigger_error(
+                'ActionForward name is empty',
+                E_USER_WARNING
+            );
+        }
         $forward = value($this->_mappings, [ACTION_FORWARDS, $name]);
         if ($forward) {
             return new ActionForward($forward);
