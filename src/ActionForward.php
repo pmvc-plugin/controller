@@ -320,6 +320,9 @@ class ActionForward extends HashMap
             $keepForward = $run[_FORWARD];
             if (!is_null($keepForward) && count($keepForward)) {
                 $view->prepend(get($keepForward));
+                $run[_FORWARD] = new HashMap();
+                $keepForward = null;
+                unset($keepForward);
             }
         }
 
