@@ -141,13 +141,6 @@ class ActionForward extends HashMap
                 $c[_VIEW_ENGINE] = $appViewEngine;
             }
             $this->_view = plug('view');
-            if (exists(_RUN_APP, 'plugin')) {
-                $run = plug(_RUN_APP);
-                $keepForward = $run[_FORWARD];
-                if (!is_null($keepForward) && count($keepForward)) {
-                    $this->_view->append(get($keepForward));
-                }
-            }
         }
         $this->_type = $type;
     }
@@ -290,6 +283,9 @@ class ActionForward extends HashMap
     private function _processView()
     {
         $view = $this->_view;
+        if (!$view) {
+            return !trigger_error('View Plugin not Install');
+        }
         if (isset($view['headers'])) {
             $this->setHeader($view['headers']);
             unset($view['headers']);
@@ -318,6 +314,13 @@ class ActionForward extends HashMap
         $path = $this->getPath();
         if ($path) {
             $view->setThemePath($path);
+        }
+        if (exists(_RUN_APP, 'plugin')) {
+            $run = plug(_RUN_APP);
+            $keepForward = $run[_FORWARD];
+            if (!is_null($keepForward) && count($keepForward)) {
+                $view->prepend(get($keepForward));
+            }
         }
 
         return $view->process();
