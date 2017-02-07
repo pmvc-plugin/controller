@@ -74,14 +74,10 @@ class MappingBuilder extends HashMap
      */
     public function addAction($psId, $settings = [])
     {
-        if (is_callable($settings)) {
+        if (!is_array($settings)) {
             $settings = [
                 _FUNCTION => $settings,
             ];
-        } elseif (!is_array($settings)) {
-            return !trigger_error(
-                'Set Action::function failed. ['.$settings.']'
-            );
         }
         $settings = new HashMap(
             array_replace(
