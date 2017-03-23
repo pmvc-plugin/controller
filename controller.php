@@ -502,10 +502,11 @@ class controller extends PlugIn // @codingStandardsIgnoreEnd
                 Event\B4_PROCESS_ERROR, true,
             ]
         );
-        if (!$this->_mappings->forwardExists('error')) {
+        $thisForward = \PMVC\get($this, _ERROR_FORWARD, 'error');
+        if (!$this->_mappings->forwardExists($thisForward)) {
             return false;
         }
-        $errorForward = $this->_mappings->findForward('error');
+        $errorForward = $this->_mappings->findForward($thisForward);
         $errorForward->set(
             [
                 'errors'    => $AllErrors[USER_ERRORS],

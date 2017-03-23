@@ -25,7 +25,7 @@
  */
 
 namespace {
-    define('_FORWARD', '_forward_');
+    /* Builder */
     define('_INIT_BUILDER', '_init_builder_');
 
     /* Action */
@@ -39,6 +39,8 @@ namespace {
     define('_HEADER', '_header_');
     define('_PATH', '_path_');
     define('_TYPE', '_type_');
+    define('_FORWARD', '_forward_');
+    define('_ERROR_FORWARD', '_error_forward_');
 
     /* Options */
     define('_ROUTER', '_router_');
