@@ -74,7 +74,7 @@ class MappingBuilder extends HashMap
      */
     public function addAction($psId, $settings = [])
     {
-        if (!is_array($settings)) {
+        if (!is_array($settings) || is_callable($settings)) {
             $settings = [
                 _FUNCTION => $settings,
             ];
