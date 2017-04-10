@@ -99,7 +99,7 @@ class ActionMappings
      *
      * @return ActionMapping
      */
-    public function findMapping($name)
+    public function findAction($name)
     {
         $mapping = value($this->_mappings, [ACTION_MAPPINGS, $name]);
         $mappingObj = new ActionMapping($mapping, $this, $name);
@@ -184,7 +184,7 @@ class ActionMappings
      *
      * @return bool
      */
-    public function mappingExists($name)
+    public function actionExists($name)
     {
         return isset($this->_mappings[ACTION_MAPPINGS][$name]);
     }

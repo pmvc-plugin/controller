@@ -68,7 +68,7 @@ class MappingBuilder extends HashMap
      * Add a Action to mapping.
      *
      * @param string $psId     forward id
-     * @param array  $settings settings
+     * @param mixed  $settings settings
      *
      * @return bool
      */

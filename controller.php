@@ -255,13 +255,13 @@ class controller extends PlugIn // @codingStandardsIgnoreEnd
      */
     public function execute($index)
     {
-        if (!$this->_mappings->mappingExists($index)) {
+        if (!$this->_mappings->actionExists($index)) {
             return !trigger_error(
                 'No mappings found for action: ['.$index.']',
                 E_USER_WARNING
             );
         }
-        $actionMapping = $this->_processMapping($index);
+        $actionMapping = $this->_processActionMapping($index);
         $actionForm = $this->_processForm($actionMapping);
         $this[_RUN_FORM] = $actionForm;
         //validate the form if necesarry
@@ -287,9 +287,9 @@ class controller extends PlugIn // @codingStandardsIgnoreEnd
      *
      * @return ActionMapping
      */
-    private function _processMapping($index)
+    private function _processActionMapping($index)
     {
-        return $this->_mappings->findMapping($index);
+        return $this->_mappings->findAction($index);
     }
 
     /**
@@ -567,7 +567,7 @@ class controller extends PlugIn // @codingStandardsIgnoreEnd
     public function getAppAction()
     {
         $action = $this[_RUN_ACTION];
-        if (!$this->_mappings->mappingExists($action)) {
+        if (!$this->_mappings->actionExists($action)) {
             $action = 'index';
         }
 
