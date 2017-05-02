@@ -60,6 +60,12 @@ class controller extends PlugIn // @codingStandardsIgnoreEnd
      * @var HttpRequestServlet
      */
     private $_request;
+    /**
+     * Finish flag.
+     *
+     * @var bool
+     */
+    private $_isFinish;
 
     /**
      * ActionController construct with the options.
@@ -428,14 +434,17 @@ class controller extends PlugIn // @codingStandardsIgnoreEnd
      */
     private function _finish()
     {
-        if ($this[Event\FINISH]) {
+        if ($this[Event\FINISH] || $this->_isFinish) {
             return;
         }
+        $this->_isFinish = true;
+
         /*Only parse user error, not contain system and app errors*/
         $errorForward = $this->getErrorForward();
         if ($errorForward) {
             $this->processForward($errorForward);
         }
+
         /* <!-- Need located after processForward to avoid json view trigger twice*/
         callPlugin(
             'dispatcher',

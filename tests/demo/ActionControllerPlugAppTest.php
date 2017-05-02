@@ -9,7 +9,7 @@ class ActionControllerPlugAppTest extends PHPUnit_Framework_TestCase
     public function setup()
     {
         folders(_RUN_APP, [], [], true);
-        $this->resources = __dir__.'/../resources/';
+        $this->resources = __DIR__.'/../resources/';
         unPlug(_RUN_APP);
     }
 
