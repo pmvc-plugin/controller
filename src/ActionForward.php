@@ -292,13 +292,6 @@ class ActionForward extends HashMap
         }
         $this->_processHeader();
         flush();
-        callPlugin(
-            'dispatcher',
-            'notify',
-            [
-                Event\B4_PROCESS_VIEW, true,
-            ]
-        );
         $c = \PMVC\plug('controller');
         $appTemplateDir = \PMVC\value(
             $c['template'],
@@ -325,6 +318,13 @@ class ActionForward extends HashMap
                 unset($keepForward);
             }
         }
+        callPlugin(
+            'dispatcher',
+            'notify',
+            [
+                Event\B4_PROCESS_VIEW, true,
+            ]
+        );
 
         return $view->process();
     }
