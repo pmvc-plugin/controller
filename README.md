@@ -21,6 +21,12 @@ controller -> plugapp -> process -> execute -> _processMapping -> _processForm -
 --- App Folder (_RUN_APP)
 ```
 
+## APP customize view and template
+   * View
+      * view_engine_[app]=[html|json|react|...]
+   * Template
+      * template_dir_[app]=[forder path]
+
 ## Install with Composer
 ### 1. Download composer
    * mkdir test_folder
