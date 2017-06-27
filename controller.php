@@ -181,7 +181,11 @@ class controller extends PlugIn // @codingStandardsIgnoreEnd
                 _PLUGIN_FILE => $path,
             ]
         );
-        addPlugInFolders([$parent.'/'.$app.'/plugins']);
+        if (!isset($this[_REAL_APP])) {
+            option('set', _REAL_APP, $app);
+        }
+        addPlugInFolders([$parent.'/'.$this[_REAL_APP].'/plugins']);
+        set($appPlugin, $this[$this[_REAL_APP]]);
         if (isset($appPlugin[_INIT_BUILDER])) {
             $isBuild = $this->addMapping(
                 $appPlugin[_INIT_BUILDER]
@@ -208,6 +212,7 @@ class controller extends PlugIn // @codingStandardsIgnoreEnd
     {
         if (!empty($alias[$app])) {
             $app = $alias[$app];
+            option('set', _REAL_APP, $app);
         }
         $file = $app.'/'.$indexFile.'.php';
 
@@ -511,7 +516,7 @@ class controller extends PlugIn // @codingStandardsIgnoreEnd
                 Event\B4_PROCESS_ERROR, true,
             ]
         );
-        $thisForward = \PMVC\get($this, _ERROR_FORWARD, 'error');
+        $thisForward = get($this, _ERROR_FORWARD, 'error');
         if (!$this->_mappings->forwardExists($thisForward)) {
             return false;
         }

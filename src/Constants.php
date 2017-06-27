@@ -49,6 +49,7 @@ namespace {
     define('_DEFAULT_FORM', '_default_form_');
 
     /* Run */
+    define('_REAL_APP', '_real_app_');
     define('_RUN_APP', '_run_app_');
     define('_RUN_APPS', '_run_apps_');
     define('_RUN_ACTION', '_run_action_');
