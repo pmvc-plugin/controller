@@ -55,6 +55,9 @@ class ActionForward extends HashMap
 
     /**
      * View.
+     * !! important !!
+     * If you change view after get forward,
+     * you need reget forward again.
      *
      * @var object
      */
@@ -129,8 +132,8 @@ class ActionForward extends HashMap
     private function _setType($type = null)
     {
         if ('view' === $type) {
-            $c = \PMVC\plug('controller');
-            $appViewEngine = \PMVC\value(
+            $c = plug('controller');
+            $appViewEngine = value(
                 $c['view'],
                 [
                     'engine',
@@ -216,7 +219,7 @@ class ActionForward extends HashMap
      */
     public function append(array $arr)
     {
-        if ($this->_view) {
+        if ('view' === $this->_type) {
             return $this->_view->append($arr);
         } else {
             return $this[[]] = $arr;
@@ -233,7 +236,7 @@ class ActionForward extends HashMap
      */
     public function set($k, $v = null)
     {
-        if ($this->_view) {
+        if ('view' === $this->_type) {
             return $this->_view->set($k, $v);
         } else {
             return set($this, $k, $v);
@@ -250,7 +253,7 @@ class ActionForward extends HashMap
      */
     public function get($k = null, $default = null)
     {
-        if ($this->_view) {
+        if ('view' === $this->_type) {
             return $this->_view->get($k, $default);
         } else {
             return get($this, $k, $default);
@@ -282,18 +285,19 @@ class ActionForward extends HashMap
      */
     private function _processView()
     {
+        /**
+        * If you face a wrong view object,
+        * Please check above important information.
+        */
         $view = $this->_view;
-        if (!$view) {
-            return !trigger_error('View Plugin not Install');
-        }
         if (isset($view['headers'])) {
             $this->setHeader($view['headers']);
             unset($view['headers']);
         }
         $this->_processHeader();
         flush();
-        $c = \PMVC\plug('controller');
-        $appTemplateDir = \PMVC\value(
+        $c = plug('controller');
+        $appTemplateDir = value(
             $c['template'],
             [
                 'dir',
