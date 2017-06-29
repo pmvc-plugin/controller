@@ -189,7 +189,7 @@ class ActionForward extends HashMap
     public function buildCommand($url, $params)
     {
         return callPlugin(
-            getOption(_ROUTER),
+            option('get', _ROUTER),
             __FUNCTION__,
             [
                 $url,
@@ -270,7 +270,7 @@ class ActionForward extends HashMap
         $headers = &$this->getHeader();
 
         return callPlugin(
-            getOption(_ROUTER),
+            option('get', _ROUTER),
             'processHeader',
             [
                 $headers,
@@ -348,7 +348,7 @@ class ActionForward extends HashMap
             $path = $this->getPath(true);
 
             return callPlugin(
-                getOption(_ROUTER),
+                option('get', _ROUTER),
                 'go',
                 [
                     $path,

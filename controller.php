@@ -110,6 +110,18 @@ class controller extends PlugIn // @codingStandardsIgnoreEnd
     }
 
     /**
+     * Contains key.
+     *
+     * @param string $k key
+     *
+     * @return bool
+     */
+    public function offsetExists($k)
+    {
+        return !empty(option('get', $k));
+    }
+
+    /**
      * Plug App.
      *
      * @param array  $folders   defaultAppFolder
@@ -185,6 +197,7 @@ class controller extends PlugIn // @codingStandardsIgnoreEnd
             option('set', _REAL_APP, $app);
         }
         addPlugInFolders([$parent.'/'.$this[_REAL_APP].'/plugins']);
+
         set($appPlugin, $this[$this[_REAL_APP]]);
         if (isset($appPlugin[_INIT_BUILDER])) {
             $isBuild = $this->addMapping(
@@ -315,7 +328,8 @@ class controller extends PlugIn // @codingStandardsIgnoreEnd
         if (empty($actionMapping->form)) {
             $actionForm = $this[_RUN_FORM];
             if (empty($actionForm)) {
-                $defaultForm = getOption(
+                $defaultForm = option(
+                    'get',
                     _DEFAULT_FORM,
                     __NAMESPACE__.'\ActionForm'
                 );
