@@ -128,7 +128,7 @@ class controller extends PlugIn // @codingStandardsIgnoreEnd
      * @param array  $appAlias  appAlias
      * @param string $indexFile index.php
      *
-     * @return mixed
+     * @return bool Check is plug success or failed.
      */
     public function plugApp(
         array $folders = [],
