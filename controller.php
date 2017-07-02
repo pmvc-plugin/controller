@@ -197,8 +197,22 @@ class controller extends PlugIn // @codingStandardsIgnoreEnd
             option('set', _REAL_APP, $app);
         }
         addPlugInFolders([$parent.'/'.$this[_REAL_APP].'/plugins']);
-
-        set($appPlugin, $this[$this[_REAL_APP]]);
+        $names = explode('_', $this[_REAL_APP]);
+        set(
+            $appPlugin,
+            array_replace(
+                value(
+                    option('get', $names[0], []),
+                    array_slice($names, 1),
+                    []
+                ),
+                value(
+                    option('get', 'PW', []),
+                    $names,
+                    []
+                )
+            )
+        );
         if (isset($appPlugin[_INIT_BUILDER])) {
             $isBuild = $this->addMapping(
                 $appPlugin[_INIT_BUILDER]
