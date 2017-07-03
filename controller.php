@@ -136,7 +136,10 @@ class controller extends PlugIn // @codingStandardsIgnoreEnd
         $indexFile = 'index'
     ) {
         if (exists(_RUN_APP, 'plugin')) {
-            return !trigger_error('APP was pluged.', E_USER_WARNING);
+            return !trigger_error(
+                'APP was pluged.',
+                E_USER_WARNING
+            );
         }
         callPlugin(
             'dispatcher',
@@ -152,38 +155,22 @@ class controller extends PlugIn // @codingStandardsIgnoreEnd
         $alias = $folders['alias'];
         $parents = $folders['folders'];
         $app = $this->getApp();
-        $path = $this->_getAppFile(
+        $path = $this->getAppFile(
             $parents,
             $app,
             $indexFile,
             $alias
         );
         if (!$path) {
-            option('set', 'httpResponseCode', 404);
-            trigger_error(
-                print_r(
-                    [
-                     'Error'  => 'No app found, '.
-                                 'Please check following debug message.',
-                     'Parent' => $parents,
-                     'App'    => $app,
-                     'Index'  => $indexFile,
-                     'Alias'  => $alias ?: '',
-                     ],
-                    true
-                ), E_USER_WARNING
-            );
-            $app = $this[_DEFAULT_APP];
-            $path = $this->_getAppFile(
+            $this->app_not_found(
+                [
+                    'app' => &$app,
+                    'path'=> &$path
+                ],
                 $parents,
-                $app,
                 $indexFile,
                 $alias
             );
-            if (!$path) {
-                throw new DomainException('Not set default app correct.');
-            }
-            $this->setApp($app);
         }
         $parent = realpath(dirname(dirname($path)));
         $this[_RUN_APPS] = $parent;
@@ -235,7 +222,7 @@ class controller extends PlugIn // @codingStandardsIgnoreEnd
      *
      * @return mixed
      */
-    private function _getAppFile($parents, $app, $indexFile, $alias)
+    public function getAppFile($parents, $app, $indexFile, $alias)
     {
         if (!empty($alias[$app])) {
             $app = $alias[$app];
