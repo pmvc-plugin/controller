@@ -39,7 +39,7 @@ ${_INIT_CONFIG
 class _app_not_found // @codingStandardsIgnoreEnd
 {
     /**
-     * App not found Invoke. 
+     * App not found invoke.
      *
      * @param array  $appAndPath Hack for pass by ref
      * @param array  $parents    Parents folders.
@@ -54,9 +54,8 @@ class _app_not_found // @codingStandardsIgnoreEnd
         $indexFile,
         $alias
     ) {
-    
-        $app  =& $appAndPath['app'];
-        $path =& $appAndPath['path'];
+        $app = &$appAndPath['app'];
+        $path = &$appAndPath['path'];
         option('set', 'httpResponseCode', 404);
         trigger_error(
             print_r(

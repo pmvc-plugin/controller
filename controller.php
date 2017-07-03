@@ -165,7 +165,7 @@ class controller extends PlugIn // @codingStandardsIgnoreEnd
             $this->app_not_found(
                 [
                     'app' => &$app,
-                    'path'=> &$path
+                    'path'=> &$path,
                 ],
                 $parents,
                 $indexFile,
