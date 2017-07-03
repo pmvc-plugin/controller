@@ -148,7 +148,7 @@ class controller extends PlugIn // @codingStandardsIgnoreEnd
                 Event\MAP_REQUEST, true,
             ]
         );
-        if (empty($folders)) {
+        if (empty($folders) && $this[_RUN_APPS]) {
             $folders = [$this[_RUN_APPS]];
         }
         $folders = addAppFolders($folders, $appAlias);
