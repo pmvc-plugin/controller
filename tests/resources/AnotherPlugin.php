@@ -14,7 +14,7 @@ class AnotherPlugin extends \PMVC\PlugIn
 
     public function onMapRequest()
     {
-        $this['actual'] = getOption($this['assert']); 
+        $this['actual'] = getOption($this['assert']);
     }
 
     public function init()
@@ -25,4 +25,3 @@ class AnotherPlugin extends \PMVC\PlugIn
             ->attach($this, Event\MAP_REQUEST);
     }
 }
-

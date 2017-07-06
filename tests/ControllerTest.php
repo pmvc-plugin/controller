@@ -2,7 +2,6 @@
 
 namespace PMVC;
 
-use PMVC\Event;
 use PHPUnit_Framework_TestCase;
 
 class ControllerTest extends PHPUnit_Framework_TestCase
@@ -128,7 +127,6 @@ class ControllerTest extends PHPUnit_Framework_TestCase
         ];
         $result = $mvc->process($b);
     }
-
 }
 
 class FakeClass extends \PMVC\Action
