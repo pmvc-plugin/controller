@@ -25,4 +25,3 @@ class AnotherPlugin extends \PMVC\PlugIn
             ->attach($this, Event\SET_CONFIG.'_'._REAL_APP);
     }
 }
-
