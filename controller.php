@@ -148,35 +148,25 @@ class controller extends PlugIn // @codingStandardsIgnoreEnd
                 Event\MAP_REQUEST, true,
             ]
         );
+        $this->_handleAlias($appAlias);
         if (empty($folders) && $this[_RUN_APPS]) {
-            $folders = [$this[_RUN_APPS]];
+            $folders = toArray($this[_RUN_APPS]);
         }
-        $folders = addAppFolders($folders, $appAlias);
-        $alias = $folders['alias'];
+        $folders = addAppFolders($folders);
         $parents = $folders['folders'];
-        $app = $this->getApp();
         $path = $this->getAppFile(
             $parents,
-            $app,
-            $indexFile,
-            $alias
+            $indexFile
         );
         if (!$path) {
-            $this->app_not_found(
-                [
-                    'app' => &$app,
-                    'path'=> &$path,
-                ],
+            $path = $this->app_not_found(
                 $parents,
                 $indexFile,
-                $alias
+                $folders
             );
         }
         $parent = realpath(dirname(dirname($path)));
         $this[_RUN_APPS] = $parent;
-        if (!isset($this[_REAL_APP])) {
-            $this[_REAL_APP] = $app;
-        }
         $appPlugin = plug(
             _RUN_APP,
             [
@@ -216,21 +206,34 @@ class controller extends PlugIn // @codingStandardsIgnoreEnd
      * Plug App.
      *
      * @param string $parents   Multiple app folder
-     * @param array  $app       app name
      * @param string $indexFile index.php
-     * @param string $alias     alias
      *
      * @return mixed
      */
-    public function getAppFile($parents, $app, $indexFile, $alias)
+    public function getAppFile($parents, $indexFile)
     {
-        if (!empty($alias[$app])) {
-            $app = $alias[$app];
-            $this[_REAL_APP] = $app;
-        }
-        $file = $app.'/'.$indexFile.'.php';
+        $file = $this[_REAL_APP].'/'.$indexFile.'.php';
 
         return find($file, $parents);
+    }
+
+    /**
+     * Handle Alias.
+     *
+     * @param array $alias Assign form plugApp
+     *
+     * @return void
+     */
+    private function _handleAlias(array $alias)
+    {
+        $folders = addAppFolders([], $alias);
+        $alias = $folders['alias'];
+        $app = $this->getApp();
+        if (!empty($alias[$app])) {
+            $this[_REAL_APP] = $alias[$app];
+        } else {
+            $this[_REAL_APP] = $app;
+        }
     }
 
     /**

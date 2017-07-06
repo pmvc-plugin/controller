@@ -64,7 +64,7 @@ function getAppsParent()
  *
  * @return mixed
  */
-function setAppFolders($folders, $alias = [])
+function setAppFolders(array $folders, $alias = [])
 {
     return folders(_RUN_APP, $folders, $alias, true);
 }
@@ -77,7 +77,7 @@ function setAppFolders($folders, $alias = [])
  *
  * @return mixed
  */
-function addAppFolders($folders, $alias = [])
+function addAppFolders(array $folders, $alias = [])
 {
     return folders(_RUN_APP, $folders, $alias);
 }
