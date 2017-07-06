@@ -141,6 +141,13 @@ class controller extends PlugIn // @codingStandardsIgnoreEnd
                 E_USER_WARNING
             );
         }
+        callPlugin(
+            'dispatcher',
+            'notify',
+            [
+                Event\MAP_REQUEST, true,
+            ]
+        );
         if (empty($folders) && $this[_RUN_APPS]) {
             $folders = [$this[_RUN_APPS]];
         }
@@ -168,16 +175,8 @@ class controller extends PlugIn // @codingStandardsIgnoreEnd
         $parent = realpath(dirname(dirname($path)));
         $this[_RUN_APPS] = $parent;
         if (!isset($this[_REAL_APP])) {
-            option('set', _REAL_APP, $app);
+            $this[_REAL_APP] = $app;
         }
-        // trigger map_request after get real app for dimension plugin
-        callPlugin(
-            'dispatcher',
-            'notify',
-            [
-                Event\MAP_REQUEST, true,
-            ]
-        );
         $appPlugin = plug(
             _RUN_APP,
             [
@@ -227,7 +226,7 @@ class controller extends PlugIn // @codingStandardsIgnoreEnd
     {
         if (!empty($alias[$app])) {
             $app = $alias[$app];
-            option('set', _REAL_APP, $app);
+            $this[_REAL_APP] = $app;
         }
         $file = $app.'/'.$indexFile.'.php';
 

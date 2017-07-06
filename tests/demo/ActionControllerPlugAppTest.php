@@ -93,9 +93,10 @@ class ActionControllerPlugAppTest extends PHPUnit_Framework_TestCase
         @$mvc->plugApp();
     }
 
-    public function testMapRequestHaveRealApp()
+    public function testSetRealApp()
     {
         unplug('another');
+        option('set', _REAL_APP, null);
         $another = \PMVC\plug(
             'another', [
                 _CLASS => '\PMVC\AnotherPlugin',
@@ -103,8 +104,8 @@ class ActionControllerPlugAppTest extends PHPUnit_Framework_TestCase
             ]
         );
         $mvc = plug('controller');
-        $mvc->setApp('testApp');
-        $mvc->plugApp();
+        $mvc->setApp('testFoo');
+        $mvc->plugApp([], ['testFoo'=>'testApp']);
         $this->assertEquals(
             'testApp',
             $another['actual']

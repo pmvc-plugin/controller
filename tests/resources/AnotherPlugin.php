@@ -12,9 +12,9 @@ class AnotherPlugin extends \PMVC\PlugIn
         $this['view']->process();
     }
 
-    public function onMapRequest()
+    public function onSetConfig__real_app_()
     {
-        $this['actual'] = getOption($this['assert']); 
+        $this['actual'] = getOption($this['assert']);
     }
 
     public function init()
@@ -22,7 +22,7 @@ class AnotherPlugin extends \PMVC\PlugIn
         \PMVC\plug('dispatcher')
             ->attachAfter($this, Event\FINISH);
         \PMVC\plug('dispatcher')
-            ->attach($this, Event\MAP_REQUEST);
+            ->attach($this, Event\SET_CONFIG.'_'._REAL_APP);
     }
 }
 
