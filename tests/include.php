@@ -9,3 +9,4 @@ include __DIR__.'/../vendor/autoload.php';
 l(__DIR__.'/resources/FakeView.php');
 l(__DIR__.'/resources/FakePlugIn.php');
 l(__DIR__.'/resources/FakeAction.php');
+l(__DIR__.'/resources/AnotherPlugin.php');

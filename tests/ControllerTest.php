@@ -1,6 +1,9 @@
 <?php
 
+namespace PMVC;
+
 use PMVC\Event;
+use PHPUnit_Framework_TestCase;
 
 class ControllerTest extends PHPUnit_Framework_TestCase
 {
@@ -12,7 +15,7 @@ class ControllerTest extends PHPUnit_Framework_TestCase
 
     public function testProcess()
     {
-        $b = new PMVC\MappingBuilder();
+        $b = new \PMVC\MappingBuilder();
         $b->addAction(
             'index', [
              'FakeClass',
@@ -40,12 +43,12 @@ class ControllerTest extends PHPUnit_Framework_TestCase
      */
     public function testProcessError()
     {
-        $b = new PMVC\MappingBuilder();
+        $b = new \PMVC\MappingBuilder();
         $b->addAction(
             'index',
             [
                 _FUNCTION => ['FakeClass', 'index'],
-                _FORM     => 'FakeFailForm',
+                _FORM     => '\PMVC\FakeFailForm',
             ]
         );
         $b->addForward(
@@ -85,7 +88,7 @@ class ControllerTest extends PHPUnit_Framework_TestCase
      */
     public function testFinishEventShouldRunOnlyOnce()
     {
-        $b = new PMVC\MappingBuilder();
+        $b = new \PMVC\MappingBuilder();
         $b->addAction(
             'index',
             [
@@ -106,7 +109,7 @@ class ControllerTest extends PHPUnit_Framework_TestCase
                 _TYPE => 'view',
             ]
         );
-        $jsonView = $this->getMockBuilder('FakeJsonView')
+        $jsonView = $this->getMockBuilder('\PMVC\FakeJsonView')
             ->setMethods(['onFinish'])
             ->getMock();
         $jsonView->expects($this->once())
@@ -114,7 +117,7 @@ class ControllerTest extends PHPUnit_Framework_TestCase
         \PMVC\replug('view', $jsonView);
         \PMVC\plug(
             'another', [
-                _CLASS => 'anotherPlugin',
+                _CLASS => '\PMVC\AnotherPlugin',
                 'view' => $jsonView,
             ]
         );
@@ -125,9 +128,10 @@ class ControllerTest extends PHPUnit_Framework_TestCase
         ];
         $result = $mvc->process($b);
     }
+
 }
 
-class FakeClass extends PMVC\Action
+class FakeClass extends \PMVC\Action
 {
     public function index($m, $f)
     {
@@ -137,25 +141,11 @@ class FakeClass extends PMVC\Action
     }
 }
 
-class FakeFailForm extends PMVC\ActionForm
+class FakeFailForm extends \PMVC\ActionForm
 {
     public function validate()
     {
         return false;
-    }
-}
-
-class anotherPlugin extends \PMVC\PlugIn
-{
-    public function onFinish()
-    {
-        $this['view']->process();
-    }
-
-    public function init()
-    {
-        \PMVC\plug('dispatcher')
-            ->attachAfter($this, Event\FINISH);
     }
 }
 

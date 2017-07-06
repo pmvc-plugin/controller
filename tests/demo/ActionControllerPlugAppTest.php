@@ -92,4 +92,22 @@ class ActionControllerPlugAppTest extends PHPUnit_Framework_TestCase
         $mvc[_DEFAULT_APP] = '';
         @$mvc->plugApp();
     }
+
+    public function testMapRequestHaveRealApp()
+    {
+        unplug('another');
+        $another = \PMVC\plug(
+            'another', [
+                _CLASS => '\PMVC\AnotherPlugin',
+                'assert'=>_REAL_APP
+            ]
+        );
+        $mvc = plug('controller');
+        $mvc->setApp('testApp');
+        $mvc->plugApp();
+        $this->assertEquals(
+            'testApp',
+            $another['actual']
+        );
+    }
 }
