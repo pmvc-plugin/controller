@@ -233,6 +233,8 @@ class controller extends PlugIn // @codingStandardsIgnoreEnd
             $this[_REAL_APP] = $alias[$app];
         } else {
             $this[_REAL_APP] = $app;
+            // Get default after dimension back
+            $this[_REAL_APP] = $this->getApp();
         }
     }
 
