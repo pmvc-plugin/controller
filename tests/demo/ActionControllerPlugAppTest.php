@@ -98,8 +98,8 @@ class ActionControllerPlugAppTest extends PHPUnit_Framework_TestCase
         unplug('another');
         $another = \PMVC\plug(
             'another', [
-                _CLASS => '\PMVC\AnotherPlugin',
-                'assert'=>_REAL_APP
+                _CLASS  => '\PMVC\AnotherPlugin',
+                'assert'=> _REAL_APP,
             ]
         );
         $mvc = plug('controller');
