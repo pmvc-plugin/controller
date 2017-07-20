@@ -69,61 +69,22 @@ class controller extends PlugIn // @codingStandardsIgnoreEnd
 
     /**
      * ActionController construct with the options.
+     *
+     * {Controller} -> plugapp -> process -> execute -> _processForm ->
+     * _processValidate -> _processAction -> processForward -> _finish
      */
     public function __construct()
     {
-        $this->_request = new Request();
         $this->_mappings = new ActionMappings();
-    }
-
-    /**
-     * Set option (Will trigger Event).
-     *
-     * @param mixed $k key
-     * @param mixed $v value
-     *
-     * @return void
-     */
-    public function offsetSet($k, $v = null)
-    {
-        option('set', $k, $v);
-        callPlugin(
-            'dispatcher',
-            'set',
-            [
-                Event\SET_CONFIG,
-                $k,
-            ]
-        );
-    }
-
-    /**
-     * Get Option.
-     *
-     * @param mixed $k key
-     *
-     * @return mixed
-     */
-    public function &offsetGet($k)
-    {
-        return option('get', $k);
-    }
-
-    /**
-     * Contains key.
-     *
-     * @param string $k key
-     *
-     * @return bool
-     */
-    public function offsetExists($k)
-    {
-        return !empty(option('get', $k));
+        $this->_request = new Request();
     }
 
     /**
      * Plug App.
      *
+     * Controller -> {plugapp} -> process -> execute -> _processForm ->
+     * _processValidate -> _processAction -> processForward -> _finish
+     * 
      * @param array  $folders   defaultAppFolder
      * @param array  $appAlias  appAlias
      * @param string $indexFile index.php
@@ -191,55 +152,22 @@ class controller extends PlugIn // @codingStandardsIgnoreEnd
             )
         );
         if (isset($appPlugin[_INIT_BUILDER])) {
-            $isBuild = $this->addMapping(
+            $builder = $this->addMapping(
                 $appPlugin[_INIT_BUILDER]
             );
             unset($appPlugin[_INIT_BUILDER]);
 
-            return $isBuild;
+            return $builder;
         } else {
             return true;
         }
     }
 
     /**
-     * Plug App.
-     *
-     * @param string $parents   Multiple app folder
-     * @param string $indexFile index.php
-     *
-     * @return mixed
-     */
-    public function getAppFile($parents, $indexFile)
-    {
-        $file = $this[_REAL_APP].'/'.$indexFile.'.php';
-
-        return find($file, $parents);
-    }
-
-    /**
-     * Handle Alias.
-     *
-     * @param array $alias Assign form plugApp
-     *
-     * @return void
-     */
-    private function _handleAlias(array $alias)
-    {
-        $folders = addAppFolders([], $alias);
-        $alias = $folders['alias'];
-        $app = $this->getApp();
-        if (!empty($alias[$app])) {
-            $this[_REAL_APP] = $alias[$app];
-        } else {
-            $this[_REAL_APP] = $app;
-            // Get default after dimension back
-            $this[_REAL_APP] = $this->getApp();
-        }
-    }
-
-    /**
      * Process the request.
+     *
+     * Controller -> plugapp -> {process} -> execute -> _processForm ->
+     * _processValidate -> _processAction -> processForward -> _finish
      *
      * @param MappingBuilder $builder Get mappings
      *
@@ -278,6 +206,9 @@ class controller extends PlugIn // @codingStandardsIgnoreEnd
 
     /**
      * Execute mapping.
+     * 
+     * Controller -> plugapp -> process -> {execute} -> _processForm ->
+     * _processValidate -> _processAction -> processForward -> _finish
      *
      * @param string $index pass run action
      *
@@ -291,7 +222,7 @@ class controller extends PlugIn // @codingStandardsIgnoreEnd
                 E_USER_WARNING
             );
         }
-        $actionMapping = $this->_processActionMapping($index);
+        $actionMapping = $this->_mappings->findAction($index);
         $actionForm = $this->_processForm($actionMapping);
         $this[_RUN_FORM] = $actionForm;
         //validate the form if necesarry
@@ -308,18 +239,6 @@ class controller extends PlugIn // @codingStandardsIgnoreEnd
         }
 
         return $actionForward;
-    }
-
-    /**
-     * ActionMapping.
-     *
-     * @param string $index mapping or action index
-     *
-     * @return ActionMapping
-     */
-    private function _processActionMapping($index)
-    {
-        return $this->_mappings->findAction($index);
     }
 
     /**
@@ -360,29 +279,6 @@ class controller extends PlugIn // @codingStandardsIgnoreEnd
         return $actionForm;
     }
 
-    /**
-     * Init Action Form Value.
-     *
-     * @param ActionForm    $actionForm    actionForm
-     * @param ActionMapping $actionMapping actionMapping
-     *
-     * @return ActionForm
-     */
-    private function _initActionFormValue($actionForm, $actionMapping)
-    {
-        $scope = &$actionMapping->scope;
-        $this[_SCOPE] = $actionMapping;
-        if (!is_array($scope)) {
-            $scope = $this->_request->keySet();
-        }
-        foreach ($scope as $name) {
-            if (is_array($name)) {
-                $actionForm[$name[1]] = $this->_request[$name[0]];
-            } else {
-                $actionForm[$name] = $this->_request[$name];
-            }
-        }
-    }
 
     /**
      * Call the validate() by ActionForm.
@@ -428,28 +324,25 @@ class controller extends PlugIn // @codingStandardsIgnoreEnd
     }
 
     /**
-     * Get action call.
+     * ActionForward.
      *
-     * @param ActionMapping $actionMapping actionMapping
+     * @param ActionForward $actionForward actionForward
      *
-     * @return callback
+     * @return mixed
      */
-    private function _getActionFunc(ActionMapping $actionMapping)
+    public function processForward($actionForward)
     {
-        $func = $actionMapping->func;
-        if (!is_callable($func)) {
-            if (exists(_RUN_APP, 'plugin')) {
-                $func = [plug(_RUN_APP), $func];
-            } else {
-                return !trigger_error(
-                    'parse action error, function not exists. '.
-                    print_r($func, true),
-                    E_USER_WARNING
-                );
-            }
+        if (!is_callable([$actionForward, 'go'])) {
+            return $actionForward;
+        }
+        $this[_FORWARD] = $actionForward;
+        if (callPlugin('dispatcher', 'stop')) {
+            unset($actionForward->action);
+
+            return;
         }
 
-        return $func;
+        return $actionForward->go();
     }
 
     /**
@@ -485,25 +378,53 @@ class controller extends PlugIn // @codingStandardsIgnoreEnd
     }
 
     /**
-     * ActionForward.
+     * Destruct.
      *
-     * @param ActionForward $actionForward actionForward
+     * @return void
+     */
+    public function __destruct()
+    {
+        $this->_finish();
+    }
+
+    /**
+     * <!-- Start Sub function.
+     */
+
+    /**
+     * Handle Alias.
+     *
+     * @param array $alias Assign form plugApp
+     *
+     * @return void
+     */
+    private function _handleAlias(array $alias)
+    {
+        $folders = addAppFolders([], $alias);
+        $alias = $folders['alias'];
+        $app = $this->getApp();
+        if (!empty($alias[$app])) {
+            $this[_REAL_APP] = $alias[$app];
+        } else {
+            $this[_REAL_APP] = $app;
+            // Get default after dimension back
+            $this[_REAL_APP] = $this->getApp();
+        }
+    }
+
+    /**
+     * Get app file.
+     *
+     * @param string $parents   Multiple app folder
+     * @param string $indexFile index.php
      *
      * @return mixed
      */
-    public function processForward($actionForward)
+    public function getAppFile($parents, $indexFile)
     {
-        if (!is_callable([$actionForward, 'go'])) {
-            return $actionForward;
-        }
-        $this[_FORWARD] = $actionForward;
-        if (callPlugin('dispatcher', 'stop')) {
-            unset($actionForward->action);
+        $file = $this[_REAL_APP].'/'.$indexFile.'.php';
 
-            return;
-        }
-
-        return $actionForward->go();
+        return find($file, $parents);
     }
 
     /**
@@ -517,6 +438,59 @@ class controller extends PlugIn // @codingStandardsIgnoreEnd
     {
         return $this->_mappings->add($mappings);
     }
+
+    /**
+     * Init Action Form Value.
+     *
+     * @param ActionForm    $actionForm    actionForm
+     * @param ActionMapping $actionMapping actionMapping
+     *
+     * @return ActionForm
+     */
+    private function _initActionFormValue($actionForm, $actionMapping)
+    {
+        $scope = &$actionMapping->scope;
+        $this[_SCOPE] = $actionMapping;
+        if (!is_array($scope)) {
+            $scope = $this->_request->keySet();
+        }
+        foreach ($scope as $name) {
+            if (is_array($name)) {
+                $actionForm[$name[1]] = $this->_request[$name[0]];
+            } else {
+                $actionForm[$name] = $this->_request[$name];
+            }
+        }
+    }
+
+    /**
+     * Get action call.
+     *
+     * @param ActionMapping $actionMapping actionMapping
+     *
+     * @return callback
+     */
+    private function _getActionFunc(ActionMapping $actionMapping)
+    {
+        $func = $actionMapping->func;
+        if (!is_callable($func)) {
+            if (exists(_RUN_APP, 'plugin')) {
+                $func = [plug(_RUN_APP), $func];
+            } else {
+                return !trigger_error(
+                    'parse action error, function not exists. '.
+                    print_r($func, true),
+                    E_USER_WARNING
+                );
+            }
+        }
+
+        return $func;
+    }
+
+    /**
+     * <!-- Start public get/set function.
+     */
 
     /**
      * Init Error Action Forward.
@@ -552,16 +526,6 @@ class controller extends PlugIn // @codingStandardsIgnoreEnd
     }
 
     /**
-     * Get Request.
-     *
-     * @return mixed
-     */
-    public function getRequest()
-    {
-        return $this->_request;
-    }
-
-    /**
      * Get Mapping.
      *
      * @return mixed
@@ -569,6 +533,16 @@ class controller extends PlugIn // @codingStandardsIgnoreEnd
     public function getMapping()
     {
         return $this->_mappings;
+    }
+
+    /**
+     * Get Request.
+     *
+     * @return mixed
+     */
+    public function getRequest()
+    {
+        return $this->_request;
     }
 
     /**
@@ -621,12 +595,47 @@ class controller extends PlugIn // @codingStandardsIgnoreEnd
     }
 
     /**
-     * Destruct.
+     * Set option (Will trigger Event).
+     *
+     * @param mixed $k key
+     * @param mixed $v value
      *
      * @return void
      */
-    public function __destruct()
+    public function offsetSet($k, $v = null)
     {
-        $this->_finish();
+        option('set', $k, $v);
+        callPlugin(
+            'dispatcher',
+            'set',
+            [
+                Event\SET_CONFIG,
+                $k,
+            ]
+        );
+    }
+
+    /**
+     * Get Option.
+     *
+     * @param mixed $k key
+     *
+     * @return mixed
+     */
+    public function &offsetGet($k)
+    {
+        return option('get', $k);
+    }
+
+    /**
+     * Contains key.
+     *
+     * @param string $k key
+     *
+     * @return bool
+     */
+    public function offsetExists($k)
+    {
+        return !empty(option('get', $k));
     }
 }
