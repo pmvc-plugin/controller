@@ -84,7 +84,7 @@ class controller extends PlugIn // @codingStandardsIgnoreEnd
      *
      * Controller -> {plugapp} -> process -> execute -> _processForm ->
      * _processValidate -> _processAction -> processForward -> _finish
-     * 
+     *
      * @param array  $folders   defaultAppFolder
      * @param array  $appAlias  appAlias
      * @param string $indexFile index.php
@@ -206,7 +206,7 @@ class controller extends PlugIn // @codingStandardsIgnoreEnd
 
     /**
      * Execute mapping.
-     * 
+     *
      * Controller -> plugapp -> process -> {execute} -> _processForm ->
      * _processValidate -> _processAction -> processForward -> _finish
      *
@@ -242,7 +242,10 @@ class controller extends PlugIn // @codingStandardsIgnoreEnd
     }
 
     /**
-     * ActionForm.
+     * Process form to handle user input.
+     *
+     * Controller -> plugapp -> process -> execute -> {_processForm} ->
+     * _processValidate -> _processAction -> processForward -> _finish
      *
      * @param ActionMapping $actionMapping actionMapping
      *
@@ -279,9 +282,11 @@ class controller extends PlugIn // @codingStandardsIgnoreEnd
         return $actionForm;
     }
 
-
     /**
-     * Call the validate() by ActionForm.
+     * Call the validate() with ActionForm.
+     *
+     * Controller -> plugapp -> process -> execute -> _processForm ->
+     * {_processValidate} -> _processAction -> processForward -> _finish
      *
      * @param ActionForm $actionForm actionForm
      *
@@ -299,7 +304,10 @@ class controller extends PlugIn // @codingStandardsIgnoreEnd
     }
 
     /**
-     * Action for this request.
+     * Process action.
+     *
+     * Controller -> plugapp -> process -> execute -> _processForm ->
+     * _processValidate -> {_processAction} -> processForward -> _finish
      *
      * @param ActionMapping $actionMapping actionMapping
      * @param ActionForm    $actionForm    actionForm
@@ -324,7 +332,10 @@ class controller extends PlugIn // @codingStandardsIgnoreEnd
     }
 
     /**
-     * ActionForward.
+     * Process forward.
+     *
+     * Controller -> plugapp -> process -> execute -> _processForm ->
+     * _processValidate -> _processAction -> {processForward} -> _finish
      *
      * @param ActionForward $actionForward actionForward
      *
@@ -347,6 +358,9 @@ class controller extends PlugIn // @codingStandardsIgnoreEnd
 
     /**
      * Finish request and take down the controller.
+     *
+     * Controller -> plugapp -> process -> execute -> _processForm ->
+     * _processValidate -> _processAction -> processForward -> {_finish}
      *
      * @return void
      */
@@ -499,30 +513,12 @@ class controller extends PlugIn // @codingStandardsIgnoreEnd
      */
     public function getErrorForward()
     {
-        $AllErrors = $this[ERRORS];
-        if (empty($AllErrors[USER_LAST_ERROR])) {
+        $allErrors = $this[ERRORS];
+        if (empty($allErrors[USER_LAST_ERROR])) {
             return false;
         }
-        callPlugin(
-            'dispatcher',
-            'notify',
-            [
-                Event\B4_PROCESS_ERROR, true,
-            ]
-        );
-        $thisForward = get($this, _ERROR_FORWARD, 'error');
-        if (!$this->_mappings->forwardExists($thisForward)) {
-            return false;
-        }
-        $errorForward = $this->_mappings->findForward($thisForward);
-        $errorForward->set(
-            [
-                'errors'    => $AllErrors[USER_ERRORS],
-                'lastError' => $AllErrors[USER_LAST_ERROR],
-            ]
-        );
 
-        return $errorForward;
+        return $this->process_error($allErrors);
     }
 
     /**
@@ -530,7 +526,7 @@ class controller extends PlugIn // @codingStandardsIgnoreEnd
      *
      * @return mixed
      */
-    public function getMapping()
+    public function getMappings()
     {
         return $this->_mappings;
     }

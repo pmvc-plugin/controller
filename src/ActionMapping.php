@@ -94,7 +94,7 @@ class ActionMapping extends HashMap
      */
     public function offsetExists($name)
     {
-        return \PMVC\plug('controller')->getMapping()->forwardExists($name);
+        return \PMVC\plug('controller')->getMappings()->forwardExists($name);
     }
 
     /**
@@ -106,6 +106,6 @@ class ActionMapping extends HashMap
      */
     public function offsetGet($name)
     {
-        return \PMVC\plug('controller')->getMapping()->findForward($name);
+        return \PMVC\plug('controller')->getMappings()->findForward($name);
     }
 }

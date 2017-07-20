@@ -20,10 +20,7 @@ namespace PMVC;
 
 use DomainException;
 
-${_INIT_CONFIG
-}[_CLASS] = __NAMESPACE__.'\_app_not_found';
-
-/**
+/*
  * App Not Found Notice.
  *
  * @category CategoryName
@@ -36,6 +33,7 @@ ${_INIT_CONFIG
  * @link https://packagist.org/packages/pmvc/pmvc
  */
 // @codingStandardsIgnoreStart
+${_INIT_CONFIG}[_CLASS] = __NAMESPACE__.'\_app_not_found';
 class _app_not_found // @codingStandardsIgnoreEnd
 {
     /**
