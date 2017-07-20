@@ -12,7 +12,13 @@ before_script:
   - composer self-update
   - composer install --prefer-source
   - composer require phpunit/phpunit 4.8.35
+  - if [[ "$TRAVIS_PHP_VERSION" == '5.6' ]]; then composer require satooshi/php-coveralls:1.* -n ; fi
  
 script:
-  - vendor/bin/phpunit
-  - vendor/bin/phpcs src/ ./controller.php
+  - if [[ "$TRAVIS_PHP_VERSION" != '5.6' ]]; then vendor/bin/phpunit; fi
+  - if [[ "$TRAVIS_PHP_VERSION" == '5.6' ]]; then vendor/bin/phpunit --coverage-clover clover.xml ; fi
+  - if [[ "$TRAVIS_PHP_VERSION" == '5.6' ]]; then vendor/bin/phpcs src/ ./controller.php; fi
+
+after_script:
+  - if [[ "$TRAVIS_PHP_VERSION" == '5.6' ]]; then php vendor/bin/coveralls --coverage_clover=clover.xml -v ; fi
+ 
