@@ -286,8 +286,13 @@ class ActionForward extends HashMap
     private function _processView()
     {
         /**
-        * If you face a wrong view object,
-        * Please check above important information.
+        * Do you face a wrong view object?
+        *
+        * !! Important !!
+        *
+        * Please remeber if you need change view,
+        * and need change it before create ActionForward instance.
+        * Or just create a new one.
         */
         $view = $this->_view;
         if (isset($view['headers'])) {
@@ -295,7 +300,6 @@ class ActionForward extends HashMap
             unset($view['headers']);
         }
         $this->_processHeader();
-        flush();
         $c = plug('controller');
         $appTemplateDir = value(
             $c['template'],
