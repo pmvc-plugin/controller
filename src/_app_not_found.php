@@ -73,7 +73,7 @@ class _app_not_found // @codingStandardsIgnoreEnd
         );
         if (!$path) {
             throw new DomainException(
-                'Not set default app correct. ['.
+                'Default app setting is not correct. ['.
                 $caller[_DEFAULT_APP].
                 ']'
             );
