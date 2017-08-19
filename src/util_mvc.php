@@ -57,19 +57,6 @@ function getAppsParent()
 }
 
 /**
- * Set App Folder.
- *
- * @param array $folders folders
- * @param array $alias   alias
- *
- * @return mixed
- */
-function setAppFolders(array $folders, $alias = [])
-{
-    return folders(_RUN_APP, $folders, $alias, true);
-}
-
-/**
  * Add App Folder.
  *
  * @param array $folders folders
@@ -77,7 +64,26 @@ function setAppFolders(array $folders, $alias = [])
  *
  * @return mixed
  */
-function addAppFolders(array $folders, $alias = [])
+function addAppFolders(array $folders, array $alias = [])
 {
+    dev(
+        /**
+         * Dev.
+         *
+         * @help Debug for PMVC add app folder.
+         */
+        function () use ($folders, $alias) {
+            $trace = plug('debug')->parseTrace(debug_backtrace(), 12);
+
+            return [
+                'previous'=> folders(_RUN_APP),
+                'folders' => $folders,
+                'alias'   => $alias,
+                'trace'   => $trace,
+            ];
+        },
+        'app-folder'
+    );
+
     return folders(_RUN_APP, $folders, $alias);
 }
