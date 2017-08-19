@@ -286,14 +286,14 @@ class ActionForward extends HashMap
     private function _processView()
     {
         /**
-        * Do you face a wrong view object?
-        *
-        * !! Important !!
-        *
-        * Please remeber if you need change view,
-        * and need change it before create ActionForward instance.
-        * Or just create a new one.
-        */
+         * Do you face a wrong view object?
+         *
+         * !! Important !!
+         *
+         * Please remeber if you need change view,
+         * and need change it before create ActionForward instance.
+         * Or just create a new one.
+         */
         $view = $this->_view;
         if (isset($view['headers'])) {
             $this->setHeader($view['headers']);
