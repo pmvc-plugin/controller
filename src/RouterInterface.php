@@ -49,7 +49,7 @@ interface RouterInterface
      *
      * @return void
      */
-    public function processHeader($headers);
+    public function processHeader(array $headers);
 
     /**
      * Execute another program.
