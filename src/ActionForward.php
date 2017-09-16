@@ -21,6 +21,13 @@ namespace PMVC;
 /**
  * PMVC ActionForward.
  *
+ * !!!!!!!!!!!!!!!
+ * !! important !!
+ * !!!!!!!!!!!!!!!
+ *
+ * If you change view after get forward,
+ * you need reget forward again.
+ *
  * @category CategoryName
  *
  * @package PMVC
@@ -55,9 +62,6 @@ class ActionForward extends HashMap
 
     /**
      * View.
-     * !! important !!
-     * If you change view after get forward,
-     * you need reget forward again.
      *
      * @var object
      */
@@ -263,19 +267,21 @@ class ActionForward extends HashMap
     /**
      * Process Header.
      *
-     * @return $this
+     * @return void
      */
     private function _processHeader()
     {
-        $headers = &$this->getHeader();
-
-        return callPlugin(
+        if (empty($this->_header)) {
+            return;
+        }
+        callPlugin(
             option('get', _ROUTER),
             'processHeader',
             [
-                $headers,
+                $this->_header,
             ]
         );
+        $this->_header = [];
     }
 
     /**
@@ -295,23 +301,6 @@ class ActionForward extends HashMap
          * Or just create a new one.
          */
         $view = $this->_view;
-        if (isset($view['headers'])) {
-            $this->setHeader($view['headers']);
-            unset($view['headers']);
-        }
-        $this->_processHeader();
-        $c = plug('controller');
-        $appTemplateDir = value(
-            $c['template'],
-            [
-                'dir',
-                $c->getApp(),
-            ],
-            $c[_TEMPLATE_DIR]
-        );
-        $view->setThemeFolder(
-            $appTemplateDir
-        );
         $path = $this->getPath();
         if ($path) {
             $view->setThemePath($path);
@@ -333,6 +322,26 @@ class ActionForward extends HashMap
                 Event\B4_PROCESS_VIEW, true,
             ]
         );
+        $c = plug('controller');
+        $appTemplateDir = value(
+            $c['template'],
+            [
+                'dir',
+                $c->getApp(),
+            ],
+            $c[_TEMPLATE_DIR]
+        );
+        // Put after B4_PROCESS_VIEW event for get all
+        // view_config_helper values.
+        $view->setThemeFolder(
+            $appTemplateDir
+        );
+        // Get header after $view->setThemeFolder.
+        if (isset($view['headers'])) {
+            $this->setHeader($view['headers']);
+            unset($view['headers']);
+        }
+        $this->_processHeader();
 
         return $view->process();
     }
