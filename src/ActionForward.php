@@ -350,6 +350,7 @@ class ActionForward extends HashMap
                 Event\B4_PROCESS_VIEW, true,
             ]
         );
+
         return $view->process();
     }
 

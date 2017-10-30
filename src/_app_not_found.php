@@ -56,7 +56,7 @@ class _app_not_found // @codingStandardsIgnoreEnd
         trigger_error(
             print_r(
                 [
-                 'Error'  => 'No app found, '.
+                 'Error' => 'No app found, '.
                              'Please check following debug message.',
                  'Parent' => $parents,
                  'App'    => $caller[_REAL_APP],

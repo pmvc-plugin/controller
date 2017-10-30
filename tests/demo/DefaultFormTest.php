@@ -6,9 +6,9 @@ class DefaultFormTest extends PHPUnit_Framework_TestCase
     {
         \PMVC\unplug('controller');
         \PMVC\option('set', [
-            _RUN_FORM        => null,
-            _DEFAULT_FORM    => null,
-            'fakeDefaultForm'=> null,
+            _RUN_FORM         => null,
+            _DEFAULT_FORM     => null,
+            'fakeDefaultForm' => null,
         ]);
     }
 
