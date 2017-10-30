@@ -319,7 +319,7 @@ class ActionForward extends HashMap
             'dispatcher',
             'notify',
             [
-                Event\B4_PROCESS_VIEW, true,
+                Event\B4_PROCESS_HEADER, true,
             ]
         );
         $c = plug('controller');
@@ -343,6 +343,13 @@ class ActionForward extends HashMap
         }
         $this->_processHeader();
 
+        callPlugin(
+            'dispatcher',
+            'notify',
+            [
+                Event\B4_PROCESS_VIEW, true,
+            ]
+        );
         return $view->process();
     }
 
