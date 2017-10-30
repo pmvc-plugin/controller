@@ -38,7 +38,7 @@ class ActionForwardTest extends PHPUnit_Framework_TestCase
     public function testAppendConfigToRunApp()
     {
         $run = plug(_RUN_APP, [
-            _CLASS=> '\PMVC\FakePlugIn',
+            _CLASS => '\PMVC\FakePlugIn',
         ]);
         $fakeForward = [
             _PATH   => '',
@@ -72,6 +72,6 @@ class ActionForwardTest extends PHPUnit_Framework_TestCase
             _ACTION => '',
         ];
         $forward = new ActionForward($fakeForward);
-        $forward->append(['foo'=>'bar']);
+        $forward->append(['foo' => 'bar']);
     }
 }

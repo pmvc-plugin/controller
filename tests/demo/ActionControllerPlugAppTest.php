@@ -99,13 +99,13 @@ class ActionControllerPlugAppTest extends PHPUnit_Framework_TestCase
         option('set', _REAL_APP, null);
         $another = \PMVC\plug(
             'another', [
-                _CLASS  => '\PMVC\AnotherPlugin',
-                'assert'=> _REAL_APP,
+                _CLASS   => '\PMVC\AnotherPlugin',
+                'assert' => _REAL_APP,
             ]
         );
         $mvc = plug('controller');
         $mvc->setApp('testFoo');
-        $mvc->plugApp([], ['testFoo'=>'testApp']);
+        $mvc->plugApp([], ['testFoo' => 'testApp']);
         $this->assertEquals(
             'testApp',
             $another['actual']

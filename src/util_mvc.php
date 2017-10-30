@@ -76,10 +76,10 @@ function addAppFolders(array $folders, array $alias = [])
             $trace = plug('debug')->parseTrace(debug_backtrace(), 12);
 
             return [
-                'previous'=> folders(_RUN_APP),
-                'folders' => $folders,
-                'alias'   => $alias,
-                'trace'   => $trace,
+                'previous' => folders(_RUN_APP),
+                'folders'  => $folders,
+                'alias'    => $alias,
+                'trace'    => $trace,
             ];
         },
         'app-folder'

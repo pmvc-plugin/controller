@@ -331,17 +331,19 @@ class ActionForward extends HashMap
             ],
             $c[_TEMPLATE_DIR]
         );
-        // Put after B4_PROCESS_VIEW event for get all
+        // Put after B4_PROCESS_HEADER event for get all
         // view_config_helper values.
         $view->setThemeFolder(
             $appTemplateDir
         );
-        // Get header after $view->setThemeFolder.
+
+        // <!-- Get header after $view->setThemeFolder.
         if (isset($view['headers'])) {
             $this->setHeader($view['headers']);
             unset($view['headers']);
         }
         $this->_processHeader();
+        // -->
 
         callPlugin(
             'dispatcher',
@@ -350,6 +352,7 @@ class ActionForward extends HashMap
                 Event\B4_PROCESS_VIEW, true,
             ]
         );
+
         return $view->process();
     }
 
