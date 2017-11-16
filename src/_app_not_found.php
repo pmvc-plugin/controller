@@ -54,16 +54,17 @@ class _app_not_found // @codingStandardsIgnoreEnd
         option('set', 'httpResponseCode', 404);
         $caller = $this->caller;
         trigger_error(
-            print_r(
+            json_encode(
                 [
                  'Error' => 'No app found, '.
                              'Please check following debug message.',
-                 'Parent' => $parents,
-                 'App'    => $caller[_REAL_APP],
-                 'Index'  => $indexFile,
-                 'Alias'  => $alias ?: '',
+                 'Debug' => [
+                     'Parent' => $parents,
+                     'App'    => $caller[_REAL_APP],
+                     'Index'  => $indexFile,
+                     'Alias'  => $alias ?: '',
                  ],
-                true
+                ]
             ), E_USER_WARNING
         );
         $caller[_REAL_APP] = $caller[_DEFAULT_APP];
