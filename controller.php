@@ -618,7 +618,7 @@ class controller extends PlugIn // @codingStandardsIgnoreEnd
      *
      * @return mixed
      */
-    public function &offsetGet($k)
+    public function &offsetGet($k = null)
     {
         return option('get', $k);
     }

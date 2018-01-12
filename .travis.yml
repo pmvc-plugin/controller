@@ -5,7 +5,7 @@ group: edge
  
 php:
   - 5.6
-  - 7.1
+  - 7.2
   - hhvm
  
 before_script:
