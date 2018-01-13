@@ -13,8 +13,8 @@ class ActionMappingTest extends PHPUnit_Framework_TestCase
         $builder = new MappingBuilder();
         $builder->addAction('action');
         $builder->addForward('forward', [
-            _PATH=>$unitPath,
-            _TYPE=>'action'
+            _PATH=> $unitPath,
+            _TYPE=> 'action',
         ]);
         $mappings->add($builder);
         $a = $mappings->findAction('action');
