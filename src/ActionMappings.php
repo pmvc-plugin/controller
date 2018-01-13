@@ -49,7 +49,6 @@ class ActionMappings
     public function set(MappingBuilder $mappings)
     {
         $this->_mappings = $mappings;
-
         return !empty($this->_mappings);
     }
 
@@ -103,7 +102,6 @@ class ActionMappings
     {
         $mapping = value($this->_mappings, [ACTION_MAPPINGS, $name]);
         $mappingObj = new ActionMapping($mapping, $this, $name);
-
         return $mappingObj;
     }
 

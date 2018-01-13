@@ -65,15 +65,23 @@ class ActionMapping extends HashMap
     public $scope;
 
     /**
+     * Connection mappings
+     *
+     * @var ActionMappings
+     */
+    private $_mappings;
+
+    /**
      * ActionMapping.
      *
-     * @param array  $mapping  mapping
-     * @param string $mappings mappings
-     * @param string $name     name
+     * @param array          $mapping  mapping
+     * @param ActionMappings $mappings mappings
+     * @param string         $name     name
      */
     public function __construct(&$mapping, $mappings, $name)
     {
         $this->func = get($mapping, _FUNCTION, $name);
+        $this->_mappings = $mappings;
         if (isset($mapping[_FORM])) {
             $this->form = $mapping[_FORM];
         }
@@ -94,7 +102,7 @@ class ActionMapping extends HashMap
      */
     public function offsetExists($name)
     {
-        return \PMVC\plug('controller')->getMappings()->forwardExists($name);
+        return $this->_mappings->forwardExists($name);
     }
 
     /**
@@ -106,6 +114,7 @@ class ActionMapping extends HashMap
      */
     public function &offsetGet($name = null)
     {
-        return \PMVC\plug('controller')->getMappings()->findForward($name);
+        $forward = $this->_mappings->findForward($name);
+        return $forward;
     }
 }
