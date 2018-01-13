@@ -65,7 +65,7 @@ class ActionMapping extends HashMap
     public $scope;
 
     /**
-     * Connection mappings
+     * Connection mappings.
      *
      * @var ActionMappings
      */
@@ -115,6 +115,7 @@ class ActionMapping extends HashMap
     public function &offsetGet($name = null)
     {
         $forward = $this->_mappings->findForward($name);
+
         return $forward;
     }
 }
