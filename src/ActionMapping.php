@@ -104,7 +104,7 @@ class ActionMapping extends HashMap
      *
      * @return mixed
      */
-    public function offsetGet($name)
+    public function &offsetGet($name = null)
     {
         return \PMVC\plug('controller')->getMappings()->findForward($name);
     }

@@ -31,7 +31,8 @@ l(__DIR__.'/src/MappingBuilder.php');
 l(__DIR__.'/src/Request.php');
 l(__DIR__.'/src/RouterInterface.php');
 addAppFolders([__DIR__.'/../../pmvc-app']);
-${_INIT_CONFIG}[_CLASS] = __NAMESPACE__.'\controller';
+${_INIT_CONFIG
+}[_CLASS] = __NAMESPACE__.'\controller';
 
 /**
  * PMVC Action.

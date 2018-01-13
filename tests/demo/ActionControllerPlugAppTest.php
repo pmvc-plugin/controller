@@ -2,6 +2,8 @@
 
 namespace PMVC;
 
+use Exception;
+use PHPUnit_Framework_Error;
 use PHPUnit_Framework_TestCase;
 
 class ActionControllerPlugAppTest extends PHPUnit_Framework_TestCase
@@ -76,9 +78,18 @@ class ActionControllerPlugAppTest extends PHPUnit_Framework_TestCase
      */
     public function testSetAppFail()
     {
-        $mvc = plug('controller');
-        $mvc->setApp('xxx');
-        $mvc->plugApp();
+        try {
+            $mvc = plug('controller');
+            $mvc->setApp('xxx');
+            $mvc->plugApp();
+        } catch (Exception $e) {
+            throw new PHPUnit_Framework_Error(
+                $e->getMessage(),
+                0,
+                $e->getFile(),
+                $e->getLine()
+            );
+        }
     }
 
     /**
