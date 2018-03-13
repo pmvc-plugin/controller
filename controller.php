@@ -183,13 +183,6 @@ class controller extends PlugIn // @codingStandardsIgnoreEnd
                 Event\MAP_REQUEST, true,
             ]
         );
-        callPlugin(
-            'dispatcher',
-            'notify',
-            [
-                Event\B4_PROCESS, true,
-            ]
-        );
         if (callPlugin('dispatcher', 'stop')) {
             // Stop for authentication plugin verify failed
             return;
