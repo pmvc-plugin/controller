@@ -21,7 +21,6 @@ namespace PMVC;
 use DomainException;
 
 l(__DIR__.'/src/Constants.php');
-l(__DIR__.'/src/util_mvc.php');
 l(__DIR__.'/src/Action.php');
 l(__DIR__.'/src/ActionForm.php');
 l(__DIR__.'/src/ActionForward.php');
@@ -30,7 +29,6 @@ l(__DIR__.'/src/ActionMappings.php');
 l(__DIR__.'/src/MappingBuilder.php');
 l(__DIR__.'/src/Request.php');
 l(__DIR__.'/src/RouterInterface.php');
-addAppFolders([__DIR__.'/../../pmvc-app']);
 ${_INIT_CONFIG
 }[_CLASS] = __NAMESPACE__.'\controller';
 
@@ -76,6 +74,7 @@ class controller extends PlugIn // @codingStandardsIgnoreEnd
      */
     public function __construct()
     {
+        $this->addAppFolders([__DIR__.'/../../pmvc-app']);
         $this->_mappings = new ActionMappings();
         $this->_request = new Request();
     }
@@ -114,7 +113,7 @@ class controller extends PlugIn // @codingStandardsIgnoreEnd
         if (empty($folders) && $this[_RUN_APPS]) {
             $folders = toArray($this[_RUN_APPS]);
         }
-        $folders = addAppFolders($folders);
+        $folders = $this->addAppFolders($folders);
         $parents = $folders['folders'];
         $path = $this->getAppFile(
             $parents,
@@ -415,7 +414,7 @@ class controller extends PlugIn // @codingStandardsIgnoreEnd
      */
     private function _handleAlias(array $alias)
     {
-        $folders = addAppFolders([], $alias);
+        $folders = $this->addAppFolders([], $alias);
         $alias = $folders['alias'];
         $app = $this->getApp();
         if (!empty($alias[$app])) {
@@ -483,7 +482,7 @@ class controller extends PlugIn // @codingStandardsIgnoreEnd
      *
      * @param ActionMapping $actionMapping actionMapping
      *
-     * @return callback
+     * @return callable
      */
     private function _getActionFunc(ActionMapping $actionMapping)
     {
@@ -634,5 +633,37 @@ class controller extends PlugIn // @codingStandardsIgnoreEnd
     public function offsetExists($k)
     {
         return !empty(option('get', $k));
+    }
+
+    /**
+     * Add App Folder.
+     *
+     * @param array $folders folders
+     * @param array $alias   alias
+     *
+     * @return mixed
+     */
+    public function addAppFolders(array $folders, array $alias = [])
+    {
+        dev(
+            /**
+             * Dev.
+             *
+             * @help Debug for PMVC add app folder.
+             */
+            function () use ($folders, $alias) {
+                $trace = plug('debug')->parseTrace(debug_backtrace(), 12);
+
+                return [
+                    'previous' => folders(_RUN_APP),
+                    'folders'  => $folders,
+                    'alias'    => $alias,
+                    'trace'    => $trace,
+                ];
+            },
+            'app-folder'
+        );
+
+        return folders(_RUN_APP, $folders, $alias);
     }
 }

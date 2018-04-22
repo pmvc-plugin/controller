@@ -55,22 +55,7 @@ class ActionControllerPlugAppTest extends PHPUnit_Framework_TestCase
         $mvc = plug('controller');
         $mvc->setApp('testApp');
         $mvc->plugApp([$this->resources.'apps1']);
-        $this->assertEquals(realpath($this->resources).'/', \PMVC\getAppsParent());
-    }
-
-    public function testTransparent()
-    {
-        $mvc = plug('controller');
-        $mvc->setApp('testApp');
-        $mvc->plugApp([$this->resources.'apps1']);
-        $this->assertEquals(
-            realpath($this->resources).'/FakeView.php',
-            \PMVC\transparent('FakeView.php')
-        );
-        $this->assertEquals(
-            realpath($this->resources).'/apps1/testApp/index.php',
-            \PMVC\transparent('index.php')
-        );
+        $this->assertEquals(realpath($this->resources).'/', $mvc->get_apps_parent());
     }
 
     /**
