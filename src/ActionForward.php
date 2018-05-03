@@ -61,6 +61,13 @@ class ActionForward extends HashMap
     private $_header = [];
 
     /**
+     * Body.
+     *
+     * @var array
+     */
+    private $_body = [];
+
+    /**
      * View.
      *
      * @var object
@@ -135,7 +142,7 @@ class ActionForward extends HashMap
      */
     private function _setType($type = null)
     {
-        if ('view' === $type) {
+        if ('view' === $type || 'redirect' === $type) {
             $c = plug('controller');
             $appViewEngine = value(
                 $c['view'],
@@ -243,7 +250,7 @@ class ActionForward extends HashMap
         if ('view' === $this->_type) {
             return $this->_view->set($k, $v);
         } else {
-            return set($this, $k, $v);
+            return set($this->_body, $k, $v);
         }
     }
 
@@ -260,7 +267,7 @@ class ActionForward extends HashMap
         if ('view' === $this->_type) {
             return $this->_view->get($k, $default);
         } else {
-            return get($this, $k, $default);
+            return get($this->_body, $k, $default);
         }
     }
 
@@ -297,13 +304,17 @@ class ActionForward extends HashMap
          * !! Important !!
          *
          * Please remeber if you need change view,
-         * and need change it before create ActionForward instance.
-         * Or just create a new one.
+         * - Option 1. Must change it before create ActionForward instance.
+         * - Option 2. Or just create a new one.
          */
         $view = $this->_view;
         $path = $this->getPath();
-        if ($path) {
-            $view->setThemePath($path);
+        if ('redirect' !== $this->_type) {
+            if ($path) {
+                $view->setThemePath($path);
+            }
+        } else {
+            $view->prepend(get($this));
         }
         if (exists(_RUN_APP, 'plugin')) {
             $run = plug(_RUN_APP);
@@ -364,19 +375,22 @@ class ActionForward extends HashMap
     public function go()
     {
         switch ($this->getType()) {
-        case 'view':
-            return $this->_processView();
         case 'redirect':
             $this->_processHeader();
             $path = $this->getPath(true);
-
-            return callPlugin(
+            if (!empty($this[_CLIENT_LOCATION])) {
+                $this['locationReplace'] = $path;
+            }
+            callPlugin(
                 option('get', _ROUTER),
                 'go',
                 [
                     $path,
+                    $this[_CLIENT_LOCATION],
                 ]
             );
+        case 'view':
+            return $this->_processView();
         case 'action':
         default:
             if (exists(_RUN_APP, 'plugin')) {
@@ -386,7 +400,7 @@ class ActionForward extends HashMap
                     $keepForward = new HashMap();
                     $run[_FORWARD] = $keepForward;
                 }
-                $keepForward[[]] = get($this);
+                $keepForward[[]] = $this->get();
             }
 
             return $this;

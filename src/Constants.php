@@ -41,6 +41,7 @@ namespace {
     define('_TYPE', '_type_');
     define('_FORWARD', '_forward_');
     define('_ERROR_FORWARD', '_error_forward_');
+    define('_CLIENT_LOCATION', '_client_location_');
 
     /* Options */
     define('_ROUTER', '_router_');

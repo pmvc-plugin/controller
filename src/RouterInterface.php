@@ -54,9 +54,10 @@ interface RouterInterface
     /**
      * Execute another program.
      *
-     * @param string $path path
+     * @param string $path             path
+     * @param bool   $isClientLocation When call with ajax, use location.href
      *
      * @return mixed
      */
-    public function go($path);
+    public function go($path, $isClientLocation = false);
 }
