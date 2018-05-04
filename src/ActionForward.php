@@ -68,6 +68,13 @@ class ActionForward extends HashMap
     private $_body = [];
 
     /**
+     * Client Location.
+     *
+     * @var array
+     */
+    private $_isClientLocation = false;
+
+    /**
      * View.
      *
      * @var object
@@ -292,6 +299,27 @@ class ActionForward extends HashMap
     }
 
     /**
+     * Set client location.
+     * 
+     * @param string $type clinet location type [href|replace|false]
+     * 
+     * @return string isClientLocation 
+     */
+    public function setClientLocation($type)
+    {
+        switch ($type) {
+        case 'href':
+        case 'replace':
+            $this->_isClientLocation = $type; 
+            break;
+        default: 
+            $this->_isClientLocation = false; 
+        }
+
+        return $this->_isClientLocation;
+    }
+
+    /**
      * Process View.
      *
      * @return $this
@@ -378,15 +406,16 @@ class ActionForward extends HashMap
         case 'redirect':
             $this->_processHeader();
             $path = $this->getPath(true);
-            if (!empty($this[_CLIENT_LOCATION])) {
-                $this['locationReplace'] = $path;
+            if (!empty($this->_isClientLocation)) {
+                $this['clientLocationTo'] = $path;
+                $this['clientLocationType'] = $this->_isClientLocation;
             }
             callPlugin(
                 option('get', _ROUTER),
                 'go',
                 [
                     $path,
-                    $this[_CLIENT_LOCATION],
+                    $this->_isClientLocation,
                 ]
             );
         case 'view':
