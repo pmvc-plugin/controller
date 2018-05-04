@@ -300,20 +300,20 @@ class ActionForward extends HashMap
 
     /**
      * Set client location.
-     * 
+     *
      * @param string $type clinet location type [href|replace|false]
-     * 
-     * @return string isClientLocation 
+     *
+     * @return string isClientLocation
      */
     public function setClientLocation($type)
     {
         switch ($type) {
         case 'href':
         case 'replace':
-            $this->_isClientLocation = $type; 
+            $this->_isClientLocation = $type;
             break;
-        default: 
-            $this->_isClientLocation = false; 
+        default:
+            $this->_isClientLocation = false;
         }
 
         return $this->_isClientLocation;
