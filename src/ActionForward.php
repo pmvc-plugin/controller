@@ -68,11 +68,11 @@ class ActionForward extends HashMap
     private $_body = [];
 
     /**
-     * Client Location.
+     * Client redirect.
      *
-     * @var array
+     * @var bool
      */
-    private $_isClientLocation = false;
+    private $_isClientRedirect = false;
 
     /**
      * View.
@@ -299,24 +299,24 @@ class ActionForward extends HashMap
     }
 
     /**
-     * Set client location.
+     * Set client redirect.
      *
-     * @param string $type clinet location type [href|replace|false]
+     * @param string $type clinet redirect type [href|replace|false]
      *
-     * @return string isClientLocation
+     * @return string isClientRedirect
      */
-    public function setClientLocation($type)
+    public function setClientRedirect($type)
     {
         switch ($type) {
         case 'href':
         case 'replace':
-            $this->_isClientLocation = $type;
+            $this->_isClientRedirect = $type;
             break;
         default:
-            $this->_isClientLocation = false;
+            $this->_isClientRedirect = false;
         }
 
-        return $this->_isClientLocation;
+        return $this->_isClientRedirect;
     }
 
     /**
@@ -406,16 +406,16 @@ class ActionForward extends HashMap
         case 'redirect':
             $this->_processHeader();
             $path = $this->getPath(true);
-            if (!empty($this->_isClientLocation)) {
-                $this['clientLocationTo'] = $path;
-                $this['clientLocationType'] = $this->_isClientLocation;
+            if (!empty($this->_isClientRedirect)) {
+                $this['clientRedirectTo'] = $path;
+                $this['clientRedirectType'] = $this->_isClientRedirect;
             }
             callPlugin(
                 option('get', _ROUTER),
                 'go',
                 [
                     $path,
-                    $this->_isClientLocation,
+                    $this->_isClientRedirect,
                 ]
             );
         case 'view':
