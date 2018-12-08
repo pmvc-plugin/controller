@@ -87,7 +87,11 @@ class MappingBuilder extends HashMap
         if (!is_null($settings[_FORM])) {
             $this->addForm($settings[_FORM]);
         }
-        $this[ACTION_MAPPINGS][$psId] = $settings;
+        $lowerId = strtolower($psId);
+        if (isset($this[ACTION_MAPPINGS][$lowerId])) {
+            trigger_error('Action ['.$lowerId.']: already exists.', E_USER_WARNING);
+        }
+        $this[ACTION_MAPPINGS][$lowerId] = $settings;
 
         return $settings;
     }

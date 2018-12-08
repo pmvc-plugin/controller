@@ -101,7 +101,7 @@ class ActionMappings
      */
     public function findAction($name)
     {
-        $mapping = value($this->_mappings, [ACTION_MAPPINGS, $name]);
+        $mapping = value($this->_mappings, [ACTION_MAPPINGS, strtolower($name)]);
         $mappingObj = new ActionMapping($mapping, $this, $name);
 
         return $mappingObj;
