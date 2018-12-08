@@ -186,6 +186,7 @@ class ActionMappings
      */
     public function actionExists($name)
     {
+        $name = strtolower($name);
         return isset($this->_mappings[ACTION_MAPPINGS][$name]);
     }
 }
