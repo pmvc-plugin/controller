@@ -4,7 +4,7 @@ class HelloTest extends PHPUnit_Framework_TestCase
 {
     public function setup()
     {
-      \PMVC\unplug('controller');
+        \PMVC\unplug('controller');
     }
 
     public function testHello()
@@ -38,7 +38,7 @@ class HelloTest extends PHPUnit_Framework_TestCase
         $result = $mvc->process($b);
         $this->assertEquals($test_str, $result[0]);
     }
-    
+
     public function actionProvider()
     {
         return [
