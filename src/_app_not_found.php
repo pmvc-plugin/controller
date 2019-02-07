@@ -34,7 +34,7 @@ use DomainException;
  */
 // @codingStandardsIgnoreStart
 ${_INIT_CONFIG}[_CLASS] = __NAMESPACE__.'\app_not_found';
-class app_not_found // @codingStandardsIgnoreEnd
+class _app_not_found // @codingStandardsIgnoreEnd
 {
     /**
      * App not found invoke.
