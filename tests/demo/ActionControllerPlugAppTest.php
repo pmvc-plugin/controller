@@ -13,6 +13,9 @@ class ActionControllerPlugAppTest extends PHPUnit_Framework_TestCase
         folders(_RUN_APP, [], [], true);
         $this->resources = __DIR__.'/../resources/';
         unPlug(_RUN_APP);
+        unPlug('controller');
+        option('set', _REAL_APP, null);
+        option('set', _RUN_APPS, null);
     }
 
     public function testStore()
@@ -28,6 +31,7 @@ class ActionControllerPlugAppTest extends PHPUnit_Framework_TestCase
         $expected = array_reverse(array_map(function ($d) {
             return realpath($d);
         }, $folders));
+        $expected[] = realpath(__DIR__.'/../../../../pmvc-app');
         $this->assertEquals(
             $expected,
             $store['folders']
@@ -55,7 +59,14 @@ class ActionControllerPlugAppTest extends PHPUnit_Framework_TestCase
         $mvc = plug('controller');
         $mvc->setApp('testApp');
         $mvc->plugApp([$this->resources.'apps1']);
-        $this->assertEquals(realpath($this->resources).'/', $mvc->get_apps_parent());
+        $this->assertEquals(realpath($this->resources).'/', $mvc->getAppsParent());
+    }
+
+    public function testGetAppsParentFromVendor()
+    {
+        $mvc = plug('controller');
+        $mvc[_RUN_APPS] = realpath('vendor/pmvc/pmvc');
+        $this->assertTrue(0 === strpos($mvc[_RUN_APPS], $mvc->getAppsParent()));
     }
 
     /**
@@ -92,16 +103,19 @@ class ActionControllerPlugAppTest extends PHPUnit_Framework_TestCase
     public function testSetRealApp()
     {
         unplug('another');
-        option('set', _REAL_APP, null);
         $another = \PMVC\plug(
             'another', [
                 _CLASS   => '\PMVC\AnotherPlugin',
                 'assert' => _REAL_APP,
             ]
         );
+        $folders = [
+            $this->resources.'apps1',
+            $this->resources.'apps2',
+        ];
         $mvc = plug('controller');
         $mvc->setApp('testFoo');
-        $mvc->plugApp([], ['testFoo' => 'testApp']);
+        $mvc->plugApp($folders, ['testFoo' => 'testApp']);
         $this->assertEquals(
             'testApp',
             $another['actual']
