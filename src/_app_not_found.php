@@ -33,8 +33,8 @@ use DomainException;
  * @link https://packagist.org/packages/pmvc/pmvc
  */
 // @codingStandardsIgnoreStart
-${_INIT_CONFIG}[_CLASS] = __NAMESPACE__.'\_app_not_found';
-class _app_not_found // @codingStandardsIgnoreEnd
+${_INIT_CONFIG}[_CLASS] = __NAMESPACE__.'\app_not_found';
+class app_not_found // @codingStandardsIgnoreEnd
 {
     /**
      * App not found invoke.
