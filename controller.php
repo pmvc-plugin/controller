@@ -551,7 +551,7 @@ class controller extends PlugIn // @codingStandardsIgnoreEnd
         $folder = $this[_RUN_APPS];
         $i = strrpos($folder, '/vendor/');
         if ($i !== false) {
-          $folder = substr($folder, 0, $i);
+            $folder = substr($folder, 0, $i);
         }
 
         return realpath(lastSlash($folder).'../').'/';
