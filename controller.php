@@ -542,9 +542,25 @@ class controller extends PlugIn // @codingStandardsIgnoreEnd
     }
 
     /**
-     * GetApp.
+     * Get apps parent.
      *
      * @return mixed
+     */
+    public function getAppsParent()
+    {
+        $folder = $this[_RUN_APPS];
+        $i = strrpos($folder, '/vendor/');
+        if ($i !== false) {
+          $folder = substr($folder, 0, $i);
+        }
+
+        return realpath(lastSlash($folder).'../').'/';
+    }
+
+    /**
+     * Get app.
+     *
+     * @return string
      */
     public function getApp()
     {
@@ -552,11 +568,11 @@ class controller extends PlugIn // @codingStandardsIgnoreEnd
     }
 
     /**
-     * SetApp.
+     * Set app.
      *
      * @param string $app app
      *
-     * @return mixed
+     * @return string
      */
     public function setApp($app)
     {
