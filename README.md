@@ -17,9 +17,9 @@ controller -> plugapp -> process -> execute -> _processForm -> _processValidate 
 
 ## Explain App Folder
 ```
-- Site Folder (_RUN_APPS's parent folder, \PMVC\plug('controller')->getAppsParent())
--- Apps Folder (_RUN_APPS)
---- App Folder (_RUN_APP)
+- Site *Folder* (_RUN_APPS's parent folder, \PMVC\plug('controller')->getAppsParent())
+-- Apps *Folder* (\PMVC\plug('controller')[_RUN_APPS])
+--- App (\PMVC\plug('controller')->getApp())
 ```
 
 ## APP customize view and template
