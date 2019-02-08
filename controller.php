@@ -29,8 +29,9 @@ l(__DIR__.'/src/ActionMappings.php');
 l(__DIR__.'/src/MappingBuilder.php');
 l(__DIR__.'/src/Request.php');
 l(__DIR__.'/src/RouterInterface.php');
-${_INIT_CONFIG
-}[_CLASS] = __NAMESPACE__.'\controller';
+
+${_INIT_CONFIG}[_CLASS]
+    = __NAMESPACE__.'\controller';
 
 /**
  * PMVC Action.
@@ -134,7 +135,12 @@ class controller extends PlugIn // @codingStandardsIgnoreEnd
                 _PLUGIN_FILE => $path,
             ]
         );
-        addPlugInFolders([$parent.'/'.$this[_REAL_APP].'/plugins']);
+        addPlugInFolders(
+            [
+            $parent.'/'.$this[_REAL_APP].'/plugins',
+            $this->getAppsParent().'plugins',
+            ]
+        );
         $names = explode('_', $this[_REAL_APP]);
         set(
             $appPlugin,

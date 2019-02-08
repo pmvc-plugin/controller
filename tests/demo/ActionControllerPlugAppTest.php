@@ -33,7 +33,7 @@ class ActionControllerPlugAppTest extends PHPUnit_Framework_TestCase
         }, $folders));
         $auto = realpath(__DIR__.'/../../../../pmvc-app');
         if ($auto) {
-          $expected[] = $auto;
+            $expected[] = $auto;
         }
         $this->assertEquals(
             $expected,
