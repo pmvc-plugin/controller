@@ -556,11 +556,10 @@ class controller extends PlugIn // @codingStandardsIgnoreEnd
     {
         $folder = $this[_RUN_APPS];
         $i = strrpos($folder, '/vendor/');
-        if ($i !== false) {
-            $folder = substr($folder, 0, $i);
-        }
-
-        return realpath(lastSlash($folder).'../').'/';
+        $folder = ($i !== false) ?
+          substr($folder, 0, $i) :
+          lastSlash($folder).'../';
+        return realpath($folder).'/';
     }
 
     /**
