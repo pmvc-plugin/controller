@@ -31,8 +31,8 @@ namespace PMVC;
  * @link https://packagist.org/packages/pmvc/pmvc
  */
 // @codingStandardsIgnoreStart
-${_INIT_CONFIG}[_CLASS] = __NAMESPACE__.'\_process_error';
-class _process_error // @codingStandardsIgnoreEnd
+${_INIT_CONFIG}[_CLASS] = __NAMESPACE__.'\process_error';
+class process_error // @codingStandardsIgnoreEnd
 {
     /**
      * Porcess error invoke.
