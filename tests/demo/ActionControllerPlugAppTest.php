@@ -31,7 +31,10 @@ class ActionControllerPlugAppTest extends PHPUnit_Framework_TestCase
         $expected = array_reverse(array_map(function ($d) {
             return realpath($d);
         }, $folders));
-        $expected[] = realpath(__DIR__.'/../../../../pmvc-app');
+        $auto = realpath(__DIR__.'/../../../../pmvc-app');
+        if ($auto) {
+          $expected[] = $auto;
+        }
         $this->assertEquals(
             $expected,
             $store['folders']
