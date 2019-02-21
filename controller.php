@@ -559,6 +559,7 @@ class controller extends PlugIn // @codingStandardsIgnoreEnd
         $folder = ($i !== false) ?
           substr($folder, 0, $i) :
           lastSlash($folder).'../';
+
         return realpath($folder).'/';
     }
 
@@ -642,6 +643,20 @@ class controller extends PlugIn // @codingStandardsIgnoreEnd
     public function &offsetGet($k = null)
     {
         return option('get', $k);
+    }
+
+    /**
+     * Get Option.
+     *
+     * @param string $k key
+     *
+     * @return mixed
+     */
+    public function __get($k)
+    {
+        $val = &option('get', $k);
+
+        return new BaseObject($val);
     }
 
     /**
