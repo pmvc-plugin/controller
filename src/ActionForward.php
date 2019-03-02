@@ -40,9 +40,11 @@ namespace PMVC;
 class ActionForward extends HashMap
 {
     /**
-     * @const view
+     * VIEW.
+     *
+     * @const VIEW
      */
-    const view = 'view';
+    const VIEW = 'view';
 
     /**
      * Path.
@@ -154,10 +156,10 @@ class ActionForward extends HashMap
      */
     private function _setType($type = null)
     {
-        if (self::view === $type || 'redirect' === $type) {
+        if (self::VIEW === $type || 'redirect' === $type) {
             $c = plug('controller');
             $appViewEngine = value(
-                $c[self::view],
+                $c[self::VIEW],
                 [
                     'engine',
                     $c->getApp(),
@@ -166,7 +168,7 @@ class ActionForward extends HashMap
             if ($appViewEngine) {
                 $c[_VIEW_ENGINE] = $appViewEngine;
             }
-            $this->_view = plug(self::view);
+            $this->_view = plug(self::VIEW);
         }
         $this->_type = $type;
     }
@@ -242,7 +244,7 @@ class ActionForward extends HashMap
      */
     public function append(array $arr)
     {
-        if (self::view === $this->_type) {
+        if (self::VIEW === $this->_type) {
             return $this->_view->append($arr);
         } else {
             return $this[[]] = $arr;
@@ -259,7 +261,7 @@ class ActionForward extends HashMap
      */
     public function set($k, $v = null)
     {
-        if (self::view === $this->_type) {
+        if (self::VIEW === $this->_type) {
             return $this->_view->set($k, $v);
         } else {
             return set($this->_body, $k, $v);
@@ -276,7 +278,7 @@ class ActionForward extends HashMap
      */
     public function get($k = null, $default = null)
     {
-        if (self::view === $this->_type) {
+        if (self::VIEW === $this->_type) {
             return $this->_view->get($k, $default);
         } else {
             return get($this->_body, $k, $default);
@@ -423,7 +425,7 @@ class ActionForward extends HashMap
                     $this->_isClientRedirect,
                 ]
             );
-        case self::view:
+        case self::VIEW:
             return $this->_processView();
         case 'action':
         default:
