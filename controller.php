@@ -423,8 +423,9 @@ class controller extends PlugIn // @codingStandardsIgnoreEnd
         $folders = $this->addAppFolders([], $alias);
         $alias = $folders['alias'];
         $app = $this->getApp();
-        if (!empty($alias[$app])) {
-            $this[_REAL_APP] = $alias[$app];
+        $aliasApp = get($alias, $app);
+        if ($aliasApp) {
+            $this[_REAL_APP] = $aliasApp;
         } else {
             $this[_REAL_APP] = $app;
             // Get default after dimension back
@@ -582,7 +583,7 @@ class controller extends PlugIn // @codingStandardsIgnoreEnd
      */
     public function setApp($app)
     {
-        return $this[_RUN_APP] = $app;
+        return $this[_RUN_APP] = strtolower($app);
     }
 
     /**

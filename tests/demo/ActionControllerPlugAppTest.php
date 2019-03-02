@@ -118,9 +118,9 @@ class ActionControllerPlugAppTest extends PHPUnit_Framework_TestCase
         ];
         $mvc = plug('controller');
         $mvc->setApp('testFoo');
-        $mvc->plugApp($folders, ['testFoo' => 'testApp']);
+        $mvc->plugApp($folders, ['testFoo' => 'testapp']);
         $this->assertEquals(
-            'testApp',
+            'testapp',
             $another['actual']
         );
     }
