@@ -207,11 +207,11 @@ class controller extends PlugIn // @codingStandardsIgnoreEnd
         }
         dev(
             /**
-            * @help MVC debug.
-            */
+             * @help MVC debug.
+             */
             function () use ($results) {
                 return [
-                'view results' =>$results
+                'view results' => $results,
                 ];
             },
             'mvc'
