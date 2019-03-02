@@ -40,7 +40,7 @@ namespace PMVC;
 class ActionForward extends HashMap
 {
     /**
-     * @const view 
+     * @const view
      */
     const view = 'view';
 
