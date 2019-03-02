@@ -205,6 +205,17 @@ class controller extends PlugIn // @codingStandardsIgnoreEnd
         ) {
             $results[] = $this->processForward($forward);
         }
+        dev(
+            /**
+            * @help View debug.
+            */
+            function () use ($results) {
+                return [
+                'results' =>$results
+                ];
+            },
+            'view'
+        );
         $this->_finish();
 
         return $results;
