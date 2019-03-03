@@ -205,22 +205,8 @@ class controller extends PlugIn // @codingStandardsIgnoreEnd
         ) {
             $results[] = $this->processForward($forward);
         }
-        dev(
-            /**
-             * Dev.
-             *
-             * @help MVC debug.
-             */
-            function () use ($results) {
-                return [
-                'view results' => $results,
-                ];
-            },
-            'mvc'
-        );
-        $this->_finish();
 
-        return $results;
+        return $this->_finish($results);
     }
 
     /**
@@ -256,6 +242,21 @@ class controller extends PlugIn // @codingStandardsIgnoreEnd
                 $actionForm
             );
         }
+        dev(
+            /**
+             * Dev.
+             *
+             * @help MVC debug.
+             */
+            function () use ($actionMapping, $actionForm, $actionForward) {
+                return [
+                'actionMapping' => $actionMapping,
+                'actionForm' => $actionForm,
+                'actionForward' => $actionForward,
+                ];
+            },
+            'mvc'
+        );
 
         return $actionForward;
     }
@@ -381,12 +382,27 @@ class controller extends PlugIn // @codingStandardsIgnoreEnd
      * Controller -> plugapp -> process -> execute -> _processForm ->
      * _processValidate -> _processAction -> processForward -> {_finish}
      *
+     * @param mixed $done Return data.
+     *
      * @return void
      */
-    private function _finish()
+    private function _finish( $done = null )
     {
+        dev(
+            /**
+             * Dev.
+             *
+             * @help Finish.
+             */
+            function () use ($done) {
+                return [
+                'done' => $done,
+                ];
+            },
+            'finish'
+        );
         if ($this[Event\FINISH] || $this->_isFinish) {
-            return;
+            return $done;
         }
         $this->_isFinish = true;
 
@@ -408,6 +424,8 @@ class controller extends PlugIn // @codingStandardsIgnoreEnd
         // Need located after callPlugin to avoid unexpedted trigger.
         option('set', Event\FINISH, true);
         /* --> */
+
+        return $done;
     }
 
     /**
