@@ -251,7 +251,7 @@ class controller extends PlugIn // @codingStandardsIgnoreEnd
             function () use ($actionMapping, $actionForm, $actionForward) {
                 return [
                 'actionMapping' => $actionMapping,
-                'actionForm' => $actionForm,
+                'actionForm'    => $actionForm,
                 'actionForward' => $actionForward,
                 ];
             },
@@ -386,7 +386,7 @@ class controller extends PlugIn // @codingStandardsIgnoreEnd
      *
      * @return void
      */
-    private function _finish( $done = null )
+    private function _finish($done = null)
     {
         dev(
             /**
