@@ -454,7 +454,7 @@ class controller extends PlugIn // @codingStandardsIgnoreEnd
         $folders = $this->addAppFolders([], $alias);
         $alias = $folders['alias'];
         $app = $this->getApp();
-        $aliasApp = get($alias, $app);
+        $aliasApp = $app ? get($alias, $app) : null;
         if ($aliasApp) {
             $this[_REAL_APP] = $aliasApp;
         } else {
