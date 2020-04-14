@@ -363,6 +363,12 @@ class controller extends PlugIn // @codingStandardsIgnoreEnd
      */
     public function processForward($actionForward)
     {
+        dev(
+          function () use ($actionForward) {
+            return $actionForward;
+          },
+          'view'
+        );
         if (!is_callable([$actionForward, 'go'])) {
             return $actionForward;
         }
