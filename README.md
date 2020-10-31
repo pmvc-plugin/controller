@@ -47,4 +47,6 @@ controller -> plugapp -> process -> execute -> _processForm -> _processValidate 
 
 #### 2.2 Or use composer command-line
    * php composer.phar require pmvc-plugin/controller
+   or
+   * composer require pmvc-plugin/controller
 
