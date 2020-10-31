@@ -126,6 +126,9 @@ class controller extends PlugIn // @codingStandardsIgnoreEnd
                 $indexFile,
                 $folders
             );
+            if (!$path) {
+                return false;
+            }
         }
         $parent = realpath(dirname(dirname($path)));
         $this[_RUN_APPS] = $parent;

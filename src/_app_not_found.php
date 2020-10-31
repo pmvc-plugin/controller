@@ -50,6 +50,9 @@ class app_not_found // @codingStandardsIgnoreEnd
         $indexFile,
         $folders
     ) {
+        if (\PMVC\isDev('help')) {
+          return;
+        }
         $alias = $folders['alias'];
         option('set', 'httpResponseCode', 404);
         $caller = $this->caller;
