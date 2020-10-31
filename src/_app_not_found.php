@@ -51,7 +51,7 @@ class app_not_found // @codingStandardsIgnoreEnd
         $folders
     ) {
         if (\PMVC\isDev('help')) {
-          return;
+            return;
         }
         $alias = $folders['alias'];
         option('set', 'httpResponseCode', 404);
