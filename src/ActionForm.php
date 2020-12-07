@@ -37,7 +37,7 @@ class ActionForm extends HashMap
      *
      * @param array $state state
      *
-     * @return this
+     * @return $this
      */
     public function &__invoke($state = null)
     {

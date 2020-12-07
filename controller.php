@@ -140,8 +140,8 @@ class controller extends PlugIn // @codingStandardsIgnoreEnd
         );
         addPlugInFolders(
             [
-            $parent.'/'.$this[_REAL_APP].'/plugins',
-            $this->getAppsParent().'plugins',
+                $parent.'/'.$this[_REAL_APP].'/plugins',
+                $this->getAppsParent().'plugins',
             ]
         );
         $names = explode('_', $this[_REAL_APP]);
@@ -253,9 +253,9 @@ class controller extends PlugIn // @codingStandardsIgnoreEnd
              */
             function () use ($actionMapping, $actionForm, $actionForward) {
                 return [
-                'actionMapping' => $actionMapping,
-                'actionForm'    => $actionForm,
-                'actionForward' => $actionForward,
+                    'actionMapping' => $actionMapping,
+                    'actionForm'    => $actionForm,
+                    'actionForward' => $actionForward,
                 ];
             },
             'mvc'
@@ -405,7 +405,7 @@ class controller extends PlugIn // @codingStandardsIgnoreEnd
              */
             function () use ($done) {
                 return [
-                'done' => $done,
+                    'done' => $done,
                 ];
             },
             'finish'

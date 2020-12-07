@@ -12,7 +12,8 @@ class HelloTest extends PHPUnit_Framework_TestCase
         $test_str = 'Hello World!';
         $b = new PMVC\MappingBuilder();
         $b->addAction(
-            'index', function () use ($test_str) {
+            'index',
+            function () use ($test_str) {
                 return $test_str;
             }
         );
@@ -29,7 +30,8 @@ class HelloTest extends PHPUnit_Framework_TestCase
         $test_str = 'Hello World!';
         $b = new PMVC\MappingBuilder();
         $b->addAction(
-            $addAction, function () use ($test_str) {
+            $addAction,
+            function () use ($test_str) {
                 return $test_str;
             }
         );
@@ -42,9 +44,9 @@ class HelloTest extends PHPUnit_Framework_TestCase
     public function actionProvider()
     {
         return [
-        ['IndexTest', 'indextest'],
-        ['IndexTest', 'IndexTest'],
-        ['indextest', 'IndexTest'],
+            ['IndexTest', 'indextest'],
+            ['IndexTest', 'IndexTest'],
+            ['indextest', 'IndexTest'],
         ];
     }
 }

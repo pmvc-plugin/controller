@@ -11,8 +11,9 @@ class ActionForwardTest extends PHPUnit_Framework_TestCase
         \PMVC\unplug(_RUN_APP);
         \PMVC\unplug('view');
         \PMVC\plug(
-            'view', [
-            _CLASS => '\PMVC\FakeView',
+            'view',
+            [
+                _CLASS => '\PMVC\FakeView',
             ]
         );
     }
