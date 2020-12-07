@@ -59,16 +59,17 @@ class app_not_found // @codingStandardsIgnoreEnd
         trigger_error(
             json_encode(
                 [
-                 'Error' => 'No app found with routrs, '.
-                             'Please check following debug message.',
-                 'Debug' => [
-                     'Parent' => $parents,
-                     'App'    => $caller[_REAL_APP],
-                     'Index'  => $indexFile,
-                     'Alias'  => $alias ?: '',
-                 ],
+                    'Error' => 'No app found with routrs, '.
+                                'Please check following debug message.',
+                    'Debug' => [
+                        'Parent' => $parents,
+                        'App'    => $caller[_REAL_APP],
+                        'Index'  => $indexFile,
+                        'Alias'  => $alias ?: '',
+                    ],
                 ]
-            ), E_USER_WARNING
+            ),
+            E_USER_WARNING
         );
         $caller[_REAL_APP] = $caller[_DEFAULT_APP];
         $path = $caller->getAppFile(

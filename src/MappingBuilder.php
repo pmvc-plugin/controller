@@ -81,7 +81,8 @@ class MappingBuilder extends HashMap
         }
         $settings = new HashMap(
             array_replace(
-                $this->getActionDefault(), $settings
+                $this->getActionDefault(),
+                $settings
             )
         );
         if (!is_null($settings[_FORM])) {
@@ -122,7 +123,8 @@ class MappingBuilder extends HashMap
     public function addForward($psId, $settings)
     {
         $settings = array_replace(
-            $this->getForwardDefault(), $settings
+            $this->getForwardDefault(),
+            $settings
         );
         $this[ACTION_FORWARDS][$psId] = $settings;
 

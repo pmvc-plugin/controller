@@ -16,9 +16,10 @@ class ControllerTest extends PHPUnit_Framework_TestCase
     {
         $b = new \PMVC\MappingBuilder();
         $b->addAction(
-            'index', [
-             'FakeClass',
-             'index',
+            'index',
+            [
+                'FakeClass',
+                'index',
             ]
         );
         $mvc = $this->getMockBuilder('\PMVC\controller')
@@ -29,7 +30,7 @@ class ControllerTest extends PHPUnit_Framework_TestCase
             ->will(
                 $this->onConsecutiveCalls(
                     (object) [
-                    'action' => 'index',
+                        'action' => 'index',
                     ],
                     (object) []
                 )
@@ -67,8 +68,9 @@ class ControllerTest extends PHPUnit_Framework_TestCase
         $mvc = \PMVC\plug('controller');
         \PMVC\set($mvc, $options);
         $view = \PMVC\plug(
-            'view', [
-            _CLASS => '\PMVC\FakeView',
+            'view',
+            [
+                _CLASS => '\PMVC\FakeView',
             ]
         );
         $error = $mvc->process($b);
@@ -115,7 +117,8 @@ class ControllerTest extends PHPUnit_Framework_TestCase
             ->method('onFinish');
         \PMVC\replug('view', $jsonView);
         \PMVC\plug(
-            'another', [
+            'another',
+            [
                 _CLASS => '\PMVC\AnotherPlugin',
                 'view' => $jsonView,
             ]
