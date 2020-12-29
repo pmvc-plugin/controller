@@ -95,7 +95,7 @@ class controller extends PlugIn // @codingStandardsIgnoreEnd
     public function plugApp(
         array $folders = [],
         array $appAlias = [],
-        $indexFile = 'index'
+        $indexFile = DEFAULT_INDEX
     ) {
         if (exists(_RUN_APP, 'plugin')) {
             return !trigger_error(
@@ -224,7 +224,7 @@ class controller extends PlugIn // @codingStandardsIgnoreEnd
      */
     public function execute($index)
     {
-        if (!$this->_mappings->actionExists($index)) {
+        if (DEFAULT_INDEX !== $index && !$this->_mappings->actionExists($index)) {
             return !trigger_error(
                 'No mappings found for action: ['.$index.']',
                 E_USER_WARNING
@@ -635,7 +635,7 @@ class controller extends PlugIn // @codingStandardsIgnoreEnd
     {
         $action = $this[_RUN_ACTION];
         if (!$this->_mappings->actionExists($action)) {
-            $action = 'index';
+            $action = DEFAULT_INDEX;
         }
 
         return $action;

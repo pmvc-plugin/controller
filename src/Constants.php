@@ -60,4 +60,5 @@ namespace PMVC {
     const ACTION_FORMS = '__action_forms__';
     const ACTION_MAPPINGS = '__action_mappings__';
     const ACTION_FORWARDS = '__action_forwards__';
+    const DEFAULT_INDEX = 'index';
 }
