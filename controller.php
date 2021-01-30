@@ -722,25 +722,29 @@ class controller extends PlugIn // @codingStandardsIgnoreEnd
      */
     public function addAppFolders(array $folders, array $alias = [])
     {
+        $prev = folders(_RUN_APP);
+        $next = folders(_RUN_APP, $folders, $alias);
         dev(
             /**
              * Dev.
              *
              * @help Debug for PMVC add app folder.
              */
-            function () use ($folders, $alias) {
+            function () use ($folders, $alias, $prev, $next) {
                 $trace = plug('debug')->parseTrace(debug_backtrace(), 12);
-
                 return [
-                    'previous' => folders(_RUN_APP),
-                    'folders'  => $folders,
-                    'alias'    => $alias,
+                    'previous' => $prev,
+                    'next'     => $next,
+                    'params'   => [
+                      'folders'  => $folders,
+                      'alias'    => $alias,
+                    ],
                     'trace'    => $trace,
                 ];
             },
             'app-folder'
         );
 
-        return folders(_RUN_APP, $folders, $alias);
+        return $next;
     }
 }
