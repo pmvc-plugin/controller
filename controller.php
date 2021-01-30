@@ -732,12 +732,13 @@ class controller extends PlugIn // @codingStandardsIgnoreEnd
              */
             function () use ($folders, $alias, $prev, $next) {
                 $trace = plug('debug')->parseTrace(debug_backtrace(), 12);
+
                 return [
                     'previous' => $prev,
                     'next'     => $next,
                     'params'   => [
-                      'folders'  => $folders,
-                      'alias'    => $alias,
+                        'folders'  => $folders,
+                        'alias'    => $alias,
                     ],
                     'trace'    => $trace,
                 ];
