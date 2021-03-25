@@ -20,15 +20,16 @@ namespace PMVC;
 
 use DomainException;
 
-l(__DIR__.'/src/Constants.php');
-l(__DIR__.'/src/Action.php');
-l(__DIR__.'/src/ActionForm.php');
-l(__DIR__.'/src/ActionForward.php');
-l(__DIR__.'/src/ActionMapping.php');
-l(__DIR__.'/src/ActionMappings.php');
-l(__DIR__.'/src/MappingBuilder.php');
-l(__DIR__.'/src/Request.php');
-l(__DIR__.'/src/RouterInterface.php');
+l(__DIR__.'/src/Constants');
+l(__DIR__.'/src/Action');
+l(__DIR__.'/src/ActionForm');
+l(__DIR__.'/src/ActionForward');
+l(__DIR__.'/src/ActionMapping');
+l(__DIR__.'/src/ActionMappings');
+l(__DIR__.'/src/MappingBuilder');
+l(__DIR__.'/src/Request');
+l(__DIR__.'/src/RouterInterface');
+l(__DIR__.'/src/Task');
 
 ${_INIT_CONFIG}[_CLASS]
     = __NAMESPACE__.'\controller';
@@ -349,7 +350,7 @@ class controller extends PlugIn // @codingStandardsIgnoreEnd
         );
 
         return call_user_func_array(
-            $this->_getActionFunc($actionMapping),
+            $this->getActionFunc($actionMapping),
             [$actionMapping, $actionForm]
         );
     }
@@ -531,7 +532,7 @@ class controller extends PlugIn // @codingStandardsIgnoreEnd
      *
      * @return callable
      */
-    private function _getActionFunc(ActionMapping $actionMapping)
+    public function getActionFunc(ActionMapping $actionMapping)
     {
         $func = $actionMapping->func;
         if (!is_callable($func)) {

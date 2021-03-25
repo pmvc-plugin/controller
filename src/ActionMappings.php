@@ -37,7 +37,7 @@ class ActionMappings
      *
      * @var array
      */
-    private $_mappings;
+    private $_mappings = [];
 
     /**
      * Set mappings.
@@ -90,6 +90,11 @@ class ActionMappings
         }
 
         return $this->_mappings[$key];
+    }
+
+    public function keySet($type = ACTION_MAPPINGS)
+    {
+        return array_keys($this->_mappings[$type]);
     }
 
     /**
@@ -166,18 +171,6 @@ class ActionMappings
     }
 
     /**
-     * Check if forward exists.
-     *
-     * @param string $name name
-     *
-     * @return bool
-     */
-    public function forwardExists($name)
-    {
-        return isset($this->_mappings[ACTION_FORWARDS][$name]);
-    }
-
-    /**
      * Check if action exists.
      *
      * @param string $name name
@@ -190,4 +183,17 @@ class ActionMappings
 
         return isset($this->_mappings[ACTION_MAPPINGS][$name]);
     }
+
+    /**
+     * Check if forward exists.
+     *
+     * @param string $name name
+     *
+     * @return bool
+     */
+    public function forwardExists($name)
+    {
+        return isset($this->_mappings[ACTION_FORWARDS][$name]);
+    }
+
 }
