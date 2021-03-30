@@ -2,7 +2,7 @@
 /**
  * PMVC.
  *
- * PHP version 8 
+ * PHP version 8
  *
  * @category Worker
  *
@@ -57,7 +57,7 @@ class process_worker // @codingStandardsIgnoreEnd
             $taskAttr = \PMVC\get($attrs['obj'], TASK_KEY);
             $queueAttr = \PMVC\get($attrs['obj'], QUEUE_KEY);
             if ($taskAttr) {
-                $wrap = function () use ($caller, $action, $queueAttr , $func) {
+                $wrap = function () use ($caller, $action, $queueAttr, $func) {
                     $form = $caller->processForm($action);
                     $queueDb = $this->_getQueueDb($queueAttr);
                     if ($queueAttr && $queueAttr->consumer) {
@@ -83,11 +83,11 @@ class process_worker // @codingStandardsIgnoreEnd
     }
 
     /**
-     * Get queue db. 
+     * Get queue db.
      *
      * @param object $queueAttr Queue parameters.
      *
-     * @return mix Db object 
+     * @return mix Db object
      */
     private function _getQueueDb($queueAttr)
     {
