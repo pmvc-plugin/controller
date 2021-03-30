@@ -35,7 +35,7 @@ const taskKey = "PMVC\Task";
 const queueKey = "PMVC\Queue";
 
 // @codingStandardsIgnoreStart
-${_INIT_CONFIG}[_CLASS] = __NAMESPACE__ . "\process_worker";
+${_INIT_CONFIG}[_CLASS] = __NAMESPACE__."\process_worker";
 class process_worker // @codingStandardsIgnoreEnd
 {
     /**
@@ -45,8 +45,8 @@ class process_worker // @codingStandardsIgnoreEnd
      */
     public function __invoke()
     {
-        $annotation = \PMVC\plug("annotation");
-        $supervisor = \PMVC\plug("supervisor");
+        $annotation = \PMVC\plug('annotation');
+        $supervisor = \PMVC\plug('supervisor');
         $caller = $this->caller;
         $mappings = $caller->getMappings();
         $keys = $mappings->keySet();
@@ -54,25 +54,25 @@ class process_worker // @codingStandardsIgnoreEnd
             $action = $mappings->findAction($key);
             $func = $caller->getActionFunc($action);
             $attrs = $annotation->getAttrs($func);
-            $taskAttr = \PMVC\get($attrs["obj"], taskKey);
-            $queueAttr = \PMVC\get($attrs["obj"], queueKey);
+            $taskAttr = \PMVC\get($attrs['obj'], taskKey);
+            $queueAttr = \PMVC\get($attrs['obj'], queueKey);
             if ($taskAttr) {
-                $wrap = function () use ($caller, $action, $queueAttr, $taskAttr, $func) {
+                $wrap = function () use ($caller, $action, $queueAttr , $func) {
                     $form = $caller->processForm($action);
                     $queueDb = $this->getQueueDb($queueAttr);
                     if ($queueAttr && $queueAttr->consumer) {
-                        $form["data"] = $queueDb[null];
+                        $form['data'] = $queueDb[null];
                     }
                     $result = call_user_func_array($func, [$action, $form]);
-                    if ($queueAttr && $queueAttr->publisher && $result["ok"]) {
-                        $queueDb[] = $result["data"];
+                    if ($queueAttr && $queueAttr->publisher && $result['ok']) {
+                        $queueDb[] = $result['data'];
                     }
                 };
                 switch ($taskAttr->type) {
-                    case "daemon":
+                    case 'daemon':
                         $supervisor->daemon($wrap, [], $taskAttr->interval);
                         break;
-                    case "script":
+                    case 'script':
                         $supervisor->script($wrap, []);
                     default:
                         break;
@@ -84,11 +84,12 @@ class process_worker // @codingStandardsIgnoreEnd
 
     public function getQueueDb($queueAttr)
     {
-        $amqp = \PMVC\plug("amqp", ["host" => "rabbitmq"]);
+        $amqp = \PMVC\plug('amqp', ['host' => 'rabbitmq']);
         $queueDb = null;
         if ($queueAttr) {
             $queueDb = $amqp->getDb($queueAttr->name);
         }
+
         return $queueDb;
     }
 }
