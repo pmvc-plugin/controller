@@ -344,7 +344,7 @@ class controller extends PlugIn // @codingStandardsIgnoreEnd
             'dispatcher',
             'notify',
             [
-                Event\B4_PROCESS_ACTION,
+                Event\WILL_PROCESS_ACTION,
                 true,
             ]
         );
