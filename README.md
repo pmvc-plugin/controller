@@ -13,7 +13,7 @@ PMVC Controller
    * More information https://github.com/pmvc/pmvc
 
 ## Explain flow
-controller -> plugapp -> process -> execute -> _processForm -> _processValidate -> _processAction -> processForward -> _finish
+controller -> plugapp -> process -> execute -> processForm -> _processValidate -> _processAction -> processForward -> _finish
 
 ## Explain App Folder
 ```
