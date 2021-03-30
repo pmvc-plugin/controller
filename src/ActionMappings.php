@@ -92,6 +92,13 @@ class ActionMappings
         return $this->_mappings[$key];
     }
 
+    /**
+     * Get action keys.
+     *
+     * @param string $type get type of keys.
+     *
+     * @return array 
+     */
     public function keySet($type = ACTION_MAPPINGS)
     {
         return array_keys($this->_mappings[$type]);

@@ -2,9 +2,9 @@
 /**
  * PMVC.
  *
- * PHP version 5
+ * PHP version 8 
  *
- * @category CategoryName
+ * @category Worker
  *
  * @package PMVC
  *
@@ -21,7 +21,7 @@ namespace PMVC;
 /*
  * Process Worker.
  *
- * @category CategoryName
+ * @category Worker
  *
  * @package PMVC
  *
@@ -31,8 +31,8 @@ namespace PMVC;
  * @link https://packagist.org/packages/pmvc/pmvc
  */
 
-const taskKey = "PMVC\Task";
-const queueKey = "PMVC\Queue";
+const TASK_KEY = "PMVC\Task";
+const QUEUE_KEY = "PMVC\Queue";
 
 // @codingStandardsIgnoreStart
 ${_INIT_CONFIG}[_CLASS] = __NAMESPACE__."\process_worker";
@@ -54,12 +54,12 @@ class process_worker // @codingStandardsIgnoreEnd
             $action = $mappings->findAction($key);
             $func = $caller->getActionFunc($action);
             $attrs = $annotation->getAttrs($func);
-            $taskAttr = \PMVC\get($attrs['obj'], taskKey);
-            $queueAttr = \PMVC\get($attrs['obj'], queueKey);
+            $taskAttr = \PMVC\get($attrs['obj'], TASK_KEY);
+            $queueAttr = \PMVC\get($attrs['obj'], QUEUE_KEY);
             if ($taskAttr) {
                 $wrap = function () use ($caller, $action, $queueAttr , $func) {
                     $form = $caller->processForm($action);
-                    $queueDb = $this->getQueueDb($queueAttr);
+                    $queueDb = $this->_getQueueDb($queueAttr);
                     if ($queueAttr && $queueAttr->consumer) {
                         $form['data'] = $queueDb[null];
                     }
@@ -69,20 +69,27 @@ class process_worker // @codingStandardsIgnoreEnd
                     }
                 };
                 switch ($taskAttr->type) {
-                    case 'daemon':
-                        $supervisor->daemon($wrap, [], $taskAttr->interval);
-                        break;
-                    case 'script':
-                        $supervisor->script($wrap, []);
-                    default:
-                        break;
+                case 'daemon':
+                    $supervisor->daemon($wrap, [], null, $taskAttr->interval);
+                    break;
+                case 'script':
+                    $supervisor->script($wrap, []);
+                default:
+                    break;
                 }
             }
         }
         $supervisor->process();
     }
 
-    public function getQueueDb($queueAttr)
+    /**
+     * Get queue db. 
+     *
+     * @param object $queueAttr Queue parameters.
+     *
+     * @return mix Db object 
+     */
+    private function _getQueueDb($queueAttr)
     {
         $amqp = \PMVC\plug('amqp', ['host' => 'rabbitmq']);
         $queueDb = null;
