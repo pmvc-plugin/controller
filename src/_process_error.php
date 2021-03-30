@@ -47,7 +47,7 @@ class process_error // @codingStandardsIgnoreEnd
             'dispatcher',
             'notify',
             [
-                Event\B4_PROCESS_ERROR, true,
+                Event\WILL_PROCESS_ERROR, true,
             ]
         );
         $thisForward = getOption(_ERROR_FORWARD, 'error');

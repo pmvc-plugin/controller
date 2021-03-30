@@ -365,7 +365,7 @@ class ActionForward extends HashMap
             'dispatcher',
             'notify',
             [
-                Event\B4_PROCESS_HEADER, true,
+                Event\WILL_PROCESS_HEADER, true,
             ]
         );
         $c = plug('controller');
@@ -377,7 +377,7 @@ class ActionForward extends HashMap
             ],
             $c[_TEMPLATE_DIR]
         );
-        // Put after B4_PROCESS_HEADER event for get all
+        // Put after WILL_PROCESS_HEADER event for get all
         // view_config_helper values.
         $view->setThemeFolder(
             $appTemplateDir
@@ -395,7 +395,7 @@ class ActionForward extends HashMap
             'dispatcher',
             'notify',
             [
-                Event\B4_PROCESS_VIEW, true,
+                Event\WILL_PROCESS_VIEW, true,
             ]
         );
 
