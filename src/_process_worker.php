@@ -31,10 +31,11 @@ namespace PMVC;
  * @link https://packagist.org/packages/pmvc/pmvc
  */
 
-const attrKey = 'PMVC\Task';
+const taskKey = "PMVC\Task";
+const queueKey = "PMVC\Queue";
 
 // @codingStandardsIgnoreStart
-${_INIT_CONFIG}[_CLASS] = __NAMESPACE__.'\process_worker';
+${_INIT_CONFIG}[_CLASS] = __NAMESPACE__ . "\process_worker";
 class process_worker // @codingStandardsIgnoreEnd
 {
     /**
@@ -44,30 +45,50 @@ class process_worker // @codingStandardsIgnoreEnd
      */
     public function __invoke()
     {
-      $annotation = \PMVC\plug('annotation');
-      $supervisor = \PMVC\plug('supervisor');
-      $amqp = \PMVC\plug('amqp', ["host" => "rabbitmq"]);
-      $hello = $amqp->getDb('hello');
-      $caller = $this->caller;
-      $mappings = $caller->getMappings();
-      $keys = $mappings->keySet();
-      foreach ($keys as $key) {
-        $action = $mappings->findAction($key);
-        $func = $caller->getActionFunc($action);
-        $attrs = $annotation->getAttrs($func);
-        $oAttr = \PMVC\get($attrs['obj'], attrKey);
-        switch($oAttr->type) {
-          case 'daemon':
-            $supervisor->daemon(function() use ($func){
-              return call_user_func_array($func, [null, null]); 
-            }, [], 10);
-            break;
-          case 'script':
-            $supervisor->script($func, [null, null]);
-          default:
-            break;
+        $annotation = \PMVC\plug("annotation");
+        $supervisor = \PMVC\plug("supervisor");
+        $caller = $this->caller;
+        $mappings = $caller->getMappings();
+        $keys = $mappings->keySet();
+        foreach ($keys as $key) {
+            $action = $mappings->findAction($key);
+            $func = $caller->getActionFunc($action);
+            $attrs = $annotation->getAttrs($func);
+            $taskAttr = \PMVC\get($attrs["obj"], taskKey);
+            $queueAttr = \PMVC\get($attrs["obj"], queueKey);
+            if ($taskAttr) {
+                $wrap = function () use ($caller, $action, $queueAttr, $taskAttr, $func) {
+                    $form = $caller->processForm($action);
+                    $queueDb = $this->getQueueDb($queueAttr);
+                    if ($queueAttr && $queueAttr->consumer) {
+                        $form["data"] = $queueDb[null];
+                    }
+                    $result = call_user_func_array($func, [$action, $form]);
+                    if ($queueAttr && $queueAttr->publisher && $result["ok"]) {
+                        $queueDb[] = $result["data"];
+                    }
+                };
+                switch ($taskAttr->type) {
+                    case "daemon":
+                        $supervisor->daemon($wrap, [], $taskAttr->interval);
+                        break;
+                    case "script":
+                        $supervisor->script($wrap, []);
+                    default:
+                        break;
+                }
+            }
         }
-      }
-      $supervisor->process();
+        $supervisor->process();
+    }
+
+    public function getQueueDb($queueAttr)
+    {
+        $amqp = \PMVC\plug("amqp", ["host" => "rabbitmq"]);
+        $queueDb = null;
+        if ($queueAttr) {
+            $queueDb = $amqp->getDb($queueAttr->name);
+        }
+        return $queueDb;
     }
 }

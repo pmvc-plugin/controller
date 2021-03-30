@@ -30,6 +30,7 @@ l(__DIR__.'/src/MappingBuilder');
 l(__DIR__.'/src/Request');
 l(__DIR__.'/src/RouterInterface');
 l(__DIR__.'/src/Task');
+l(__DIR__.'/src/Queue');
 
 ${_INIT_CONFIG}[_CLASS]
     = __NAMESPACE__.'\controller';
@@ -71,7 +72,7 @@ class controller extends PlugIn // @codingStandardsIgnoreEnd
     /**
      * ActionController construct with the options.
      *
-     * {Controller} -> plugapp -> process -> execute -> _processForm ->
+     * {Controller} -> plugapp -> process -> execute -> processForm ->
      * _processValidate -> _processAction -> processForward -> _finish
      */
     public function __construct()
@@ -176,7 +177,7 @@ class controller extends PlugIn // @codingStandardsIgnoreEnd
     /**
      * Process the request.
      *
-     * Controller -> plugapp -> {process} -> execute -> _processForm ->
+     * Controller -> plugapp -> {process} -> execute -> processForm ->
      * _processValidate -> _processAction -> processForward -> _finish
      *
      * @param MappingBuilder $builder Get mappings
@@ -216,7 +217,7 @@ class controller extends PlugIn // @codingStandardsIgnoreEnd
     /**
      * Execute mapping.
      *
-     * Controller -> plugapp -> process -> {execute} -> _processForm ->
+     * Controller -> plugapp -> process -> {execute} -> processForm ->
      * _processValidate -> _processAction -> processForward -> _finish
      *
      * @param string $index pass run action
@@ -232,7 +233,7 @@ class controller extends PlugIn // @codingStandardsIgnoreEnd
             );
         }
         $actionMapping = $this->_mappings->findAction($index);
-        $actionForm = $this->_processForm($actionMapping);
+        $actionForm = $this->processForm($actionMapping);
         $this[_RUN_FORM] = $actionForm;
         //validate the form if necesarry
         if ($actionMapping->validate) {
@@ -268,14 +269,14 @@ class controller extends PlugIn // @codingStandardsIgnoreEnd
     /**
      * Process form to handle user input.
      *
-     * Controller -> plugapp -> process -> execute -> {_processForm} ->
+     * Controller -> plugapp -> process -> execute -> {processForm} ->
      * _processValidate -> _processAction -> processForward -> _finish
      *
      * @param ActionMapping $actionMapping actionMapping
      *
      * @return ActionForm
      */
-    private function _processForm($actionMapping)
+    public function processForm($actionMapping)
     {
         if (empty($actionMapping->form)) {
             $actionForm = $this[_RUN_FORM];
@@ -309,7 +310,7 @@ class controller extends PlugIn // @codingStandardsIgnoreEnd
     /**
      * Call the validate() with ActionForm.
      *
-     * Controller -> plugapp -> process -> execute -> _processForm ->
+     * Controller -> plugapp -> process -> execute -> processForm ->
      * {_processValidate} -> _processAction -> processForward -> _finish
      *
      * @param ActionForm $actionForm actionForm
@@ -330,7 +331,7 @@ class controller extends PlugIn // @codingStandardsIgnoreEnd
     /**
      * Process action.
      *
-     * Controller -> plugapp -> process -> execute -> _processForm ->
+     * Controller -> plugapp -> process -> execute -> processForm ->
      * _processValidate -> {_processAction} -> processForward -> _finish
      *
      * @param ActionMapping $actionMapping actionMapping
@@ -358,7 +359,7 @@ class controller extends PlugIn // @codingStandardsIgnoreEnd
     /**
      * Process forward.
      *
-     * Controller -> plugapp -> process -> execute -> _processForm ->
+     * Controller -> plugapp -> process -> execute -> processForm ->
      * _processValidate -> _processAction -> {processForward} -> _finish
      *
      * @param ActionForward $actionForward actionForward
@@ -389,7 +390,7 @@ class controller extends PlugIn // @codingStandardsIgnoreEnd
     /**
      * Finish request and take down the controller.
      *
-     * Controller -> plugapp -> process -> execute -> _processForm ->
+     * Controller -> plugapp -> process -> execute -> processForm ->
      * _processValidate -> _processAction -> processForward -> {_finish}
      *
      * @param mixed $done Return data.
