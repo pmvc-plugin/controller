@@ -97,7 +97,7 @@ class ActionMappings
      *
      * @param string $type get type of keys.
      *
-     * @return array 
+     * @return array
      */
     public function keySet($type = ACTION_MAPPINGS)
     {

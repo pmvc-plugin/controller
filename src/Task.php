@@ -2,7 +2,7 @@
 /**
  * PMVC.
  *
- * PHP version 8 
+ * PHP version 8
  *
  * @category Worker
  *
@@ -37,12 +37,12 @@ class Task
     public $interval;
 
     /**
-     * Task construct. 
+     * Task construct.
      *
      * @param string $type    Task type.
      * @param array  $payload Task parameters.
      *
-     * @return void 
+     * @return void
      */
     public function __construct($type, $payload = [])
     {

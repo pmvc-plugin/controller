@@ -2,7 +2,7 @@
 /**
  * PMVC.
  *
- * PHP version 8 
+ * PHP version 8
  *
  * @category Worker
  *
@@ -38,12 +38,12 @@ class Queue
     public $publisher;
 
     /**
-     * Queue construct. 
+     * Queue construct.
      *
      * @param string $name    Queue name.
      * @param array  $payload Queue parameters.
      *
-     * @return void 
+     * @return void
      */
     public function __construct($name, $payload = [])
     {
