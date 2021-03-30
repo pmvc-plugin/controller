@@ -195,5 +195,4 @@ class ActionMappings
     {
         return isset($this->_mappings[ACTION_FORWARDS][$name]);
     }
-
 }
