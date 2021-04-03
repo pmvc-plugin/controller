@@ -89,7 +89,7 @@ class ActionForward extends HashMap
     private $_view;
 
     /**
-     * Name 
+     * Name.
      *
      * @var string
      */

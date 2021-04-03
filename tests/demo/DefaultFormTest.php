@@ -1,7 +1,6 @@
 <?php
-namespace PMVC;
 
-use DomainException;
+namespace PMVC;
 
 class DefaultFormTest extends TestCase
 {
@@ -42,19 +41,19 @@ class DefaultFormTest extends TestCase
      */
     public function testFormNotExists()
     {
-        $this->willThrow(function(){
-          $b = new \PMVC\MappingBuilder();
-          $b->addAction(
-              'index',
-              [
-                  _FUNCTION => function () {
-                      return '';
-                  },
-                  _FORM => 'xxx',
-              ]
-          );
-          $mvc = \PMVC\plug('controller');
-          $mvc->process($b);
+        $this->willThrow(function () {
+            $b = new \PMVC\MappingBuilder();
+            $b->addAction(
+                'index',
+                [
+                    _FUNCTION => function () {
+                        return '';
+                    },
+                    _FORM => 'xxx',
+                ]
+            );
+            $mvc = \PMVC\plug('controller');
+            $mvc->process($b);
         }, false);
     }
 
