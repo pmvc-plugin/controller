@@ -174,6 +174,7 @@ class ActionMappings
         if ($forward) {
             $oForward = new ActionForward($forward);
             $oForward->name = $name;
+
             return $oForward;
         } else {
             return !trigger_error(
