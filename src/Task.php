@@ -35,6 +35,8 @@ class Task
 {
     public $type;
     public $interval;
+    public $group;
+    public $trigger;
 
     /**
      * Task construct.
@@ -48,5 +50,7 @@ class Task
     {
         $this->type = $type;
         $this->interval = \PMVC\get($payload, 'interval', 10);
+        $this->group = \PMVC\get($payload, 'group');
+        $this->trigger = \PMVC\get($payload, 'trigger');
     }
 }

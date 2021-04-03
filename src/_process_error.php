@@ -52,7 +52,7 @@ class process_error // @codingStandardsIgnoreEnd
         );
         $thisForward = getOption(_ERROR_FORWARD, 'error');
         $mappings = $this->caller->getMappings();
-        if (!$mappings->forwardExists($thisForward)) {
+        if (!$mappings || !$mappings->forwardExists($thisForward)) {
             return false;
         }
         $errorForward = $mappings->findForward($thisForward);

@@ -33,6 +33,13 @@ namespace PMVC;
 class ActionForm extends HashMap
 {
     /**
+     * Name 
+     *
+     * @var string
+     */
+    public $name;
+
+    /**
      * Let ActionForm coule be a separate file unser src.
      *
      * @param array $state state

@@ -16,6 +16,7 @@
     },
     "require-dev": {
         "squizlabs/php_codesniffer" : "@stable",
+        "pmvc-plugin/unit": "*",
         "pmvc-plugin/dispatcher": "*"
     },
     "minimum-stability": "dev"

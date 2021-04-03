@@ -33,6 +33,13 @@ namespace PMVC;
 class ActionMapping extends HashMap
 {
     /**
+     * Name 
+     *
+     * @var string
+     */
+    public $name;
+
+    /**
      * Func.
      *
      * @var string
@@ -80,6 +87,7 @@ class ActionMapping extends HashMap
      */
     public function __construct(&$mapping, $mappings, $name)
     {
+        $this->name = $name;
         $this->func = get($mapping, _FUNCTION, $name);
         $this->_mappings = $mappings;
         if (isset($mapping[_FORM])) {

@@ -18,6 +18,9 @@
 
 namespace PMVC;
 
+use PMVC\PlugIn\supervisor as sup;
+use PMVC\PlugIn\supervisor\Parallel;
+
 /*
  * Process Worker.
  *
@@ -31,11 +34,11 @@ namespace PMVC;
  * @link https://packagist.org/packages/pmvc/pmvc
  */
 
-const TASK_KEY = "PMVC\Task";
-const QUEUE_KEY = "PMVC\Queue";
+const TASK_KEY = 'PMVC\Task';
+const QUEUE_KEY = 'PMVC\Queue';
 
 // @codingStandardsIgnoreStart
-${_INIT_CONFIG}[_CLASS] = __NAMESPACE__."\process_worker";
+${_INIT_CONFIG}[_CLASS] = __NAMESPACE__ . '\process_worker';
 class process_worker // @codingStandardsIgnoreEnd
 {
     /**
@@ -52,13 +55,19 @@ class process_worker // @codingStandardsIgnoreEnd
         $keys = $mappings->keySet();
         foreach ($keys as $key) {
             $action = $mappings->findAction($key);
+            $form = $caller->processForm($action);
             $func = $caller->getActionFunc($action);
             $attrs = $annotation->getAttrs($func);
             $taskAttr = \PMVC\get($attrs['obj'], TASK_KEY);
             $queueAttr = \PMVC\get($attrs['obj'], QUEUE_KEY);
             if ($taskAttr) {
-                $wrap = function () use ($caller, $action, $queueAttr, $func) {
-                    $form = $caller->processForm($action);
+                $wrap = function () use (
+                    $caller,
+                    $action,
+                    $form,
+                    $queueAttr,
+                    $func
+                ) {
                     $queueDb = $this->_getQueueDb($queueAttr);
                     if ($queueAttr && $queueAttr->consumer) {
                         $form['data'] = $queueDb[null];
@@ -69,17 +78,36 @@ class process_worker // @codingStandardsIgnoreEnd
                     }
                 };
                 switch ($taskAttr->type) {
-                case 'daemon':
-                    $supervisor->daemon($wrap, [], null, $taskAttr->interval);
-                    break;
-                case 'script':
-                    $supervisor->script($wrap, []);
-                default:
-                    break;
+                    case sup\TYPE_DAEMON:
+                        $workerGroup = $taskAttr->group;
+                        $inputConcurrency = get($form, $workerGroup);
+                        $concurrency =
+                            !empty($inputConcurrency) &&
+                            is_numeric($inputConcurrency) &&
+                            $inputConcurrency > 1
+                                ? $form[$workerGroup]
+                                : 1;
+                        for ($i = 0; $i < $concurrency; $i++) {
+                            new Parallel($wrap, [
+                              sup\TYPE => sup\TYPE_DAEMON,
+                              sup\INTERVAL => $taskAttr->interval
+                            ]);
+                        }
+                        break;
+                    case sup\TYPE_SCRIPT:
+                        new Parallel($wrap, [
+                          sup\TYPE => sup\TYPE_SCRIPT,
+                          sup\NAME => $action->name, 
+                        ]);
+                        break;  
+                    default:
+                        trigger_error("Wrong worker type [".$taskAttr->type."]");
+                        break;
                 }
             }
         }
-        $supervisor->process();
+        \PMVC\v($supervisor[sup\PARALLELS]);
+        //        $supervisor->process();
     }
 
     /**

@@ -148,6 +148,10 @@ class ActionMappings
             $actionForm = false;
         }
 
+        if (is_object($actionForm)) {
+            $actionForm->name = $name;
+        }
+
         return $actionForm;
     }
 
@@ -168,7 +172,9 @@ class ActionMappings
         }
         $forward = value($this->_mappings, [ACTION_FORWARDS, $name]);
         if ($forward) {
-            return new ActionForward($forward);
+            $oForward = new ActionForward($forward);
+            $oForward->name = $name;
+            return $oForward;
         } else {
             return !trigger_error(
                 'ActionForward not found: {'.$name.'} not exists',

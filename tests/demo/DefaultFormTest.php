@@ -1,8 +1,11 @@
 <?php
+namespace PMVC;
 
-class DefaultFormTest extends PHPUnit_Framework_TestCase
+use DomainException;
+
+class DefaultFormTest extends TestCase
 {
-    public function setup()
+    public function pmvc_setup()
     {
         \PMVC\unplug('controller');
         \PMVC\option('set', [
@@ -15,7 +18,7 @@ class DefaultFormTest extends PHPUnit_Framework_TestCase
     public function testDefaultForm()
     {
         $test_str = 'Hello World!';
-        $b = new PMVC\MappingBuilder();
+        $b = new \PMVC\MappingBuilder();
         $b->addAction(
             'index',
             [
@@ -25,7 +28,7 @@ class DefaultFormTest extends PHPUnit_Framework_TestCase
             ]
         );
         $option = [
-            _DEFAULT_FORM => 'FakeDefaultForm',
+            _DEFAULT_FORM => '\PMVC\FakeDefaultForm',
         ];
         $mvc = \PMVC\plug('controller');
         \PMVC\set($mvc, $option);
@@ -35,27 +38,29 @@ class DefaultFormTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException DomainException
+     * @expectedException \DomainException
      */
     public function testFormNotExists()
     {
-        $b = new PMVC\MappingBuilder();
-        $b->addAction(
-            'index',
-            [
-                _FUNCTION => function () {
-                    return '';
-                },
-                _FORM => 'xxx',
-            ]
-        );
-        $mvc = \PMVC\plug('controller');
-        $mvc->process($b);
+        $this->willThrow(function(){
+          $b = new \PMVC\MappingBuilder();
+          $b->addAction(
+              'index',
+              [
+                  _FUNCTION => function () {
+                      return '';
+                  },
+                  _FORM => 'xxx',
+              ]
+          );
+          $mvc = \PMVC\plug('controller');
+          $mvc->process($b);
+        }, false);
     }
 
     public function testNotSetDefaultForm()
     {
-        $b = new PMVC\MappingBuilder();
+        $b = new \PMVC\MappingBuilder();
         $b->addAction(
             'index',
             [

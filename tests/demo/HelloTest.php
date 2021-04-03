@@ -1,8 +1,9 @@
 <?php
+namespace PMVC;
 
-class HelloTest extends PHPUnit_Framework_TestCase
+class HelloTest extends TestCase
 {
-    public function setup()
+    public function pmvc_setup()
     {
         \PMVC\unplug('controller');
     }
@@ -10,7 +11,7 @@ class HelloTest extends PHPUnit_Framework_TestCase
     public function testHello()
     {
         $test_str = 'Hello World!';
-        $b = new PMVC\MappingBuilder();
+        $b = new \PMVC\MappingBuilder();
         $b->addAction(
             'index',
             function () use ($test_str) {
@@ -28,7 +29,7 @@ class HelloTest extends PHPUnit_Framework_TestCase
     public function testActionCaseSensitive($addAction, $processAction)
     {
         $test_str = 'Hello World!';
-        $b = new PMVC\MappingBuilder();
+        $b = new \PMVC\MappingBuilder();
         $b->addAction(
             $addAction,
             function () use ($test_str) {

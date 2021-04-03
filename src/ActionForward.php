@@ -89,7 +89,14 @@ class ActionForward extends HashMap
     private $_view;
 
     /**
-     * Lazyoutput action.
+     * Name 
+     *
+     * @var string
+     */
+    public $name;
+
+    /**
+     * Next action.
      *
      * @var string
      */

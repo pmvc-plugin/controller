@@ -2,11 +2,9 @@
 
 namespace PMVC;
 
-use PHPUnit_Framework_TestCase;
-
-class ActionForwardTest extends PHPUnit_Framework_TestCase
+class ActionForwardTest extends TestCase
 {
-    public function setup()
+    public function pmvc_setup()
     {
         \PMVC\unplug(_RUN_APP);
         \PMVC\unplug('view');

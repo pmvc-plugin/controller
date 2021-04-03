@@ -26,8 +26,9 @@ class MappingBuilderTest extends PHPUnit_Framework_TestCase
     public function testAddActionWithCallable()
     {
         $b = new MappingBuilder();
+        $fakeClass = new FakeAction();
         $call = [
-            __NAMESPACE__.'\FakeAction',
+            $fakeClass,
             'fakeAction',
         ];
         $action = $b->addAction('foo', $call);

@@ -2,16 +2,12 @@
 
 namespace PMVC;
 
-use Exception;
-use PHPUnit_Framework_Error;
-use PHPUnit_Framework_TestCase;
-
-class ActionControllerPlugAppTest extends PHPUnit_Framework_TestCase
+class ActionControllerPlugAppTest extends TestCase
 {
-    public function setup()
+    public function pmvc_setup()
     {
         folders(_RUN_APP, [], [], true);
-        $this->resources = __DIR__.'/../resources/';
+        $this->resources = __DIR__ . '/../resources/';
         unPlug(_RUN_APP);
         unPlug('controller');
         option('set', _REAL_APP, null);
@@ -20,49 +16,42 @@ class ActionControllerPlugAppTest extends PHPUnit_Framework_TestCase
 
     public function testStore()
     {
-        $folders = [
-            $this->resources.'apps1',
-            $this->resources.'apps2',
-        ];
+        $folders = [$this->resources . 'apps1', $this->resources . 'apps2'];
         $mvc = plug('controller');
         $mvc->setApp('testApp');
         $mvc->plugApp($folders);
         $store = folders(_RUN_APP);
-        $expected = array_reverse(array_map(function ($d) {
-            return realpath($d);
-        }, $folders));
-        $auto = realpath(__DIR__.'/../../../../pmvc-app');
+        $expected = array_reverse(
+            array_map(function ($d) {
+                return realpath($d);
+            }, $folders)
+        );
+        $auto = realpath(__DIR__ . '/../../../../pmvc-app');
         if ($auto) {
             $expected[] = $auto;
         }
-        $this->assertEquals(
-            $expected,
-            $store['folders']
-        );
+        $this->assertEquals($expected, $store['folders']);
     }
 
     public function testPlugApp()
     {
-        $folders = [
-            $this->resources.'apps1',
-            $this->resources.'apps2',
-        ];
+        $folders = [$this->resources . 'apps1', $this->resources . 'apps2'];
         $mvc = plug('controller');
         $mvc->setApp('testApp');
         $result = $mvc->plugApp($folders);
         $this->assertTrue($result);
-        $this->assertEquals(
-            'app2',
-            getOption('test')
-        );
+        $this->assertEquals('app2', getOption('test'));
     }
 
     public function testGetAppsParent()
     {
         $mvc = plug('controller');
         $mvc->setApp('testApp');
-        $mvc->plugApp([$this->resources.'apps1']);
-        $this->assertEquals(realpath($this->resources).'/', $mvc->getAppsParent());
+        $mvc->plugApp([$this->resources . 'apps1']);
+        $this->assertEquals(
+            realpath($this->resources) . '/',
+            $mvc->getAppsParent()
+        );
     }
 
     public function testGetAppsParentFromVendor()
@@ -73,22 +62,15 @@ class ActionControllerPlugAppTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException PHPUnit_Framework_Error
+     * @expectedException Exception
      */
     public function testSetAppFail()
     {
-        try {
+        $this->willThrow(function () {
             $mvc = plug('controller');
             $mvc->setApp('xxx');
             $mvc->plugApp();
-        } catch (Exception $e) {
-            throw new PHPUnit_Framework_Error(
-                $e->getMessage(),
-                0,
-                $e->getFile(),
-                $e->getLine()
-            );
-        }
+        });
     }
 
     /**
@@ -96,33 +78,25 @@ class ActionControllerPlugAppTest extends PHPUnit_Framework_TestCase
      */
     public function testSetDefaultAppFail()
     {
-        $mvc = plug('controller');
-
-        $mvc->setApp('xxx');
-        $mvc[_DEFAULT_APP] = '';
-        @$mvc->plugApp();
+        $this->willThrow(function () {
+            $mvc = plug('controller');
+            $mvc->setApp('xxx');
+            $mvc[_DEFAULT_APP] = '';
+            @$mvc->plugApp();
+        }, false);
     }
 
     public function testSetRealApp()
     {
         unplug('another');
-        $another = \PMVC\plug(
-            'another',
-            [
-                _CLASS   => '\PMVC\AnotherPlugin',
-                'assert' => _REAL_APP,
-            ]
-        );
-        $folders = [
-            $this->resources.'apps1',
-            $this->resources.'apps2',
-        ];
+        $another = \PMVC\plug('another', [
+            _CLASS => '\PMVC\AnotherPlugin',
+            'assert' => _REAL_APP,
+        ]);
+        $folders = [$this->resources . 'apps1', $this->resources . 'apps2'];
         $mvc = plug('controller');
         $mvc->setApp('testFoo');
         $mvc->plugApp($folders, ['testFoo' => 'testapp']);
-        $this->assertEquals(
-            'testapp',
-            $another['actual']
-        );
+        $this->assertEquals('testapp', $another['actual']);
     }
 }

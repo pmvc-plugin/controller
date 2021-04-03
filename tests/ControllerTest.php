@@ -2,11 +2,10 @@
 
 namespace PMVC;
 
-use PHPUnit_Framework_TestCase;
 
-class ControllerTest extends PHPUnit_Framework_TestCase
+class ControllerTest extends TestCase
 {
-    public function setup()
+    public function pmvc_setup()
     {
         \PMVC\option('set', Event\FINISH, false);
         \PMVC\unplug('controller');
