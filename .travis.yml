@@ -1,27 +1,30 @@
 language: php
-dist: trusty
+ 
+jobs:
+  include:
+    - dist: trusty
+      php: 5.6
+    - dist: trusty
+      php: 7.2 
+    - dist: focal
+      php: 8.0 
+
 sudo: required
 group: edge
- 
-php:
-  - 5.6
-  - 7.2
-  - 7.3
  
 before_script:
   - composer self-update
   - composer install --prefer-source
   - if [[ "$TRAVIS_PHP_VERSION" == '5.6' ]]; then composer require phpunit/phpunit 4.8.35; fi
-  - if [[ "$TRAVIS_PHP_VERSION" == 'hhvm' ]]; then composer require phpunit/phpunit 4.8.35; fi
   - if [[ "$TRAVIS_PHP_VERSION" == '7.2' ]]; then composer require phpunit/phpunit 6.5.5; fi
-  - if [[ "$TRAVIS_PHP_VERSION" == '7.3' ]]; then composer require phpunit/phpunit 6.5.5; fi
-  - if [[ "$TRAVIS_PHP_VERSION" == '5.6' ]]; then composer require satooshi/php-coveralls:1.* -n ; fi
+  - if [[ "$TRAVIS_PHP_VERSION" == '8.0' ]]; then composer require --ignore-platform-req=php phpunit/phpunit 9.5.0; fi
+  - if [[ "$TRAVIS_PHP_VERSION" == '8.0' ]]; then composer require --dev php-coveralls/php-coveralls -n ; fi
  
 script:
-  - if [[ "$TRAVIS_PHP_VERSION" != '5.6' ]]; then vendor/bin/phpunit; fi
-  - if [[ "$TRAVIS_PHP_VERSION" == '5.6' ]]; then vendor/bin/phpunit --coverage-clover clover.xml ; fi
-  - if [[ "$TRAVIS_PHP_VERSION" == '5.6' ]]; then vendor/bin/phpcs --version && vendor/bin/phpcs src/ ./controller.php; fi
+  - if [[ "$TRAVIS_PHP_VERSION" != '8.0' ]]; then vendor/bin/phpunit; fi
+  - if [[ "$TRAVIS_PHP_VERSION" == '8.0' ]]; then vendor/bin/phpunit --coverage-clover clover.xml ; fi
+  - if [[ "$TRAVIS_PHP_VERSION" == '8.0' ]]; then vendor/bin/phpcs --version && vendor/bin/phpcs src/ ./controller.php; fi
 
 after_script:
-  - if [[ "$TRAVIS_PHP_VERSION" == '5.6' ]]; then php vendor/bin/coveralls --coverage_clover=clover.xml -v ; fi
+  - if [[ "$TRAVIS_PHP_VERSION" == '8.0' ]]; then php vendor/bin/coveralls --coverage_clover=clover.xml -v ; fi
  
