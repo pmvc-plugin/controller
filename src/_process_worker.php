@@ -62,7 +62,6 @@ class process_worker // @codingStandardsIgnoreEnd
             $queueAttr = \PMVC\get($attrs['obj'], QUEUE_KEY);
             if ($taskAttr) {
                 $wrap = function () use (
-
                     $action,
                     $form,
                     $queueAttr,
@@ -113,8 +112,7 @@ class process_worker // @codingStandardsIgnoreEnd
                 }
             }
         }
-        \PMVC\v($supervisor[sup\PARALLELS]);
-        //        $supervisor->process();
+        $supervisor->process();
     }
 
     /**
