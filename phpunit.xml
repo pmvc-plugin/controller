@@ -13,9 +13,14 @@
   xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd"
 >
   <coverage includeUncoveredFiles="true">
+    <!-- https://phpunit.readthedocs.io/en/9.5/configuration.html -->
     <include>
       <directory suffix=".php">./src</directory>
+      <file>controller.php</file>
     </include>
+    <exclude>
+      <file>./src/Constants.php</file>
+    </exclude>
   </coverage>
   <testsuites>
     <testsuite name="Application Test Suite">
