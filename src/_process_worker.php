@@ -38,7 +38,7 @@ const TASK_KEY = 'PMVC\Task';
 const QUEUE_KEY = 'PMVC\Queue';
 
 // @codingStandardsIgnoreStart
-${_INIT_CONFIG}[_CLASS] = __NAMESPACE__ . '\process_worker';
+${_INIT_CONFIG}[_CLASS] = __NAMESPACE__.'\process_worker';
 class process_worker // @codingStandardsIgnoreEnd
 {
     /**
@@ -62,7 +62,7 @@ class process_worker // @codingStandardsIgnoreEnd
             $queueAttr = \PMVC\get($attrs['obj'], QUEUE_KEY);
             if ($taskAttr) {
                 $wrap = function () use (
-                    $caller,
+
                     $action,
                     $form,
                     $queueAttr,
@@ -88,24 +88,26 @@ class process_worker // @codingStandardsIgnoreEnd
                             : 1;
                     for ($i = 0; $i < $concurrency; $i++) {
                         new Parallel(
-                            $wrap, [
-                            sup\TYPE => sup\TYPE_DAEMON,
-                            sup\INTERVAL => $taskAttr->interval,
-                                ]
+                            $wrap,
+                            [
+                                sup\TYPE     => sup\TYPE_DAEMON,
+                                sup\INTERVAL => $taskAttr->interval,
+                            ]
                         );
                     }
                     break;
                 case sup\TYPE_SCRIPT:
                     new Parallel(
-                        $wrap, [
-                        sup\TYPE => sup\TYPE_SCRIPT,
-                        sup\NAME => $action->name,
-                            ]
+                        $wrap,
+                        [
+                            sup\TYPE => sup\TYPE_SCRIPT,
+                            sup\NAME => $action->name,
+                        ]
                     );
                     break;
                 default:
                     trigger_error(
-                        'Wrong worker type [' . $taskAttr->type . ']'
+                        'Wrong worker type ['.$taskAttr->type.']'
                     );
                     break;
                 }

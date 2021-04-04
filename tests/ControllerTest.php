@@ -2,7 +2,6 @@
 
 namespace PMVC;
 
-
 class ControllerTest extends TestCase
 {
     public function pmvc_setup()

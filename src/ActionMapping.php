@@ -33,7 +33,7 @@ namespace PMVC;
 class ActionMapping extends HashMap
 {
     /**
-     * Name 
+     * Name.
      *
      * @var string
      */

@@ -1,4 +1,5 @@
 <?php
+
 namespace PMVC;
 
 class HelloTest extends TestCase

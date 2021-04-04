@@ -33,7 +33,7 @@ namespace PMVC;
 class ActionForm extends HashMap
 {
     /**
-     * Name 
+     * Name.
      *
      * @var string
      */
