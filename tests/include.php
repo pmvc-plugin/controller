@@ -3,7 +3,7 @@
 $path = __DIR__.'/../vendor/autoload.php';
 include $path;
 
-\PMVC\Load::plug(['unit' => null, 'controller'=>null], [__DIR__.'/../../']);
+\PMVC\Load::plug(['unit' => null, 'controller'=>null], [__DIR__.'/../../', __DIR__.'/../vendor/']);
 
 \PMVC\l(__DIR__.'/resources/FakeView');
 \PMVC\l(__DIR__.'/resources/FakePlugIn');
