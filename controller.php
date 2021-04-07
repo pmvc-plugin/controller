@@ -137,7 +137,7 @@ class controller extends PlugIn // @codingStandardsIgnoreEnd
         $appPlugin = plug(
             _RUN_APP,
             [
-                _PLUGIN_FILE => $path,
+                _PLUGIN_FILE   => $path,
                 _DEFAULT_CLASS => '\PMVC\Action',
             ]
         );
