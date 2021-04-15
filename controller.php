@@ -20,19 +20,19 @@ namespace PMVC;
 
 use DomainException;
 
-l(__DIR__ . '/src/Constants');
-l(__DIR__ . '/src/Action');
-l(__DIR__ . '/src/ActionForm');
-l(__DIR__ . '/src/ActionForward');
-l(__DIR__ . '/src/ActionMapping');
-l(__DIR__ . '/src/ActionMappings');
-l(__DIR__ . '/src/MappingBuilder');
-l(__DIR__ . '/src/Request');
-l(__DIR__ . '/src/RouterInterface');
-l(__DIR__ . '/src/Task');
-l(__DIR__ . '/src/Queue');
+l(__DIR__.'/src/Constants');
+l(__DIR__.'/src/Action');
+l(__DIR__.'/src/ActionForm');
+l(__DIR__.'/src/ActionForward');
+l(__DIR__.'/src/ActionMapping');
+l(__DIR__.'/src/ActionMappings');
+l(__DIR__.'/src/MappingBuilder');
+l(__DIR__.'/src/Request');
+l(__DIR__.'/src/RouterInterface');
+l(__DIR__.'/src/Task');
+l(__DIR__.'/src/Queue');
 
-${_INIT_CONFIG}[_CLASS] = __NAMESPACE__ . '\controller';
+${_INIT_CONFIG}[_CLASS] = __NAMESPACE__.'\controller';
 
 /**
  * PMVC Action.
@@ -76,7 +76,7 @@ class controller extends PlugIn // @codingStandardsIgnoreEnd
      */
     public function __construct()
     {
-        $this->addAppFolders([__DIR__ . '/../../pmvc-app']);
+        $this->addAppFolders([__DIR__.'/../../pmvc-app']);
         $this->_mappings = new ActionMappings();
         $this->_request = new Request();
     }
@@ -126,8 +126,8 @@ class controller extends PlugIn // @codingStandardsIgnoreEnd
         );
         addPlugInFolders(
             [
-            $parent . '/' . $this[_REAL_APP] . '/plugins',
-            $this->getAppsParent() . 'plugins',
+                $parent.'/'.$this[_REAL_APP].'/plugins',
+                $this->getAppsParent().'plugins',
             ]
         );
         $names = explode('_', $this[_REAL_APP]);
@@ -192,11 +192,11 @@ class controller extends PlugIn // @codingStandardsIgnoreEnd
      */
     public function execute($index)
     {
-        if (DEFAULT_INDEX !== $index 
+        if (DEFAULT_INDEX !== $index
             && !$this->_mappings->actionExists($index)
         ) {
             return !trigger_error(
-                'No mappings found for action: [' . $index . ']',
+                'No mappings found for action: ['.$index.']',
                 E_USER_WARNING
             );
         }
@@ -221,7 +221,7 @@ class controller extends PlugIn // @codingStandardsIgnoreEnd
             function () use ($actionMapping, $actionForm, $actionForward) {
                 return [
                     'actionMapping' => $actionMapping,
-                    'actionForm' => $actionForm,
+                    'actionForm'    => $actionForm,
                     'actionForward' => $actionForward,
                 ];
             },
@@ -249,7 +249,7 @@ class controller extends PlugIn // @codingStandardsIgnoreEnd
                 $defaultForm = option(
                     'get',
                     _DEFAULT_FORM,
-                    __NAMESPACE__ . '\ActionForm'
+                    __NAMESPACE__.'\ActionForm'
                 );
                 $actionForm = new $defaultForm();
             }
@@ -257,7 +257,7 @@ class controller extends PlugIn // @codingStandardsIgnoreEnd
             $actionForm = $this->_mappings->findForm($actionMapping->form);
             if (empty($actionForm)) {
                 throw new DomainException(
-                    'ActionForm: [' . $actionMapping->form . '] not exists.'
+                    'ActionForm: ['.$actionMapping->form.'] not exists.'
                 );
             }
         }
@@ -305,9 +305,10 @@ class controller extends PlugIn // @codingStandardsIgnoreEnd
         callPlugin('dispatcher', 'notify', [Event\WILL_PROCESS_ACTION, true]);
 
         return call_user_func_array(
-            $this->getActionFunc($actionMapping), [
-            $actionMapping,
-            $actionForm,
+            $this->getActionFunc($actionMapping),
+            [
+                $actionMapping,
+                $actionForm,
             ]
         );
     }
@@ -327,7 +328,8 @@ class controller extends PlugIn // @codingStandardsIgnoreEnd
         dev(
             function () use ($actionForward) {
                 return $actionForward;
-            }, 'view'
+            },
+            'view'
         );
         if (!is_callable([$actionForward, 'go'])) {
             return $actionForward;
@@ -433,7 +435,7 @@ class controller extends PlugIn // @codingStandardsIgnoreEnd
      */
     public function getAppFile($parents, $indexFile)
     {
-        $file = $this[_REAL_APP] . '/' . $indexFile . '.php';
+        $file = $this[_REAL_APP].'/'.$indexFile.'.php';
 
         return find($file, $parents);
     }
@@ -489,7 +491,7 @@ class controller extends PlugIn // @codingStandardsIgnoreEnd
                 $func = [plug(_RUN_APP), $func];
             } else {
                 return !trigger_error(
-                    'parse action error, function not exists. ' .
+                    'parse action error, function not exists. '.
                         print_r($func, true),
                     E_USER_WARNING
                 );
@@ -548,9 +550,9 @@ class controller extends PlugIn // @codingStandardsIgnoreEnd
         $folder = $this[_RUN_APPS];
         $i = strrpos($folder, '/vendor/');
         $folder = $i !== false ?
-          substr($folder, 0, $i) : lastSlash($folder) . '../';
+          substr($folder, 0, $i) : lastSlash($folder).'../';
 
-        return realpath($folder) . '/';
+        return realpath($folder).'/';
     }
 
     /**
@@ -677,10 +679,10 @@ class controller extends PlugIn // @codingStandardsIgnoreEnd
 
                 return [
                     'previous' => $prev,
-                    'next' => $next,
-                    'params' => [
+                    'next'     => $next,
+                    'params'   => [
                         'folders' => $folders,
-                        'alias' => $alias,
+                        'alias'   => $alias,
                     ],
                     'trace' => $trace,
                 ];
