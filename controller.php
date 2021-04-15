@@ -118,8 +118,10 @@ class controller extends PlugIn // @codingStandardsIgnoreEnd
         $parent = realpath(dirname(dirname($path)));
         $this[_RUN_APPS] = $parent;
         $appPlugin = plug(
-            _RUN_APP, [
-            _PLUGIN_FILE => $path,
+            _RUN_APP,
+            [
+                _PLUGIN_FILE   => $path,
+                _DEFAULT_CLASS => '\PMVC\Action',
             ]
         );
         addPlugInFolders(
