@@ -122,10 +122,11 @@ class ActionMapping extends HashMap
      */
     public function &offsetGet($name = null)
     {
+        $forward = null;
         if (!is_null($name)) {
             $forward = $this->_mappings->findForward($name);
-
-            return $forward;
         }
+
+        return $forward;
     }
 }
