@@ -368,10 +368,11 @@ class ActionForward extends HashMap
         // else path will be clean by $view->enable
         if ($this->ttfb) {
             $view[_TTFB] = true;
+            $view['reEnable'] = true;
             $view->disable();
         } else {
-            if (!empty($view[_TTFB])) {
-                $view[_TTFB] = false;
+            if (!empty($view['reEnable'])) {
+                unset($view['reEnable']);
                 $view->enable();
             }
         }
