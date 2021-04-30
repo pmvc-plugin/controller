@@ -61,6 +61,13 @@ class ActionForward extends HashMap
     private $_type;
 
     /**
+     * TTFB.
+     *
+     * @var bool
+     */
+    private $_ttfb;
+
+    /**
      * Header.
      *
      * @var array
@@ -113,7 +120,12 @@ class ActionForward extends HashMap
         $this->setPath($forward[_PATH]);
         $this->setHeader($forward[_HEADER]);
         $this->_setType($forward[_TYPE]);
+
+        // assign value
         $this->action = $forward[_ACTION];
+        if (isset($forward[_TTFB])) {
+            $this->_ttfb = $forward[_TTFB];
+        }
     }
 
     /**
@@ -358,6 +370,7 @@ class ActionForward extends HashMap
         } else {
             $view->prepend(get($this));
         }
+
         if (exists(_RUN_APP, 'plugin')) {
             $run = plug(_RUN_APP);
             $keepForward = $run[_FORWARD];
@@ -368,6 +381,19 @@ class ActionForward extends HashMap
                 unset($keepForward);
             }
         }
+
+        // <-- Handle ttfb
+        if ($this->_ttfb) {
+            $view[_TTFB] = true;
+            $view->disable();
+        } else {
+            if (!empty($view[_TTFB])) {
+                $view[_TTFB] = false;
+                $view->enable();
+            }
+        }
+        // end Handle ttfb-->
+
         callPlugin(
             'dispatcher',
             'notify',
