@@ -61,13 +61,6 @@ class ActionForward extends HashMap
     private $_type;
 
     /**
-     * TTFB.
-     *
-     * @var bool
-     */
-    private $_ttfb;
-
-    /**
      * Header.
      *
      * @var array
@@ -110,6 +103,13 @@ class ActionForward extends HashMap
     public $action;
 
     /**
+     * TTFB.
+     *
+     * @var bool
+     */
+    public $ttfb;
+
+    /**
      * ActionForward.
      *
      * @param array $forward forward
@@ -124,7 +124,7 @@ class ActionForward extends HashMap
         // assign value
         $this->action = $forward[_ACTION];
         if (isset($forward[_TTFB])) {
-            $this->_ttfb = $forward[_TTFB];
+            $this->ttfb = $forward[_TTFB];
         }
     }
 
@@ -383,7 +383,7 @@ class ActionForward extends HashMap
         }
 
         // <-- Handle ttfb
-        if ($this->_ttfb) {
+        if ($this->ttfb) {
             $view[_TTFB] = true;
             $view->disable();
         } else {
