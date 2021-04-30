@@ -362,8 +362,23 @@ class ActionForward extends HashMap
          * - Option 2. Or just create a new one.
          */
         $view = $this->_view;
-        $path = $this->getPath();
+
+        // <-- Handle ttfb 
+        // Need locate before setThemePath 
+        // else path will be clean by $view->enable
+        if ($this->ttfb) {
+            $view[_TTFB] = true;
+            $view->disable();
+        } else {
+            if (!empty($view[_TTFB])) {
+                $view[_TTFB] = false;
+                $view->enable();
+            }
+        }
+        // end Handle ttfb-->
+
         if ('redirect' !== $this->_type) {
+            $path = $this->getPath();
             if ($path) {
                 $view->setThemePath($path);
             }
@@ -382,17 +397,6 @@ class ActionForward extends HashMap
             }
         }
 
-        // <-- Handle ttfb
-        if ($this->ttfb) {
-            $view[_TTFB] = true;
-            $view->disable();
-        } else {
-            if (!empty($view[_TTFB])) {
-                $view[_TTFB] = false;
-                $view->enable();
-            }
-        }
-        // end Handle ttfb-->
 
         callPlugin(
             'dispatcher',
