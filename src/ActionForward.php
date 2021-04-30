@@ -363,8 +363,8 @@ class ActionForward extends HashMap
          */
         $view = $this->_view;
 
-        // <-- Handle ttfb 
-        // Need locate before setThemePath 
+        // <-- Handle ttfb
+        // Need locate before setThemePath
         // else path will be clean by $view->enable
         if ($this->ttfb) {
             $view[_TTFB] = true;
@@ -397,7 +397,6 @@ class ActionForward extends HashMap
                 unset($keepForward);
             }
         }
-
 
         callPlugin(
             'dispatcher',
