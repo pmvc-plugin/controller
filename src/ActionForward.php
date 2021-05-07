@@ -177,9 +177,18 @@ class ActionForward extends HashMap
     {
         if (self::VIEW === $type || 'redirect' === $type) {
             $c = plug('controller');
+            /**
+             * Get custom engine from .env
+             *
+             * syntax: view_engine_[app-name]
+             *
+             * such as.
+             * view_engine_sitemap=xml
+             */
             $appViewEngine = value(
-                $c[self::VIEW],
+                $c,
                 [
+                    self::VIEW,
                     'engine',
                     $c->getApp(),
                 ]
@@ -407,8 +416,9 @@ class ActionForward extends HashMap
         );
         $c = plug('controller');
         $appTemplateDir = value(
-            $c['template'],
+            $c,
             [
+                'template',
                 'dir',
                 $c->getApp(),
             ],
