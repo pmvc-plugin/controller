@@ -223,8 +223,9 @@ class controller extends PlugIn // @codingStandardsIgnoreEnd
                 $annot = \PMVC\plug('annotation');
                 $doc = $annot->get($func);
                 $line = $doc->getStartLine();
-                $file = $doc->getFile(); 
-                $actionFile = compact('file', 'line', 'func'); 
+                $file = $doc->getFile();
+                $actionFile = compact('file', 'line', 'func');
+
                 return compact(
                     'actionMapping',
                     'actionForm',
