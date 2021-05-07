@@ -177,7 +177,7 @@ class ActionForward extends HashMap
     {
         if (self::VIEW === $type || 'redirect' === $type) {
             $c = plug('controller');
-            /**
+            /*
              * Get custom engine from .env
              *
              * syntax: view_engine_[app-name]
