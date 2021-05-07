@@ -219,11 +219,18 @@ class controller extends PlugIn // @codingStandardsIgnoreEnd
              * @help MVC debug.
              */
             function () use ($actionMapping, $actionForm, $actionForward) {
-                return [
-                    'actionMapping' => $actionMapping,
-                    'actionForm'    => $actionForm,
-                    'actionForward' => $actionForward,
-                ];
+                $func = $this->getActionFunc($actionMapping);
+                $annot = \PMVC\plug('annotation');
+                $doc = $annot->get($func);
+                $line = $doc->getStartLine();
+                $file = $doc->getFile(); 
+                $actionFile = compact('file', 'line', 'func'); 
+                return compact(
+                    'actionMapping',
+                    'actionForm',
+                    'actionForward',
+                    'actionFile'
+                );
             },
             'mvc'
         );
