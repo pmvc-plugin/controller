@@ -570,7 +570,7 @@ class controller extends PlugIn // @codingStandardsIgnoreEnd
      */
     public function getAppsFolder()
     {
-        return $this[_RUN_APPS];
+        return realpath($this[_RUN_APPS]).'/';
     }
 
     /**
