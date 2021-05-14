@@ -32,7 +32,7 @@ controller -> plugapp -> process -> execute -> processForm -> _processValidate -
 
 * Apps *Folder*
 ```
-\PMVC\plug('controller')[_RUN_APPS]
+\PMVC\plug('controller')->getAppsFolder()
 ```
 
 * App

@@ -564,15 +564,14 @@ class controller extends PlugIn // @codingStandardsIgnoreEnd
     }
 
     /**
-     * Get app folder.
+     * Get apps folder.
      *
      * @return string
      */
-    public function getAppFolder()
+    public function getAppsFolder()
     {
         return $this[_RUN_APPS];
     }
-
 
     /**
      * Get app.
