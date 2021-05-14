@@ -16,11 +16,33 @@ PMVC Controller
 controller -> plugapp -> process -> execute -> processForm -> _processValidate -> _processAction -> processForward -> _finish
 
 ## Explain App Folder
+
+### Folders hierarchy
 ```
-- Site *Folder* (_RUN_APPS's parent folder, \PMVC\plug('controller')->getAppsParent())
--- Apps *Folder* (\PMVC\plug('controller')[_RUN_APPS])
---- App (\PMVC\plug('controller')->getApp())
+- Site *Folder*
+-- Apps *Folder*
+--- App
 ```
+
+### How to get (folders)?
+* Site *Folder* 
+```
+\PMVC\plug('controller')->getAppsParent()
+```
+
+* Apps *Folder*
+```
+\PMVC\plug('controller')[_RUN_APPS]
+```
+
+* App
+ ```
+\PMVC\plug('controller')->getApp()
+```
+
+
+
+
 
 ## APP customize view and template
    * View
