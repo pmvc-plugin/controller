@@ -76,7 +76,7 @@ class controller extends PlugIn // @codingStandardsIgnoreEnd
      */
     public function __construct()
     {
-        $this->addAppFolders([__DIR__.'/../../pmvc-app']);
+        $this->_addAppFolders([__DIR__.'/../../pmvc-app']);
         $this->_mappings = new ActionMappings();
         $this->_request = new Request();
     }
@@ -106,7 +106,7 @@ class controller extends PlugIn // @codingStandardsIgnoreEnd
         if (empty($folders) && $this[_RUN_APPS]) {
             $folders = toArray($this[_RUN_APPS]);
         }
-        $folders = $this->addAppFolders($folders);
+        $folders = $this->_addAppFolders($folders);
         $parents = $folders['folders'];
         $path = $this->getAppFile($parents, $indexFile);
         if (!$path) {
@@ -420,7 +420,7 @@ class controller extends PlugIn // @codingStandardsIgnoreEnd
      */
     private function _handleAlias(array $alias)
     {
-        $folders = $this->addAppFolders([], $alias);
+        $folders = $this->_addAppFolders([], $alias);
         $alias = $folders['alias'];
         $app = $this->getApp();
         $aliasApp = $app ? get($alias, $app) : null;
@@ -564,6 +564,17 @@ class controller extends PlugIn // @codingStandardsIgnoreEnd
     }
 
     /**
+     * Get app folder.
+     *
+     * @return string
+     */
+    public function getAppFolder()
+    {
+        return $this[_RUN_APPS];
+    }
+
+
+    /**
      * Get app.
      *
      * @return string
@@ -667,12 +678,15 @@ class controller extends PlugIn // @codingStandardsIgnoreEnd
     /**
      * Add App Folder.
      *
+     * Let _addAppFolders keep private,
+     * if need pass multiple folders, could use plugApp.
+     *
      * @param array $folders folders
      * @param array $alias   alias
      *
      * @return mixed
      */
-    public function addAppFolders(array $folders, array $alias = [])
+    private function _addAppFolders(array $folders, array $alias = [])
     {
         $prev = folders(_RUN_APP);
         $next = folders(_RUN_APP, $folders, $alias);
