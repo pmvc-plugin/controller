@@ -119,6 +119,13 @@ class ActionForward extends HashMap
         parent::__construct();
         $this->setPath($forward[_PATH]);
         $this->setHeader($forward[_HEADER]);
+        callPlugin(
+            'dispatcher',
+            'notify',
+            [
+                Event\WILL_SET_VIEW
+            ]
+        );
         $this->_setType($forward[_TYPE]);
 
         // assign value
