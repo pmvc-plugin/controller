@@ -123,7 +123,7 @@ class ActionForward extends HashMap
             'dispatcher',
             'notify',
             [
-                Event\WILL_SET_VIEW
+                Event\WILL_SET_VIEW,
             ]
         );
         $this->_setType($forward[_TYPE]);
