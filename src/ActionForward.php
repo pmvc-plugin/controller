@@ -89,7 +89,7 @@ class ActionForward extends HashMap
     private $_view;
 
     /**
-     * Name.
+     * Name (setup on ActionMappings).
      *
      * @var string
      */
@@ -397,9 +397,10 @@ class ActionForward extends HashMap
 
         if ('redirect' !== $this->_type) {
             $path = $this->getPath();
-            if ($path) {
-                $view->setThemePath($path);
+            if (is_null($path)) {
+                $path = $this->name;
             }
+            $view->setThemePath($path);
         } else {
             $view->prepend(get($this));
         }

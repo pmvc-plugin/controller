@@ -63,7 +63,7 @@ class ActionForwardTest extends TestCase
             ->getMock();
         $mock->expects($this->exactly(1))
             ->method('append');
-        \PMVC\replug('view', $mock);
+        \PMVC\replug('view', [], $mock);
         $fakeForward = [
             _PATH   => '',
             _HEADER => '',

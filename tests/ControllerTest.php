@@ -113,7 +113,7 @@ class ControllerTest extends TestCase
             ->getMock();
         $jsonView->expects($this->once())
             ->method('onFinish');
-        \PMVC\replug('view', $jsonView);
+        \PMVC\replug('view', [], $jsonView);
         \PMVC\plug(
             'another',
             [
