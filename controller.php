@@ -340,7 +340,7 @@ class controller extends PlugIn // @codingStandardsIgnoreEnd
                      * If actionForward
                      * wiil call dev @actionForward::__destruct
                      */
-                    return $actionForward;
+                    return ['nonForward' => $actionForward];
                 },
                 'view'
             );
