@@ -340,8 +340,8 @@ class controller extends PlugIn // @codingStandardsIgnoreEnd
                     'action'   => $actionForward->action,
                     'ttfb'     => $actionForward->ttfb,
                     'header'   => $actionForward->getHeader(),
-                    'type'     => $actionForward->getType(), 
-                    'path'     => $actionForward->getPath(), 
+                    'type'     => $actionForward->getType(),
+                    'path'     => $actionForward->getPath(),
                     'viewData' => $actionForward->get(),
                 ];
             },
