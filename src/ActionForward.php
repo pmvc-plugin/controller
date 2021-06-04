@@ -136,6 +136,29 @@ class ActionForward extends HashMap
     }
 
     /**
+     * Destruct.
+     *
+     * @return void 
+     */
+    public function __destruct()
+    {
+        dev(
+            function () {
+                return [
+                    'name'     => $this->name,
+                    'action'   => $this->action,
+                    'ttfb'     => $this->ttfb,
+                    'header'   => $this->getHeader(),
+                    'type'     => $this->getType(),
+                    'path'     => $this->getPath(),
+                    'viewData' => $this->get(),
+                ];
+            },
+            'view'
+        );
+    }
+
+    /**
      * Set header.
      *
      * @param array $v value
