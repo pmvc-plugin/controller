@@ -335,7 +335,8 @@ class controller extends PlugIn // @codingStandardsIgnoreEnd
     {
         dev(
             function () use ($actionForward) {
-                return $actionForward;
+                $viewData = $actionForward->get();
+                return compact('actionForward', 'viewData');
             },
             'view'
         );
