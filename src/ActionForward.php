@@ -138,7 +138,7 @@ class ActionForward extends HashMap
     /**
      * Destruct.
      *
-     * @return void 
+     * @return void
      */
     public function __destruct()
     {
