@@ -336,13 +336,15 @@ class controller extends PlugIn // @codingStandardsIgnoreEnd
         if (!is_callable([$actionForward, 'go'])) {
             dev(
                 function () use ($actionForward) {
-                    /**
-                     * if actionForward wiil call dev @actionForward::__destruct
+                    /*
+                     * If actionForward 
+                     * wiil call dev @actionForward::__destruct
                      */
                     return $actionForward;
                 },
                 'view'
             );
+
             return $actionForward;
         }
         $this[_FORWARD] = $actionForward;
