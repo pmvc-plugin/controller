@@ -337,13 +337,14 @@ class controller extends PlugIn // @codingStandardsIgnoreEnd
             dev(
                 function () use ($actionForward) {
                     /**
-                     * if actionForward wiil call dev
+                     * if actionForward wiil call dev.
                      * @actionForward::__destruct
                      */
                     return $actionForward;
                 },
                 'view'
             );
+
             return $actionForward;
         }
         $this[_FORWARD] = $actionForward;
