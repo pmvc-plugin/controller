@@ -337,7 +337,7 @@ class controller extends PlugIn // @codingStandardsIgnoreEnd
             dev(
                 function () use ($actionForward) {
                     /*
-                     * If actionForward 
+                     * If actionForward
                      * wiil call dev @actionForward::__destruct
                      */
                     return $actionForward;
