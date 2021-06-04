@@ -333,21 +333,16 @@ class controller extends PlugIn // @codingStandardsIgnoreEnd
      */
     public function processForward($actionForward)
     {
-        dev(
-            function () use ($actionForward) {
-                return [
-                    'name'     => $actionForward->name,
-                    'action'   => $actionForward->action,
-                    'ttfb'     => $actionForward->ttfb,
-                    'header'   => $actionForward->getHeader(),
-                    'type'     => $actionForward->getType(),
-                    'path'     => $actionForward->getPath(),
-                    'viewData' => $actionForward->get(),
-                ];
-            },
-            'view'
-        );
         if (!is_callable([$actionForward, 'go'])) {
+            dev(
+                function () use ($actionForward) {
+                    /**
+                     * if actionForward wiil call dev @actionForward::__destruct
+                     */
+                    return $actionForward;
+                },
+                'view'
+            );
             return $actionForward;
         }
         $this[_FORWARD] = $actionForward;
