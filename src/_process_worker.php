@@ -67,13 +67,13 @@ class process_worker // @codingStandardsIgnoreEnd
                     $queueAttr,
                     $func
                 ) {
-                    $queueDb = $this->_getQueueDb($queueAttr);
+                    $queueModel = $this->_getQueueModel($queueAttr);
                     if ($queueAttr && $queueAttr->consumer) {
-                        $form['data'] = $queueDb[null];
+                        $form['data'] = $queueModel[null];
                     }
                     $result = call_user_func_array($func, [$action, $form]);
                     if ($queueAttr && $queueAttr->publisher && $result['ok']) {
-                        $queueDb[] = $result['data'];
+                        $queueModel[] = $result['data'];
                     }
                 };
                 switch ($taskAttr->type) {
@@ -116,20 +116,20 @@ class process_worker // @codingStandardsIgnoreEnd
     }
 
     /**
-     * Get queue db.
+     * Get queue model.
      *
      * @param object $queueAttr Queue parameters.
      *
-     * @return mix Db object
+     * @return mixed model object
      */
-    private function _getQueueDb($queueAttr)
+    private function _getQueueModel($queueAttr)
     {
         $amqp = \PMVC\plug('amqp', ['host' => 'rabbitmq']);
-        $queueDb = null;
+        $queueModel = null;
         if ($queueAttr) {
-            $queueDb = $amqp->getDb($queueAttr->name);
+            $queueModel $amqp->getModel($queueAttr->name);
         }
 
-        return $queueDb;
+        return $queueModel;
     }
 }
