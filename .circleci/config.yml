@@ -7,7 +7,7 @@ jobs:
         type: string
       plugin-name:
         type: string
-        default: "guid"
+        default: "controller"
     docker:
       - image: hillliu/pmvc-phpunit:<< parameters.php-version >>
     working_directory: /var/www/<< parameters.plugin-name >>

@@ -1,6 +1,6 @@
 [![Latest Stable Version](https://poser.pugx.org/pmvc-plugin/controller/v/stable)](https://packagist.org/packages/pmvc-plugin/controller) 
 [![Latest Unstable Version](https://poser.pugx.org/pmvc-plugin/controller/v/unstable)](https://packagist.org/packages/pmvc-plugin/controller) 
-[![Build Status](https://travis-ci.org/pmvc-plugin/controller.svg?branch=master)](https://travis-ci.org/pmvc-plugin/controller)
+[![CircleCI](https://circleci.com/gh/pmvc-plugin/controller/tree/master.svg?style=svg)](https://circleci.com/gh/pmvc-plugin/controller/tree/master)
 [![StyleCI](https://styleci.io/repos/56382568/shield)](https://styleci.io/repos/56382568)
 [![Coverage Status](https://coveralls.io/repos/github/pmvc-plugin/controller/badge.svg?branch=master)](https://coveralls.io/github/pmvc-plugin/controller?branch=master)
 [![License](https://poser.pugx.org/pmvc-plugin/controller/license)](https://packagist.org/packages/pmvc-plugin/controller)

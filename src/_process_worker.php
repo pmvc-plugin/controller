@@ -127,7 +127,7 @@ class process_worker // @codingStandardsIgnoreEnd
         $amqp = \PMVC\plug('amqp', ['host' => 'rabbitmq']);
         $queueModel = null;
         if ($queueAttr) {
-            $queueModel $amqp->getModel($queueAttr->name);
+            $queueModel = $amqp->getModel($queueAttr->name);
         }
 
         return $queueModel;
