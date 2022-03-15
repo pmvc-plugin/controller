@@ -561,7 +561,7 @@ class controller extends PlugIn // @codingStandardsIgnoreEnd
     public function getAppsParent()
     {
         $folder = $this[_RUN_APPS];
-        $i = strrpos($folder, '/vendor/');
+        $i = strrpos($folder || '', '/vendor/');
         $folder = $i !== false ?
           substr($folder, 0, $i) : lastSlash($folder).'../';
 
