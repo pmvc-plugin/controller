@@ -59,7 +59,7 @@ class app_not_found // @codingStandardsIgnoreEnd
         trigger_error(
             json_encode(
                 [
-                    'Error' => 'No app found with routrs, '.
+                    'Error' => 'No app found with routers, '.
                                 'Please check following debug message.',
                     'Debug' => [
                         'Parent' => $parents,
