@@ -165,7 +165,7 @@ class ActionForward extends HashMap
      *
      * @return mixed
      */
-    public function cleanHeader($v)
+    public function cleanHeader($v = [])
     {
         return clean($this->_header, $v);
     }
@@ -194,6 +194,27 @@ class ActionForward extends HashMap
         }
 
         return set($this->_header, toArray($v));
+    }
+
+    /**
+     * Process Header.
+     *
+     * @return void
+     */
+    private function _processHeader()
+    {
+        $headers = $this->getHeader();
+        if (empty($headers)) {
+            return;
+        }
+        callPlugin(
+            option('get', _ROUTER),
+            'processHeader',
+            [
+                $headers,
+            ]
+        );
+        $this->cleanHeader();
     }
 
     /**
@@ -342,26 +363,6 @@ class ActionForward extends HashMap
         } else {
             return get($this->_body, $k, $default);
         }
-    }
-
-    /**
-     * Process Header.
-     *
-     * @return void
-     */
-    private function _processHeader()
-    {
-        if (empty($this->_header)) {
-            return;
-        }
-        callPlugin(
-            option('get', _ROUTER),
-            'processHeader',
-            [
-                $this->_header,
-            ]
-        );
-        $this->_header = [];
     }
 
     /**
