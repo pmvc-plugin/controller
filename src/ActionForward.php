@@ -103,13 +103,6 @@ class ActionForward extends HashMap
     public $action;
 
     /**
-     * TTFB.
-     *
-     * @var bool
-     */
-    public $ttfb;
-
-    /**
      * ActionForward.
      *
      * @param array $forward forward
@@ -130,9 +123,6 @@ class ActionForward extends HashMap
 
         // assign value
         $this->action = $forward[_ACTION];
-        if (isset($forward[_TTFB])) {
-            $this->ttfb = $forward[_TTFB];
-        }
     }
 
     /**
@@ -147,7 +137,6 @@ class ActionForward extends HashMap
                 return [
                     'name'     => $this->name,
                     'action'   => $this->action,
-                    'ttfb'     => $this->ttfb,
                     'header'   => $this->getHeader(),
                     'type'     => $this->getType(),
                     'path'     => $this->getPath(),
@@ -403,21 +392,6 @@ class ActionForward extends HashMap
          * - Option 2. Or just create a new one.
          */
         $view = $this->_view;
-
-        // <-- Handle ttfb
-        // Need locate before setThemePath
-        // else path will be clean by $view->enable
-        if ($this->ttfb) {
-            $view[_TTFB] = true;
-            $view['reEnable'] = true;
-            $view->disable();
-        } else {
-            if (!empty($view['reEnable'])) {
-                unset($view['reEnable']);
-                $view->enable();
-            }
-        }
-        // end Handle ttfb-->
 
         if ('redirect' !== $this->_type) {
             $path = $this->getPath();
