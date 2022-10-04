@@ -53,6 +53,7 @@ controller -> plugapp -> process -> execute -> processForm -> _processValidate -
 
 ## Install with Composer
 <details><summary>CLICK TO SEE</summary><p>
+
 ### 1. Download composer
    * mkdir test_folder
    * curl -sS https://getcomposer.org/installer | php
