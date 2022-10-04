@@ -50,7 +50,9 @@ controller -> plugapp -> process -> execute -> processForm -> _processValidate -
    * Template
       * template_dir_[app]=[forder path]
 
+
 ## Install with Composer
+<details><summary>CLICK TO SEE</summary><p>
 ### 1. Download composer
    * mkdir test_folder
    * curl -sS https://getcomposer.org/installer | php
@@ -69,6 +71,8 @@ controller -> plugapp -> process -> execute -> processForm -> _processValidate -
 
 #### 2.2 Or use composer command-line
    * php composer.phar require pmvc-plugin/controller
-   * or
-      * composer require pmvc-plugin/controller
-
+   
+   or
+   
+   * composer require pmvc-plugin/controller
+</p></details>
