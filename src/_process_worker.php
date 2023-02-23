@@ -41,6 +41,8 @@ const QUEUE_KEY = 'PMVC\Queue';
 ${_INIT_CONFIG}[_CLASS] = __NAMESPACE__.'\process_worker';
 class process_worker // @codingStandardsIgnoreEnd
 {
+    public $caller; 
+
     /**
      * Porcess worker invoke.
      *

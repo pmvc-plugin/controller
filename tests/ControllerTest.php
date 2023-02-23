@@ -20,8 +20,8 @@ class ControllerTest extends TestCase
                 'index',
             ]
         );
-        $mvc = $this->getMockBuilder('\PMVC\controller')
-            ->setMethods(['execute'])
+        $mvc = $this->getPMVCMockBuilder('\PMVC\controller')
+            ->pmvc_onlyMethods(['execute'])
             ->getMock();
         $mvc->expects($this->exactly(2))
             ->method('execute')
@@ -108,8 +108,8 @@ class ControllerTest extends TestCase
                 _TYPE => 'view',
             ]
         );
-        $jsonView = $this->getMockBuilder('\PMVC\FakeJsonView')
-            ->setMethods(['onFinish'])
+        $jsonView = $this->getPMVCMockBuilder('\PMVC\FakeJsonView')
+            ->pmvc_onlyMethods(['onFinish'])
             ->getMock();
         $jsonView->expects($this->once())
             ->method('onFinish');

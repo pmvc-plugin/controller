@@ -36,6 +36,8 @@ use DomainException;
 ${_INIT_CONFIG}[_CLASS] = __NAMESPACE__.'\app_not_found';
 class app_not_found // @codingStandardsIgnoreEnd
 {
+    public $caller;
+    
     /**
      * App not found invoke.
      *

@@ -4,6 +4,8 @@ namespace PMVC;
 
 class ActionControllerPlugAppTest extends TestCase
 {
+    protected $resources;
+
     public function pmvc_setup()
     {
         folders(_RUN_APP, [], [], true);

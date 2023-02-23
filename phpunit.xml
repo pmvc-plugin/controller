@@ -2,15 +2,13 @@
 <phpunit
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   backupGlobals="false"
-  backupStaticAttributes="false"
   colors="true"
   bootstrap="tests/include.php"
-  convertErrorsToExceptions="true"
-  convertNoticesToExceptions="true"
-  convertWarningsToExceptions="true"
   processIsolation="false"
   stopOnFailure="false"
-  xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd"
+  xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.0/phpunit.xsd"
+  cacheDirectory=".phpunit.cache"
+  backupStaticProperties="false"
 >
   <coverage includeUncoveredFiles="true">
     <!-- https://phpunit.readthedocs.io/en/9.5/configuration.html -->

@@ -43,7 +43,7 @@ class HelloTest extends TestCase
         $this->assertEquals($test_str, $result[0]);
     }
 
-    public function actionProvider()
+    static public function actionProvider()
     {
         return [
             ['IndexTest', 'indextest'],

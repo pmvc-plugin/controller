@@ -58,8 +58,8 @@ class ActionForwardTest extends TestCase
 
     public function testAppendView()
     {
-        $mock = $this->getMockBuilder('\PMVC\FakeView')
-            ->setMethods(['append'])
+        $mock = $this->getPMVCMockBuilder('\PMVC\FakeView')
+            ->pmvc_onlyMethods(['append'])
             ->getMock();
         $mock->expects($this->exactly(1))
             ->method('append');
