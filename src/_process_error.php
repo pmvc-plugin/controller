@@ -34,8 +34,7 @@ namespace PMVC;
 ${_INIT_CONFIG}[_CLASS] = __NAMESPACE__.'\process_error';
 class process_error // @codingStandardsIgnoreEnd
 {
-
-    public $caller; 
+    public $caller;
 
     /**
      * Porcess error invoke.
