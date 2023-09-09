@@ -33,7 +33,7 @@ use DomainException;
  * @link https://packagist.org/packages/pmvc/pmvc
  */
 // @codingStandardsIgnoreStart
-${_INIT_CONFIG}[_CLASS] = __NAMESPACE__.'\app_not_found';
+${_INIT_CONFIG}[_CLASS] = __NAMESPACE__ . '\app_not_found';
 class app_not_found // @codingStandardsIgnoreEnd
 {
     public $caller;
@@ -47,42 +47,36 @@ class app_not_found // @codingStandardsIgnoreEnd
      *
      * @return void
      */
-    public function __invoke(
-        $parents,
-        $indexFile,
-        $folders
-    ) {
+    public function __invoke($parents, $indexFile, $folders)
+    {
         if (\PMVC\isDev('help')) {
             return;
         }
         $alias = $folders['alias'];
         option('set', 'httpResponseCode', 404);
         $caller = $this->caller;
-        trigger_error(
-            json_encode(
-                [
-                    'Error' => 'No app found with routers, '.
-                                'Please check following debug message.',
-                    'Debug' => [
-                        'Parent' => $parents,
-                        'App'    => $caller[_REAL_APP],
-                        'Index'  => $indexFile,
-                        'Alias'  => $alias ?: '',
-                    ],
-                ]
-            ),
-            E_USER_WARNING
-        );
         $caller[_REAL_APP] = $caller[_DEFAULT_APP];
-        $path = $caller->getAppFile(
-            $parents,
-            $indexFile
-        );
+        $path = $caller->getAppFile($parents, $indexFile);
         if (!$path) {
             throw new DomainException(
-                'Default app setting is not correct. ['.
-                $caller[_DEFAULT_APP].
-                ']'
+                'Default app setting is not correct. [' .
+                    $caller[_DEFAULT_APP] .
+                    ']'
+            );
+        } else {
+            trigger_error(
+                json_encode([
+                    'Error' =>
+                        'No app found with routers, ' .
+                        'Please check following debug message.',
+                    'Debug' => [
+                        'Parent' => $parents,
+                        'App' => $caller[_REAL_APP],
+                        'Index' => $indexFile,
+                        'Alias' => $alias ?: '',
+                    ],
+                ]),
+                E_USER_WARNING
             );
         }
         $caller->setApp($caller[_REAL_APP]);
