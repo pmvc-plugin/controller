@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <phpunit
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.0/phpunit.xsd"
   backupGlobals="false"
   colors="true"
   bootstrap="tests/include.php"
   processIsolation="false"
   stopOnFailure="false"
-  xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.0/phpunit.xsd"
-  cacheDirectory=".phpunit.cache"
-  backupStaticProperties="false"
 >
   <coverage includeUncoveredFiles="true">
     <!-- https://phpunit.readthedocs.io/en/9.5/configuration.html -->

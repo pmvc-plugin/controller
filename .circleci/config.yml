@@ -9,7 +9,7 @@ jobs:
         type: string
         default: "controller"
     docker:
-      - image: hillliu/pmvc-phpunit:<< parameters.php-version >>
+      - image: allfunc/pmvc-phpunit:<< parameters.php-version >>
     working_directory: /var/www/<< parameters.plugin-name >>
     steps:
       - checkout
@@ -44,6 +44,8 @@ jobs:
           path: /var/www/<< parameters.plugin-name >>/clover.xml
       - store_artifacts:
           path: /var/www/<< parameters.plugin-name >>/coveralls-upload.json
+      - store_test_results:
+          path: /tmp/test_output
 
 workflows:
   run-job:
