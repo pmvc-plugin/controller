@@ -79,38 +79,38 @@ class process_worker // @codingStandardsIgnoreEnd
                     }
                 };
                 switch ($taskAttr->type) {
-                case sup\TYPE_DAEMON:
-                    $workerGroup = $taskAttr->group;
-                    $inputConcurrency = get($form, $workerGroup);
-                    $concurrency = !empty($inputConcurrency) &&
-                        is_numeric($inputConcurrency) &&
-                        $inputConcurrency > 1
-                            ? $form[$workerGroup]
-                            : 1;
-                    for ($i = 0; $i < $concurrency; $i++) {
+                    case sup\TYPE_DAEMON:
+                        $workerGroup = $taskAttr->group;
+                        $inputConcurrency = get($form, $workerGroup);
+                        $concurrency = !empty($inputConcurrency) &&
+                            is_numeric($inputConcurrency) &&
+                            $inputConcurrency > 1
+                                ? $form[$workerGroup]
+                                : 1;
+                        for ($i = 0; $i < $concurrency; $i++) {
+                            new Parallel(
+                                $wrap,
+                                [
+                                    sup\TYPE     => sup\TYPE_DAEMON,
+                                    sup\INTERVAL => $taskAttr->interval,
+                                ]
+                            );
+                        }
+                        break;
+                    case sup\TYPE_SCRIPT:
                         new Parallel(
                             $wrap,
                             [
-                                sup\TYPE     => sup\TYPE_DAEMON,
-                                sup\INTERVAL => $taskAttr->interval,
+                                sup\TYPE => sup\TYPE_SCRIPT,
+                                sup\NAME => $action->name,
                             ]
                         );
-                    }
-                    break;
-                case sup\TYPE_SCRIPT:
-                    new Parallel(
-                        $wrap,
-                        [
-                            sup\TYPE => sup\TYPE_SCRIPT,
-                            sup\NAME => $action->name,
-                        ]
-                    );
-                    break;
-                default:
-                    trigger_error(
-                        'Wrong worker type ['.$taskAttr->type.']'
-                    );
-                    break;
+                        break;
+                    default:
+                        trigger_error(
+                            'Wrong worker type ['.$taskAttr->type.']'
+                        );
+                        break;
                 }
             }
         }

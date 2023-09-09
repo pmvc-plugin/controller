@@ -364,12 +364,12 @@ class ActionForward extends HashMap
     public function setClientRedirect($type)
     {
         switch ($type) {
-        case 'href':
-        case 'replace':
-            $this->_isClientRedirect = $type;
-            break;
-        default:
-            $this->_isClientRedirect = false;
+            case 'href':
+            case 'replace':
+                $this->_isClientRedirect = $type;
+                break;
+            default:
+                $this->_isClientRedirect = false;
         }
 
         return $this->_isClientRedirect;
@@ -464,36 +464,36 @@ class ActionForward extends HashMap
     public function go()
     {
         switch ($this->getType()) {
-        case 'redirect':
-            $this->_processHeader();
-            $path = $this->getPath(true);
-            if (!empty($this->_isClientRedirect)) {
-                $this['clientRedirectTo'] = $path;
-                $this['clientRedirectType'] = $this->_isClientRedirect;
-            }
-            callPlugin(
-                option('get', _ROUTER),
-                'go',
-                [
-                    $path,
-                    $this->_isClientRedirect,
-                ]
-            );
-        case self::VIEW:
-            return $this->_processView();
-        case 'action':
-        default:
-            if (exists(_RUN_APP, 'plugin')) {
-                $run = plug(_RUN_APP);
-                $keepForward = $run[_FORWARD];
-                if (is_null($keepForward)) {
-                    $keepForward = new HashMap();
-                    $run[_FORWARD] = $keepForward;
+            case 'redirect':
+                $this->_processHeader();
+                $path = $this->getPath(true);
+                if (!empty($this->_isClientRedirect)) {
+                    $this['clientRedirectTo'] = $path;
+                    $this['clientRedirectType'] = $this->_isClientRedirect;
                 }
-                $keepForward[[]] = $this->get();
-            }
+                callPlugin(
+                    option('get', _ROUTER),
+                    'go',
+                    [
+                        $path,
+                        $this->_isClientRedirect,
+                    ]
+                );
+            case self::VIEW:
+                return $this->_processView();
+            case 'action':
+            default:
+                if (exists(_RUN_APP, 'plugin')) {
+                    $run = plug(_RUN_APP);
+                    $keepForward = $run[_FORWARD];
+                    if (is_null($keepForward)) {
+                        $keepForward = new HashMap();
+                        $run[_FORWARD] = $keepForward;
+                    }
+                    $keepForward[[]] = $this->get();
+                }
 
-            return $this;
+                return $this;
         }
     }
 }
