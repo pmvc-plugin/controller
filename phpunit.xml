@@ -1,23 +1,21 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <phpunit
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.0/phpunit.xsd"
+  xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/11.0/phpunit.xsd"
   backupGlobals="false"
-  colors="true"
   bootstrap="tests/include.php"
+  colors="true"
   processIsolation="false"
   stopOnFailure="false"
+  cacheDirectory=".phpunit.cache"
+  backupStaticProperties="false"
+  failOnPhpunitDeprecation="false"
 >
-  <coverage includeUncoveredFiles="true">
-    <!-- https://phpunit.readthedocs.io/en/9.5/configuration.html -->
+  <source>
     <include>
-      <directory suffix=".php">./src</directory>
-      <file>controller.php</file>
+      <directory suffix=".php">src</directory>
     </include>
-    <exclude>
-      <file>./src/Constants.php</file>
-    </exclude>
-  </coverage>
+  </source>
   <testsuites>
     <testsuite name="Application Test Suite">
       <directory>./tests/</directory>
@@ -29,4 +27,12 @@
     <ini name="display_startup_errors" value="true" />
     <env name="APP_ENV" value="testing" />
   </php>
+  <coverage>
+    <report>
+      <clover outputFile="clover.xml"/>
+    </report>
+  </coverage>
+  <logging>
+    <junit outputFile="/tmp/test_output/junit.xml" />
+  </logging>
 </phpunit>

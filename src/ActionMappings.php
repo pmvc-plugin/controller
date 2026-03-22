@@ -80,7 +80,7 @@ class ActionMappings
      *
      * @return array keys
      */
-    public function addByKey($key, MappingBuilder $mappings = null)
+    public function addByKey($key, $mappings = null)
     {
         if (!is_null($mappings)) {
             $this->_mappings[$key] = array_replace(
@@ -193,11 +193,11 @@ class ActionMappings
      */
     public function actionExists($name)
     {
-        if ($name) {
-            $name = strtolower($name);
+        if (!$name) {
+            return false;
         }
 
-        return isset($this->_mappings[ACTION_MAPPINGS][$name]);
+        return isset($this->_mappings[ACTION_MAPPINGS][strtolower($name)]);
     }
 
     /**

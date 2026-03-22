@@ -25,20 +25,16 @@ class ControllerTest extends TestCase
             ->getMock();
         $mvc->expects($this->exactly(2))
             ->method('execute')
-            ->will(
-                $this->onConsecutiveCalls(
-                    (object) [
-                        'action' => 'index',
-                    ],
-                    (object) []
-                )
+            ->willReturnOnConsecutiveCalls(
+                (object) [
+                    'action' => 'index',
+                ],
+                (object) []
             );
         $mvc->process($b);
     }
 
-    /**
-     * @group error
-     */
+    #[\PHPUnit\Framework\Attributes\Group('error')]
     public function testProcessError()
     {
         $b = new \PMVC\MappingBuilder();
@@ -82,9 +78,7 @@ class ControllerTest extends TestCase
         );
     }
 
-    /**
-     * @group error
-     */
+    #[\PHPUnit\Framework\Attributes\Group('error')]
     public function testFinishEventShouldRunOnlyOnce()
     {
         $b = new \PMVC\MappingBuilder();

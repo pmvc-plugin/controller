@@ -27,6 +27,7 @@ class HelloTest extends TestCase
     /**
      * @dataProvider actionProvider
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('actionProvider')]
     public function testActionCaseSensitive($addAction, $processAction)
     {
         $test_str = 'Hello World!';

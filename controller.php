@@ -158,7 +158,7 @@ class controller extends PlugIn // @codingStandardsIgnoreEnd
      *
      * @return mixed
      */
-    public function process(MappingBuilder $builder = null)
+    public function process($builder = null)
     {
         callPlugin('dispatcher', 'notify', [Event\MAP_REQUEST, true]);
         if (callPlugin('dispatcher', 'stop')) {
