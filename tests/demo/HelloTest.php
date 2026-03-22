@@ -4,7 +4,7 @@ namespace PMVC;
 
 class HelloTest extends TestCase
 {
-    public function pmvc_setup()
+    protected function pmvc_setup()
     {
         \PMVC\unplug('controller');
     }

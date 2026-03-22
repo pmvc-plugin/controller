@@ -1,14 +1,14 @@
 [![Latest Stable Version](https://poser.pugx.org/pmvc-plugin/controller/v/stable)](https://packagist.org/packages/pmvc-plugin/controller) 
 [![Latest Unstable Version](https://poser.pugx.org/pmvc-plugin/controller/v/unstable)](https://packagist.org/packages/pmvc-plugin/controller) 
-[![CircleCI](https://circleci.com/gh/pmvc-plugin/controller/tree/master.svg?style=svg)](https://circleci.com/gh/pmvc-plugin/controller/tree/master)
-[![Coverage Status](https://coveralls.io/repos/github/pmvc-plugin/controller/badge.svg?branch=master)](https://coveralls.io/github/pmvc-plugin/controller?branch=master)
+[![CircleCI](https://circleci.com/gh/pmvc-plugin/controller/tree/main.svg?style=svg)](https://circleci.com/gh/pmvc-plugin/controller/tree/main)
+[![Coverage Status](https://coveralls.io/repos/github/pmvc-plugin/controller/badge.svg?branch=main)](https://coveralls.io/github/pmvc-plugin/controller?branch=main)
 [![License](https://poser.pugx.org/pmvc-plugin/controller/license)](https://packagist.org/packages/pmvc-plugin/controller)
 [![Total Downloads](https://poser.pugx.org/pmvc-plugin/controller/downloads)](https://packagist.org/packages/pmvc-plugin/controller) 
 
 PMVC Controller
 ===============
    * A simple MVC for unidirectional dataflow architecture.
-   * <img src="https://raw.githubusercontent.com/pmvc/pmvc.github.io/master/flow5.png">
+   * <img src="https://raw.githubusercontent.com/pmvc/pmvc.github.io/main/flow5.png">
    * More information https://github.com/pmvc/pmvc
 
 ## Explain flow
@@ -63,7 +63,7 @@ controller -> plugapp -> process -> execute -> processForm -> _processValidate -
 ```
 {
     "require": {
-        "pmvc-plugin/controller": "dev-master"
+        "pmvc-plugin/controller": "dev-main"
     }
 }
 ```

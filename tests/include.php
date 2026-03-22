@@ -9,3 +9,6 @@ include $path;
 \PMVC\l(__DIR__.'/resources/FakePlugIn');
 \PMVC\l(__DIR__.'/resources/FakeAction');
 \PMVC\l(__DIR__.'/resources/AnotherPlugin');
+\PMVC\l(__DIR__.'/resources/FakeRouter');
+\PMVC\l(__DIR__.'/resources/FakeSupervisor');
+\PMVC\l(__DIR__.'/resources/FakeAnnotation');

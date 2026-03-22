@@ -6,7 +6,7 @@ class ActionControllerPlugAppTest extends TestCase
 {
     protected $resources;
 
-    public function pmvc_setup()
+    protected function pmvc_setup()
     {
         folders(_RUN_APP, [], [], true);
         $this->resources = __DIR__.'/../resources/';

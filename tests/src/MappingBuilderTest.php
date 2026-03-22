@@ -2,9 +2,7 @@
 
 namespace PMVC;
 
-use PHPUnit_Framework_TestCase;
-
-class MappingBuilderTest extends PHPUnit_Framework_TestCase
+class MappingBuilderTest extends TestCase
 {
     public function testAddActionWithNull()
     {
@@ -21,6 +19,14 @@ class MappingBuilderTest extends PHPUnit_Framework_TestCase
             'bar',
             $action[_FUNCTION]
         );
+    }
+
+    public function testAddDuplicateAction()
+    {
+        $b = new MappingBuilder();
+        $b->addAction('foo');
+        @$b->addAction('foo');
+        $this->assertTrue(isset($b[ACTION_MAPPINGS]['foo']));
     }
 
     public function testAddActionWithCallable()

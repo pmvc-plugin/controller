@@ -4,7 +4,7 @@ namespace PMVC;
 
 class DefaultFormTest extends TestCase
 {
-    public function pmvc_setup()
+    protected function pmvc_setup()
     {
         \PMVC\unplug('controller');
         \PMVC\option('set', [

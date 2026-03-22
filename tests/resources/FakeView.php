@@ -16,6 +16,14 @@ class FakeView extends PlugIn
         return get($this->v, $k, $default);
     }
 
+    public function prepend(array $arr)
+    {
+        $this->v = array_merge_recursive(
+            $arr,
+            $this->v
+        );
+    }
+
     public function append(array $arr)
     {
         $this->v = array_merge_recursive(

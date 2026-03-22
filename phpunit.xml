@@ -15,6 +15,9 @@
     <include>
       <directory suffix=".php">src</directory>
     </include>
+    <exclude>
+      <file>src/Constants.php</file>
+    </exclude>
   </source>
   <testsuites>
     <testsuite name="Application Test Suite">
@@ -27,11 +30,6 @@
     <ini name="display_startup_errors" value="true" />
     <env name="APP_ENV" value="testing" />
   </php>
-  <coverage>
-    <report>
-      <clover outputFile="clover.xml"/>
-    </report>
-  </coverage>
   <logging>
     <junit outputFile="/tmp/test_output/junit.xml" />
   </logging>
