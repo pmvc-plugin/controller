@@ -8,7 +8,7 @@
 PMVC Controller
 ===============
    * A simple MVC for unidirectional dataflow architecture.
-   * <img src="https://raw.githubusercontent.com/pmvc/pmvc.github.io/main/flow5.png">
+   * <img src="https://raw.githubusercontent.com/pmvc/pmvc.github.io/master/flow5.png">
    * More information https://github.com/pmvc/pmvc
 
 ## Explain flow
