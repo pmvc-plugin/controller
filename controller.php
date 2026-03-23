@@ -130,7 +130,7 @@ class controller extends PlugIn // @codingStandardsIgnoreEnd
                 $this->getAppsParent().'plugins',
             ]
         );
-        $names = explode('_', $this[_REAL_APP]);
+        $names = explode('_', isset($this[_REAL_APP]) ? $this[_REAL_APP] : '');
         set(
             $appPlugin,
             array_replace(
@@ -311,9 +311,13 @@ class controller extends PlugIn // @codingStandardsIgnoreEnd
     private function _processAction($actionMapping, $actionForm)
     {
         callPlugin('dispatcher', 'notify', [Event\WILL_PROCESS_ACTION, true]);
+        $func = $this->getActionFunc($actionMapping);
+        if (!is_callable($func)) {
+            return;
+        }
 
         return call_user_func_array(
-            $this->getActionFunc($actionMapping),
+            $func,
             [
                 $actionMapping,
                 $actionForm,
@@ -501,7 +505,11 @@ class controller extends PlugIn // @codingStandardsIgnoreEnd
         $func = $actionMapping->func;
         if (!is_callable($func)) {
             if (exists(_RUN_APP, 'plugin')) {
-                $func = [plug(_RUN_APP), $func];
+                $app = plug(_RUN_APP);
+                if (!method_exists($app, $func)) {
+                    return;
+                }
+                $func = [$app, $func];
             } else {
                 return !trigger_error(
                     'parse action error, function not exists. '.
